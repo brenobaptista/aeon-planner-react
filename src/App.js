@@ -1,8 +1,13 @@
 import React, {Component} from 'react';
-import { BrowserRouter as Router, Route, NavLink } from "react-router-dom";
+import { BrowserRouter as Router, Route, NavLink, Switch } from "react-router-dom";
 
 import Home from './Home'
 import Lists from './Lists'
+import NewBoard from './components/NewBoard/NewBoard'
+import NewList from './components/NewList/NewList'
+import NewTask from './components/NewTask/NewTask'
+
+import './App.css'
 
 class App extends Component {
   state = {
@@ -27,8 +32,8 @@ class App extends Component {
     return (
       <>
         <Router>
-          <nav className="navbar navbar-expand-lg navbar-light bg-light">
-            <a className="navbar-brand" href="/">Aeon Planner</a>
+          <nav className="navbar navbar-expand-lg navbar-dark bg-secondary">
+            <NavLink to="/" className="navbar-brand">Aeon Planner</NavLink>
             <button onClick={this.menuHandler} className={`${classTwo}`} type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
               <span className="navbar-toggler-icon"></span>
             </button>
@@ -43,7 +48,12 @@ class App extends Component {
           </nav>
 
           <Route exact path='/' component={Home} />
-          <Route path='/:listId' exact component={Lists} />
+          <Switch>
+            <Route exact path='/new-board' component={NewBoard} />
+            <Route exact path='/new-list/:listId' component={NewList} />
+            <Route exact path='/new-task/:listId' component={NewTask} />
+            <Route exact path='/:listId' component={Lists} />
+          </Switch>
           
         </Router>
       </>

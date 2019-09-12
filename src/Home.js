@@ -1,6 +1,9 @@
 import React, { Component } from 'react'
 import Boards from './components/Boards/Boards';
 import axios from 'axios';
+import { Link } from 'react-router-dom';
+
+import './App.css'
 
 import './components/Boards/Boards.css'
 
@@ -25,6 +28,7 @@ class Home extends Component {
       <>
         <center className="margin-t-b"><h1>Board List</h1></center>
         <Boards boards={this.state.boards} />
+        <Link to="/new-board"><center><button className="btn btn-success button-margin">+ New Board</button></center></Link>
       </>
     )
   }
