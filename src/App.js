@@ -2,10 +2,10 @@ import React, {Component} from 'react';
 import { BrowserRouter as Router, Route, NavLink, Switch } from "react-router-dom";
 
 import Home from './Home'
-import Lists from './Lists'
-import NewBoard from './components/NewBoard/NewBoard'
-import NewList from './components/NewList/NewList'
-import NewTask from './components/NewTask/NewTask'
+import ListsPage from './ListsPage'
+import NewBoard from './containers/NewBoard/NewBoard'
+import NewList from './containers/NewList/NewList'
+import NewTask from './containers/NewTask/NewTask'
 
 import './App.css'
 
@@ -50,9 +50,9 @@ class App extends Component {
           <Route exact path='/' component={Home} />
           <Switch>
             <Route exact path='/new-board' component={NewBoard} />
-            <Route exact path='/new-list/:listId' component={NewList} />
+            <Route exact path='/new-list/:boardId' component={NewList} />
             <Route exact path='/new-task/:listId' component={NewTask} />
-            <Route exact path='/:listId' component={Lists} />
+            <Route exact path='/:boardId' component={ListsPage} />
           </Switch>
           
         </Router>

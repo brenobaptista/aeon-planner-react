@@ -1,3 +1,22 @@
+.unit-card {
+    width: 20%;
+}
+
+.small-card {
+    width: 60%;
+    margin: auto;
+}
+
+.medium-card {
+    width: 80%;
+    margin: auto;
+}
+
 .button-margin {
     margin-bottom: 1.5em;
+}
+
+.margin-t-b {
+    margin-top: 1.5rem;
+    margin-bottom: 1.5rem;
 }

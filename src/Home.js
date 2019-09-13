@@ -5,8 +5,6 @@ import { Link } from 'react-router-dom';
 
 import './App.css'
 
-import './components/Boards/Boards.css'
-
 class Home extends Component {
   state = {
     boards: []

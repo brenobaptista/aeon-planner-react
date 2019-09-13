@@ -1,19 +1,18 @@
 import React from 'react';
-import './Lists.css'
 import { Link } from 'react-router-dom';
 
-const Lists = ({ lists, listsLists, myId }) => {
+const Lists = ({ listInfo, lists }) => {
     return (
         <div>
             <div className="card small-card margin-t-b bg-light">
                 <div className="card-body">
-                    <center><h5 className="card-title">{lists.name}</h5></center>
-                    <center><p className="card-text">Created at: {lists.created_at}</p></center>
-                    <center><p className="card-text">Updated at: {lists.updated_at}</p></center>
+                    <center><h5 className="card-title">{listInfo.name}</h5></center>
+                    <center><p className="card-text">Created at: {listInfo.created_at}</p></center>
+                    <center><p className="card-text">Updated at: {listInfo.updated_at}</p></center>
                 </div>
             </div>
 
-            {listsLists.map( (list) => (
+            {lists.map( (list) => (
                 <div key={list.id}>
                     <div className="card medium-card bg-light">
                         <div className="card-body">
@@ -28,7 +27,7 @@ const Lists = ({ lists, listsLists, myId }) => {
                                 </div>   
                             ))}
 
-                            <Link to={`new-task/${myId}`}><button className="btn btn-success">+ New Task</button></Link>
+                            <Link to={`new-task/${list.id}`}><button className="btn btn-success">+ New Task</button></Link>
 
                         </div>
                     </div>
