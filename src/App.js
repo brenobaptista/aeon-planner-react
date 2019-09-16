@@ -1,4 +1,4 @@
-import React, {Component} from 'react';
+import React, { Component } from 'react';
 import { BrowserRouter as Router, Route, NavLink, Switch } from "react-router-dom";
 
 import Home from './Home'
@@ -24,7 +24,7 @@ class App extends Component {
     this.setState({ isCollapsed: true })
   }
 
-  render () {
+  render() {
     const collapsed = this.state.isCollapsed;
     const classOne = collapsed ? 'collapse navbar-collapse' : 'collapse navbar-collapse show';
     const classTwo = collapsed ? 'navbar-toggler collapsed' : 'navbar-toggler'
@@ -54,7 +54,7 @@ class App extends Component {
             <Route exact path='/new-task/:listId' component={NewTask} />
             <Route exact path='/:boardId' component={ListsPage} />
           </Switch>
-          
+
         </Router>
       </>
     );

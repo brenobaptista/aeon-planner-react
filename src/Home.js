@@ -7,29 +7,38 @@ import './App.css'
 
 class Home extends Component {
   state = {
-    boards: []
+    boards: [],
   }
 
-  componentDidMount () {
+  componentDidMount() {
+    this.getHandler();
+  }
+
+  getHandler = () => {
     axios.get('https://trellacens.herokuapp.com/boards')
-      .then(response => {
-        console.log(response.data)
-        this.setState({ boards: response.data })
-      })
-      .catch((error) => {
-        console.log(error)
-      })
+    .then(response => {
+      this.setState({ boards: response.data })
+    })
+    .catch((error) => {
+      console.log(error)
+    })
   }
 
-  render () {
+  deleteHandler = (board_id) => {
+    axios.delete(`https://trellacens.herokuapp.com/boards/${board_id}`)
+      .then( () => this.getHandler() )
+  }
+  /* Agora falta renderizar novamente após o delete */
+
+  render() {
     return (
       <>
         <center className="margin-t-b"><h1>Board List</h1></center>
-        <Boards boards={this.state.boards} />
         <Link to="/new-board"><center><button className="btn btn-success button-margin">+ New Board</button></center></Link>
+        <Boards boards={this.state.boards} deleted={this.deleteHandler} />
       </>
     )
   }
 }
-  
+
 export default Home
