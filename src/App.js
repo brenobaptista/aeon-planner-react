@@ -4,8 +4,11 @@ import { BrowserRouter as Router, Route, NavLink, Switch } from "react-router-do
 import Home from './Home'
 import ListsPage from './ListsPage'
 import NewBoard from './containers/NewBoard/NewBoard'
+import EditBoard from './containers/EditBoard/EditBoard'
 import NewList from './containers/NewList/NewList'
 import NewTask from './containers/NewTask/NewTask'
+import EditList from './containers/EditList/EditList'
+import EditTask from './containers/EditTask/EditTask'
 
 import './App.css'
 
@@ -50,8 +53,11 @@ class App extends Component {
           <Route exact path='/' component={Home} />
           <Switch>
             <Route exact path='/new-board' component={NewBoard} />
+            <Route exact path='/edit-board/:boardId/:boardName' component={EditBoard} />
             <Route exact path='/new-list/:boardId' component={NewList} />
+            <Route exact path='/edit-list/:listId/:listName' component={EditList} />
             <Route exact path='/new-task/:listId' component={NewTask} />
+            <Route exact path='/edit-task/:taskId/:taskName' component={EditTask} />
             <Route exact path='/:boardId' component={ListsPage} />
           </Switch>
 

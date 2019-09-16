@@ -14,10 +14,7 @@
 
 .list-button {
   height: 33px;
-}
-
-.unit-card {
-  width: 20%;
+  margin-left: 0.5em;
 }
 
 .small-card {
@@ -26,7 +23,7 @@
 }
 
 .medium-card {
-  width: 80%;
+  width: 65%;
   margin: auto;
 }
 

@@ -12,7 +12,9 @@ const Boards = ({ boards, deleted }) => {
             <center><h5>{board.name}</h5></center>
           </button>
         </Link>
-        <button className="btn btn-warning delete-button">Edit</button>
+        <Link to={`/edit-board/${board.id}/${board.name}`}>
+          <button className="btn btn-warning delete-button">Edit</button>
+        </Link>
         <button className="btn btn-danger delete-button" onClick={() => deleted(board.id)}>Delete</button>
         <br />
       </center>
