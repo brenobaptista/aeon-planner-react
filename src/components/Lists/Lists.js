@@ -7,8 +7,6 @@ const Lists = ({ listInfo, lists, board_id, deleteL, deleteT }) => {
       <div className="card small-card margin-t-b bg-light">
         <div className="card-body">
           <center><h5 className="card-title">{listInfo.name}</h5></center>
-          <center><p className="card-text">Created at: {listInfo.created_at}</p></center>
-          <center><p className="card-text">Updated at: {listInfo.updated_at}</p></center>
         </div>
       </div>
 
@@ -18,12 +16,13 @@ const Lists = ({ listInfo, lists, board_id, deleteL, deleteT }) => {
         <div key={list.id}>
           <div className="card medium-card bg-light">
             <div className="card-body">
-              <h5 className="card-title">{list.name} 
+              <center><h5 className="card-title">{list.name} 
+                <br />
                 <Link to={`/board/${board_id}/edit-list/${list.id}/${list.name}`}>
                   <button className="btn btn-warning list-button">Edit</button>
                 </Link>
                 <button className="btn btn-danger list-button" onClick={() => deleteL(list.id)}>Delete</button>
-              </h5>
+              </h5></center>
               
 
               {list.tasks.map((task) => (
@@ -42,6 +41,7 @@ const Lists = ({ listInfo, lists, board_id, deleteL, deleteT }) => {
                 </span>
               ))}
 
+              <br />
               <Link to={`/board/${board_id}/list/${list.id}/new-task/`}><button className="btn btn-success">+ New Task</button></Link>
 
             </div>

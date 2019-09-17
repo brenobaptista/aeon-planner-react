@@ -13,9 +13,9 @@ const Boards = ({ boards, deleted }) => {
           </button>
         </Link>
         <Link to={`/edit-board/${board.id}/${board.name}`}>
-          <button className="btn btn-warning delete-button">Edit</button>
+          <button className="btn btn-warning delete-button"><h6>Edit</h6></button>
         </Link>
-        <button className="btn btn-danger delete-button" onClick={() => deleted(board.id)}>Delete</button>
+        <button className="btn btn-danger delete-button" onClick={() => deleted(board.id)}><h6>Delete</h6></button>
         <br />
       </center>
     ))}

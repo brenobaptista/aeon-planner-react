@@ -15,7 +15,10 @@
 
 .list-button {
   height: 33px;
-  margin-left: 0.5em;
+  margin-top: 0.25em;
+  margin-left: 0.25em;
+  margin-right: 0.25em;
+  color: white !important;
 }
 
 .small-card {

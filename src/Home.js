@@ -37,7 +37,7 @@ class Home extends Component {
   render() {
     return (
       <>
-        <center className="margin-t-b"><h1>Board List</h1></center>
+        <center className="margin-t-b"><h1>Boards</h1></center>
         {this.state.isLoaded ? 
         <div>
           <Link to="/new-board"><center><button className="btn btn-success button-margin">+ New Board</button></center></Link>
