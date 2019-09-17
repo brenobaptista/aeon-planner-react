@@ -7,9 +7,9 @@ const Boards = ({ boards, deleted }) => {
     <div>
     {boards.map((board) => (
       <center key={board.id}>
-        <Link to={`/${board.id}`}>
+        <Link to={`/board/${board.id}`}>
           <button className="btn btn-info board-button">
-            <center><h5>{board.name}</h5></center>
+            <center><h6>{board.name}</h6></center>
           </button>
         </Link>
         <Link to={`/edit-board/${board.id}/${board.name}`}>

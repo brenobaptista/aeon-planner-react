@@ -8,6 +8,7 @@ import './App.css'
 class Home extends Component {
   state = {
     boards: [],
+    isLoaded: false
   }
 
   componentDidMount() {
@@ -17,7 +18,10 @@ class Home extends Component {
   getHandler = () => {
     axios.get('https://trellacens.herokuapp.com/boards')
     .then(response => {
-      this.setState({ boards: response.data })
+      this.setState({ 
+        boards: response.data,
+        isLoaded: true 
+      })
     })
     .catch((error) => {
       console.log(error)
@@ -34,8 +38,12 @@ class Home extends Component {
     return (
       <>
         <center className="margin-t-b"><h1>Board List</h1></center>
-        <Link to="/new-board"><center><button className="btn btn-success button-margin">+ New Board</button></center></Link>
-        <Boards boards={this.state.boards} deleted={this.deleteHandler} />
+        {this.state.isLoaded ? 
+        <div>
+          <Link to="/new-board"><center><button className="btn btn-success button-margin">+ New Board</button></center></Link>
+          <Boards boards={this.state.boards} deleted={this.deleteHandler} />
+        </div>
+        : <center><h2>Loading boards...</h2></center>}
       </>
     )
   }

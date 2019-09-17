@@ -6,6 +6,7 @@ class ListsPage extends Component {
   state = {
     listInfo: {},
     lists: [],
+    isLoaded: false
   }
 
   componentDidMount() {
@@ -17,7 +18,8 @@ class ListsPage extends Component {
       .then(response => {
         this.setState({
           listInfo: response.data,
-          lists: response.data.lists
+          lists: response.data.lists,
+          isLoaded: true
         })
       })
       .catch((error) => {
@@ -40,12 +42,17 @@ class ListsPage extends Component {
 
     return (
       <>
-        <Lists 
-          listInfo={this.state.listInfo} 
-          lists={this.state.lists} 
-          board_id={board_id} 
-          deleteL={this.deleteListHandler}
-          deleteT={this.deleteTaskHandler} />
+        {this.state.isLoaded ? 
+          <div>
+            <Lists 
+              listInfo={this.state.listInfo} 
+              lists={this.state.lists} 
+              board_id={board_id} 
+              deleteL={this.deleteListHandler}
+              deleteT={this.deleteTaskHandler} />
+          </div>
+          : <center className="margin-t-b"><h2>Loading lists...</h2></center>
+        }
       </>
     )
   }

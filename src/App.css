@@ -6,10 +6,11 @@
 }
 
 .delete-button {
-  width: 15%;
+  width: 20%;
   height: 5em;
   margin-bottom: 1em;
   margin-right: 1em;
+  color: white !important;
 }
 
 .list-button {

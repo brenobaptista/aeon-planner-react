@@ -9,6 +9,7 @@ import NewList from './containers/NewList/NewList'
 import NewTask from './containers/NewTask/NewTask'
 import EditList from './containers/EditList/EditList'
 import EditTask from './containers/EditTask/EditTask'
+import HTTP404 from './components/HTTP404/HTTP404'
 
 import './App.css'
 
@@ -50,15 +51,16 @@ class App extends Component {
             </div>
           </nav>
 
-          <Route exact path='/' component={Home} />
           <Switch>
-            <Route exact path='/new-board' component={NewBoard} />
-            <Route exact path='/edit-board/:boardId/:boardName' component={EditBoard} />
-            <Route exact path='/new-list/:boardId' component={NewList} />
-            <Route exact path='/edit-list/:listId/:listName' component={EditList} />
-            <Route exact path='/new-task/:listId' component={NewTask} />
-            <Route exact path='/edit-task/:taskId/:taskName' component={EditTask} />
-            <Route exact path='/:boardId' component={ListsPage} />
+            <Route exact path='/' component={Home} />
+            <Route path='/new-board' component={NewBoard} />
+            <Route path='/edit-board/:boardId/:boardName' component={EditBoard} />
+            <Route path='/board/:boardId/new-list' component={NewList} />
+            <Route path='/board/:boardId/edit-list/:listId/:listName' component={EditList} />
+            <Route path='/board/:boardId/list/:listId/new-task/' component={NewTask} />
+            <Route path='/board/:boardId/list/:listId/edit-task/:taskName/:taskId/' component={EditTask} />
+            <Route path='/board/:boardId' component={ListsPage} />
+            <Route component={HTTP404} />
           </Switch>
 
         </Router>

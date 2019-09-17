@@ -12,14 +12,14 @@ const Lists = ({ listInfo, lists, board_id, deleteL, deleteT }) => {
         </div>
       </div>
 
-      <Link to={`new-list/${board_id}`}><center><button className="btn btn-success button-margin">+ New List</button></center></Link>
+      <Link to={`/board/${board_id}/new-list`}><center><button className="btn btn-success button-margin">+ New List</button></center></Link>
 
       {lists.map((list) => (
         <div key={list.id}>
           <div className="card medium-card bg-light">
             <div className="card-body">
               <h5 className="card-title">{list.name} 
-                <Link to={`/edit-list/${list.id}/${list.name}`}>
+                <Link to={`/board/${board_id}/edit-list/${list.id}/${list.name}`}>
                   <button className="btn btn-warning list-button">Edit</button>
                 </Link>
                 <button className="btn btn-danger list-button" onClick={() => deleteL(list.id)}>Delete</button>
@@ -32,7 +32,7 @@ const Lists = ({ listInfo, lists, board_id, deleteL, deleteT }) => {
                     <center><h6 className="card-title">{task.name}</h6></center>
                     <center>
                       <p className="card-text">{task.due ? `Due: ${task.due}` : 'Not due'} <br />
-                        <Link to={`/edit-task/${task.id}/${task.name}`}>
+                        <Link to={`/board/${board_id}/list/${list.id}/edit-task/${task.name}/${task.id}/`}>
                           <button className="btn btn-warning list-button">Edit</button>
                         </Link>
                         <button className="btn btn-danger list-button" onClick={() => deleteT(task.id)}>Delete</button>
@@ -42,7 +42,7 @@ const Lists = ({ listInfo, lists, board_id, deleteL, deleteT }) => {
                 </span>
               ))}
 
-              <Link to={`new-task/${list.id}`}><button className="btn btn-success">+ New Task</button></Link>
+              <Link to={`/board/${board_id}/list/${list.id}/new-task/`}><button className="btn btn-success">+ New Task</button></Link>
 
             </div>
           </div>
