@@ -29,8 +29,8 @@ class NewBoard extends Component {
           <input type="text" placeholder="Board Name" value={this.state.name} onChange={(event) => this.setState({ name: event.target.value })} /><br /><br />
         </center>
         <center>
-          <button className="btn btn-danger mod-button" onClick={this.goBack}>Cancel</button>
-          <button className="btn btn-success mod-button" onClick={this.dataHandler}>Add Board</button>
+          <button className="btn btn-danger margin-teeth" onClick={this.goBack}>Cancel</button>
+          <button className="btn btn-success margin-teeth" onClick={this.dataHandler}>Add Board</button>
         </center>
       </div>
     );

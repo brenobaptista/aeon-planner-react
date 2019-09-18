@@ -36,8 +36,8 @@ class NewTask extends Component {
           <textarea type="text" placeholder="Task Description?" value={this.state.description} onChange={(event) => this.setState({ description: event.target.value })} /><br /><br />
         </center>
         <center>
-          <button className="btn btn-danger mod-button" onClick={this.goBack}>Cancel</button>
-          <button className="btn btn-success mod-button" onClick={this.dataHandler}>Add Task</button>
+          <button className="btn btn-danger margin-teeth" onClick={this.goBack}>Cancel</button>
+          <button className="btn btn-success margin-teeth" onClick={this.dataHandler}>Add Task</button>
         </center>
       </div>
     )

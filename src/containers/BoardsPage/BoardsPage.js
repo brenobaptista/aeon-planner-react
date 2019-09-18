@@ -40,7 +40,7 @@ class Home extends Component {
         <center className="margin-t-b"><h1>Boards</h1>
           {this.state.isLoaded ? 
           <div>
-            <Link to="/new-board"><button className="btn btn-success button-margin">+ New Board</button></Link>
+            <Link to="/new-board"><button className="btn btn-success margin-b">+ New Board</button></Link>
             <br />
             <Boards boards={this.state.boards} deleted={this.deleteHandler} />
           </div>
