@@ -4,25 +4,25 @@ import axios from 'axios';
 class EditTask extends Component {
     state = {
         name: '',
+        description: ''
     }
 
     componentDidMount() {
-        this.setState({ name: this.props.match.params.taskName })
+        this.setState({ 
+          name: this.props.match.params.taskName,
+          description: this.props.match.params.taskDescription
+        })
     }
 
     dataHandler = () => {
         const data = {
-            name: this.state.name
+            name: this.state.name,
+            description: this.state.description
         };
-        axios.patch(`https://trellacens.herokuapp.com/tasks/${this.props.match.params.taskId}`, data)
+        axios.put(`https://trello-api-second.herokuapp.com/tasks/${this.props.match.params.taskId}`, data)
             .then(() => {
                 this.props.history.goBack();
             })
-            .catch(() => this.setState({ error: true }))
-    }
-
-    goBackList = () => {
-        this.props.history.goBack();
     }
 
     render() {
@@ -32,14 +32,10 @@ class EditTask extends Component {
                     <center>
                         <label>Name:</label><br />
                         <input type="text" value={this.state.name} onChange={(event) => this.setState({ name: event.target.value })} /><br /><br />
-                        {this.state.error ? 
-                            <div>
-                                <h1>*** API PROBLEM ***</h1>
-                                <h2>Error in patch task endpoint</h2>
-                                <button className="btn btn-warning" onClick={this.goBackList}>Click here go to back (sorry!)</button>
-                                <br /><br />
-                            </div> 
-                        : null}
+                    </center>
+                    <center>
+                      <label>Description:</label><br />
+                      <textarea type="text" value={this.state.description} onChange={(event) => this.setState({ description: event.target.value })} /><br /><br />
                     </center>
                 <center><button className="btn btn-success" onClick={this.dataHandler}>Finish editing</button></center>
             </div>

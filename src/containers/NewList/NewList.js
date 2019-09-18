@@ -3,17 +3,20 @@ import axios from 'axios';
 
 class NewList extends Component {
   state = {
-    name: ''
+    name: '',
   }
 
+  
   dataHandler = () => {
     const data = {
-      name: this.state.name
+      name: this.state.name,
+      board_id: this.props.match.params.boardId
     };
-    axios.post(`https://trellacens.herokuapp.com/boards/${this.props.match.params.boardId}/lists`, data)
-      .then(() => {
-        this.props.history.goBack()
+    axios.post(`https://trello-api-second.herokuapp.com/lists/`, data)
+    .then(() => {
+      this.props.history.goBack()
       })
+      .catch((error) => console.log(error))
   }
 
   render() {

@@ -4,15 +4,16 @@ import axios from 'axios';
 class NewTask extends Component {
   state = {
     name: '',
-    due: ''
+    description: ''
   }
 
   dataHandler = () => {
     const data = {
       name: this.state.name,
-      due: this.state.due
+      description: this.state.description,
+      list_id: this.props.match.params.listId
     };
-    axios.post(`https://trellacens.herokuapp.com/lists/${this.props.match.params.listId}/tasks`, data)
+    axios.post(`https://trello-api-second.herokuapp.com/tasks/`, data)
       .then(() => {
         this.props.history.goBack()
       })
@@ -27,8 +28,8 @@ class NewTask extends Component {
           <input type="text" placeholder="Task Name" value={this.state.name} onChange={(event) => this.setState({ name: event.target.value })} /><br /><br />
         </center>
         <center>
-          <label>Due:</label><br />
-          <input type="text" placeholder="When?" value={this.state.due} onChange={(event) => this.setState({ due: event.target.value })} /><br /><br />
+          <label>Description:</label><br />
+          <textarea type="text" placeholder="Task Description?" value={this.state.description} onChange={(event) => this.setState({ description: event.target.value })} /><br /><br />
         </center>
         <center><button className="btn btn-success" onClick={this.dataHandler}>Add Task</button></center>
       </div>

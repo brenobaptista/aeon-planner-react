@@ -1,13 +1,13 @@
 .board-button {
-  width: 35%;
-  height: 5em;
+  width: 40%;
+  height: 4em;
   margin-bottom: 1em;
   margin-right: 1em;
 }
 
 .delete-button {
-  width: 20%;
-  height: 5em;
+  width: 4.5em;
+  height: 4em;
   margin-bottom: 1em;
   margin-right: 1em;
   color: white !important;
@@ -15,6 +15,7 @@
 
 .list-button {
   height: 33px;
+  padding-top: 5px !important;
   margin-top: 0.25em;
   margin-left: 0.25em;
   margin-right: 0.25em;

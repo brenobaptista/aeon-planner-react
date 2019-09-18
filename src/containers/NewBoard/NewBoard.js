@@ -10,7 +10,7 @@ class NewBoard extends Component {
     const data = {
       name: this.state.name
     };
-    axios.post('https://trellacens.herokuapp.com/boards', data)
+    axios.post('https://trello-api-second.herokuapp.com/boards/', data)
       .then(() => {
         this.props.history.replace('/');
       })

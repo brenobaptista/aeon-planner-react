@@ -16,7 +16,7 @@ class Home extends Component {
   }
 
   getHandler = () => {
-    axios.get('https://trellacens.herokuapp.com/boards')
+    axios.get('https://trello-api-second.herokuapp.com/boards/')
     .then(response => {
       this.setState({ 
         boards: response.data,
@@ -28,8 +28,8 @@ class Home extends Component {
     })
   }
 
-  deleteHandler = (board_id) => {
-    axios.delete(`https://trellacens.herokuapp.com/boards/${board_id}`)
+  deleteHandler = (boardId) => {
+    axios.delete(`https://trello-api-second.herokuapp.com/boards/${boardId}`)
       .then( () => this.getHandler() )
   }
   /* Agora falta renderizar novamente após o delete */
@@ -41,6 +41,7 @@ class Home extends Component {
         {this.state.isLoaded ? 
         <div>
           <Link to="/new-board"><center><button className="btn btn-success button-margin">+ New Board</button></center></Link>
+          <br />
           <Boards boards={this.state.boards} deleted={this.deleteHandler} />
         </div>
         : <center><h2>Loading boards...</h2></center>}

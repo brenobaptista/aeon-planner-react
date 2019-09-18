@@ -57,11 +57,11 @@ class App extends Component {
             <Route exact path='/' component={Home} />
             <Route path='/new-board' component={NewBoard} />
             <Route path='/edit-board/:boardId/:boardName' component={EditBoard} />
-            <Route path='/board/:boardId/new-list' component={NewList} />
             <Route path='/board/:boardId/edit-list/:listId/:listName' component={EditList} />
+            <Route path='/board/:boardId/new-list' component={NewList} />
             <Route path='/board/:boardId/list/:listId/new-task/' component={NewTask} />
-            <Route path='/board/:boardId/list/:listId/edit-task/:taskName/:taskId/' component={EditTask} />
-            <Route path='/board/:boardId' component={ListsPage} />
+            <Route path='/board/:boardId/list/:listId/edit-task/:taskName/:taskId/:taskDescription' component={EditTask} />
+            <Route path='/board/:boardName/:boardId' component={ListsPage} />
             <Route component={HTTP404} />
           </Switch>
 

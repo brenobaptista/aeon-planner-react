@@ -1,54 +1,66 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 
-const Lists = ({ listInfo, lists, board_id, deleteL, deleteT }) => {
+const Lists = ({ lists, tasks, boardId, boardName, deleteL, deleteT }) => {
   return (
     <div>
       <div className="card small-card margin-t-b bg-light">
         <div className="card-body">
-          <center><h5 className="card-title">{listInfo.name}</h5></center>
+          <center><h5 className="card-title">{boardName}</h5></center>
         </div>
       </div>
 
-      <Link to={`/board/${board_id}/new-list`}><center><button className="btn btn-success button-margin">+ New List</button></center></Link>
+      <Link to={`/board/${boardId}/new-list`}><center><button className="btn btn-success button-margin">+ New List</button></center></Link>
 
-      {lists.map((list) => (
-        <div key={list.id}>
-          <div className="card medium-card bg-light">
-            <div className="card-body">
-              <center><h5 className="card-title">{list.name} 
-                <br />
-                <Link to={`/board/${board_id}/edit-list/${list.id}/${list.name}`}>
-                  <button className="btn btn-warning list-button">Edit</button>
-                </Link>
-                <button className="btn btn-danger list-button" onClick={() => deleteL(list.id)}>Delete</button>
-              </h5></center>
-              
+      {lists.map((list) => {
+        if (list.board_id === Number(boardId)) {
+          return (
+            <div key={list.id}>
+              <div className="card medium-card bg-light">
+                <div className="card-body">
+                  <center><h5 className="card-title">{list.name} 
+                    <br />
+                    <Link to={`/board/${boardId}/edit-list/${list.id}/${list.name}`}>
+                      <button className="btn btn-warning list-button"><FontAwesomeIcon icon="pencil-alt" /></button>
+                    </Link>
+                    <button className="btn btn-danger list-button" onClick={() => deleteL(list.id)}><FontAwesomeIcon icon="window-close" /></button>
+                  </h5></center>
+                  
 
-              {list.tasks.map((task) => (
-                <span className="card margin-t-b" key={task.id}>
-                  <div className="card-body">
-                    <center><h6 className="card-title">{task.name}</h6></center>
-                    <center>
-                      <p className="card-text">{task.due ? `Due: ${task.due}` : 'Not due'} <br />
-                        <Link to={`/board/${board_id}/list/${list.id}/edit-task/${task.name}/${task.id}/`}>
-                          <button className="btn btn-warning list-button">Edit</button>
-                        </Link>
-                        <button className="btn btn-danger list-button" onClick={() => deleteT(task.id)}>Delete</button>
-                      </p>
-                    </center>
-                  </div>
-                </span>
-              ))}
+                {tasks.map((task) => {
+                  if (task.list_id === Number(list.id)) {
+                    return(
+                      <span className="card margin-t-b" key={task.id}>
+                        <div className="card-body">
+                          <center><h6 className="card-title">{task.name}</h6></center>
+                          <center><p className="card-text">{task.description}</p></center>
+                          <br />
+                          <center>
+                            <Link to={`/board/${boardId}/list/${list.id}/edit-task/${task.name}/${task.id}/${task.description}`}>
+                              <button className="btn btn-warning list-button"><FontAwesomeIcon icon="pencil-alt" /></button>
+                            </Link>
+                            <button className="btn btn-danger list-button" onClick={() => deleteT(task.id)}><FontAwesomeIcon icon="window-close" /></button>
+                          </center>
+                        </div>
+                      </span>
+                    )
+                  };
+                  return null;
+                })}
 
+                  <br />
+                  <Link to={`/board/${boardId}/list/${list.id}/new-task/`}><button className="btn btn-success">+ New Task</button></Link>
+
+                </div>
+              </div>
               <br />
-              <Link to={`/board/${board_id}/list/${list.id}/new-task/`}><button className="btn btn-success">+ New Task</button></Link>
-
             </div>
-          </div>
-          <br />
-        </div>
-      ))}
+          )
+        };
+      return null;
+      }
+      )}
 
     </div>
   )
