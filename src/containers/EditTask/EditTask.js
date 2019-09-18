@@ -25,19 +25,26 @@ class EditTask extends Component {
             })
     }
 
+    goBack = () => {
+      this.props.history.goBack();
+    }
+
     render() {
         return(
             <div>
-                <center><h1 className="margin-t-b">Edit task</h1></center>
-                    <center>
-                        <label>Name:</label><br />
-                        <input type="text" value={this.state.name} onChange={(event) => this.setState({ name: event.target.value })} /><br /><br />
-                    </center>
-                    <center>
-                      <label>Description:</label><br />
-                      <textarea type="text" value={this.state.description} onChange={(event) => this.setState({ description: event.target.value })} /><br /><br />
-                    </center>
-                <center><button className="btn btn-success" onClick={this.dataHandler}>Finish editing</button></center>
+              <center><h1 className="margin-t-b">Edit task</h1></center>
+                <center>
+                    <label>Name:</label><br />
+                    <input type="text" value={this.state.name} onChange={(event) => this.setState({ name: event.target.value })} /><br /><br />
+                </center>
+                <center>
+                  <label>Description:</label><br />
+                  <textarea type="text" value={this.state.description} onChange={(event) => this.setState({ description: event.target.value })} /><br /><br />
+                </center>
+                <center>
+                  <button className="btn btn-danger mod-button" onClick={this.goBack}>Cancel</button>
+                  <button className="btn btn-success mod-button" onClick={this.dataHandler}>Finish editing</button>
+                </center>
             </div>
         )
     }

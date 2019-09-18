@@ -19,6 +19,10 @@ class NewList extends Component {
       .catch((error) => console.log(error))
   }
 
+  goBack = () => {
+    this.props.history.goBack()
+  }
+
   render() {
     return (
       <div>
@@ -27,7 +31,10 @@ class NewList extends Component {
           <label>Name:</label><br />
           <input type="text" placeholder="List Name" value={this.state.name} onChange={(event) => this.setState({ name: event.target.value })} /><br /><br />
         </center>
-        <center><button className="btn btn-success" onClick={this.dataHandler}>Add List</button></center>
+        <center>
+          <button className="btn btn-danger mod-button" onClick={this.goBack}>Cancel</button>
+          <button className="btn btn-success mod-button" onClick={this.dataHandler}>Add List</button>
+        </center>
       </div>
     )
   }

@@ -15,8 +15,12 @@ class NewTask extends Component {
     };
     axios.post(`https://trello-api-second.herokuapp.com/tasks/`, data)
       .then(() => {
-        this.props.history.goBack()
+        this.props.history.goBack();
       })
+  }
+
+  goBack = () => {
+    this.props.history.goBack();
   }
 
   render() {
@@ -31,7 +35,10 @@ class NewTask extends Component {
           <label>Description:</label><br />
           <textarea type="text" placeholder="Task Description?" value={this.state.description} onChange={(event) => this.setState({ description: event.target.value })} /><br /><br />
         </center>
-        <center><button className="btn btn-success" onClick={this.dataHandler}>Add Task</button></center>
+        <center>
+          <button className="btn btn-danger mod-button" onClick={this.goBack}>Cancel</button>
+          <button className="btn btn-success mod-button" onClick={this.dataHandler}>Add Task</button>
+        </center>
       </div>
     )
   }

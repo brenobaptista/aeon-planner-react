@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import Lists from './components/Lists/Lists';
+import Lists from '../../components/Lists/Lists';
 import axios from 'axios';
 
 class ListsPage extends Component {
@@ -45,18 +45,20 @@ class ListsPage extends Component {
 
     return (
       <>
-        {this.state.isLoaded ? 
-          <div>
-            <Lists 
-              lists={this.state.lists}
-              tasks={this.state.tasks} 
-              boardId={boardId} 
-              boardName={boardName}
-              deleteL={this.deleteListHandler}
-              deleteT={this.deleteTaskHandler} />
-          </div>
-          : <center className="margin-t-b"><h2>Loading lists...</h2></center>
-        }
+        <center>
+          {this.state.isLoaded ? 
+            <div>
+              <Lists 
+                lists={this.state.lists}
+                tasks={this.state.tasks} 
+                boardId={boardId} 
+                boardName={boardName}
+                deleteL={this.deleteListHandler}
+                deleteT={this.deleteTaskHandler} />
+            </div>
+            : <div className="margin-t-b"><h2>Loading lists...</h2></div>
+          }
+        </center>
       </>
     )
   }

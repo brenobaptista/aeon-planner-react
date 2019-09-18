@@ -1,9 +1,9 @@
 import React, { Component } from 'react'
-import Boards from './components/Boards/Boards';
+import Boards from '../../components/Boards/Boards';
 import axios from 'axios';
 import { Link } from 'react-router-dom';
 
-import './App.css'
+import '../../App.css'
 
 class Home extends Component {
   state = {
@@ -37,14 +37,15 @@ class Home extends Component {
   render() {
     return (
       <>
-        <center className="margin-t-b"><h1>Boards</h1></center>
-        {this.state.isLoaded ? 
-        <div>
-          <Link to="/new-board"><center><button className="btn btn-success button-margin">+ New Board</button></center></Link>
-          <br />
-          <Boards boards={this.state.boards} deleted={this.deleteHandler} />
-        </div>
-        : <center><h2>Loading boards...</h2></center>}
+        <center className="margin-t-b"><h1>Boards</h1>
+          {this.state.isLoaded ? 
+          <div>
+            <Link to="/new-board"><button className="btn btn-success button-margin">+ New Board</button></Link>
+            <br />
+            <Boards boards={this.state.boards} deleted={this.deleteHandler} />
+          </div>
+          : <h2>Loading boards...</h2>}
+        </center>
       </>
     )
   }

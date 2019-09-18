@@ -12,8 +12,12 @@ class NewBoard extends Component {
     };
     axios.post('https://trello-api-second.herokuapp.com/boards/', data)
       .then(() => {
-        this.props.history.replace('/');
+        this.props.history.goBack();
       })
+  }
+
+  goBack = () => {
+    this.props.history.goBack();
   }
 
   render() {
@@ -24,7 +28,10 @@ class NewBoard extends Component {
           <label>Name:</label><br />
           <input type="text" placeholder="Board Name" value={this.state.name} onChange={(event) => this.setState({ name: event.target.value })} /><br /><br />
         </center>
-        <center><button className="btn btn-success" onClick={this.dataHandler}>Add Board</button></center>
+        <center>
+          <button className="btn btn-danger mod-button" onClick={this.goBack}>Cancel</button>
+          <button className="btn btn-success mod-button" onClick={this.dataHandler}>Add Board</button>
+        </center>
       </div>
     );
   }
