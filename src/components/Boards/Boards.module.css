@@ -1,0 +1,14 @@
+.modBtn {
+  width: 4em;
+  height: 3.5em;
+  margin-bottom: 0.5em;
+  margin-right: 0.5em;
+  color: white !important;
+}
+
+.boardBtn {
+  width: 45%;
+  height: 3.5em;
+  margin-bottom: 0.5em;
+  margin-right: 0.5em;
+}

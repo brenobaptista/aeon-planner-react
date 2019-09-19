@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { NavLink } from 'react-router-dom';
+import classes from './Navbar.module.css';
 
 class Navbar extends Component {
   state = {
@@ -22,7 +23,7 @@ class Navbar extends Component {
     const classTwo = collapsed ? 'navbar-toggler collapsed' : 'navbar-toggler'
 
     return (
-      <nav className="navbar navbar-expand-lg navbar-dark navbar-color">
+      <nav className={`navbar navbar-expand-lg navbar-dark ${classes.greenNavbar}`}>
         <NavLink to="/board" className="navbar-brand">Aeon Planner</NavLink>
 
         <button onClick={this.menuHandler} className={`${classTwo}`} type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">

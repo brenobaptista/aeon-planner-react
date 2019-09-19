@@ -1,0 +1,33 @@
+.listBtn {
+  height: 33px;
+  padding-top: 5px !important;
+  margin-top: 0.25em;
+  margin-left: 0.25em;
+  margin-right: 0.25em;
+  color: white !important;
+}
+
+.greenText {
+  color: #00AB84;
+}
+
+.card50 {
+  width: 50%;
+}
+
+.card80 {
+  width: 80%;
+  margin: auto;
+}
+
+.marginBottom {
+  margin-bottom: 1.5em;
+}
+
+.marginBottomCard {
+  margin-bottom: 3rem;
+}
+
+.marginTop {
+  margin-top: 1.5rem;
+}

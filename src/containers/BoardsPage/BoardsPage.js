@@ -2,6 +2,7 @@ import React, { Component } from 'react'
 import Boards from '../../components/Boards/Boards';
 import axios from 'axios';
 import { Link } from 'react-router-dom';
+import classes from './BoardsPage.module.css';
 
 import '../../App.css'
 
@@ -37,11 +38,11 @@ class Home extends Component {
   render() {
     return (
       <>
-        <center className="margin-t-b"><h1>Boards</h1>
+        <center className="margin-t-b">
+          <h1 className={classes.marginBottom}>All Boards</h1>
           {this.state.isLoaded ? 
           <div>
-            <Link to="/new-board"><button className="btn btn-success margin-b">+ New Board</button></Link>
-            <br />
+            <Link to="/new-board"><button className={`btn btn-success ${classes.marginBottom}`}>+ New Board</button></Link>
             <Boards boards={this.state.boards} deleted={this.deleteHandler} />
           </div>
           : <h2>Loading boards...</h2>}

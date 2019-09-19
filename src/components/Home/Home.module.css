@@ -1,0 +1,32 @@
+.greenBtn {
+  background-color: #00AB84 !important;
+  color: white !important;
+}
+.greenBtn:hover {
+  background-color: #00785C !important;
+}
+
+.text180 {
+  font-size: 180%;
+}
+
+.greenLink {
+  color: #00AB84;
+}
+.greenLink:hover {
+  color: #00785C;
+}
+
+.marginHome {
+  margin-top: 4rem;
+  margin-bottom: 3rem;
+}
+
+.marginBtn {
+  margin-top: 2rem;
+  margin-bottom: 5rem;
+}
+
+.marginBetween {
+  margin-top: 1rem;
+}
