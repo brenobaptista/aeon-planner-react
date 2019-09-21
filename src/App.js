@@ -4,6 +4,7 @@ import { BrowserRouter as Router, Route, Switch, Redirect } from "react-router-d
 import Navbar from './components/Navbar/Navbar'
 import Home from './components/Home/Home'
 import BoardsPage from './containers/BoardsPage/BoardsPage'
+import Login from './containers/Login/Login'
 import ListsPage from './containers/ListsPage/ListsPage'
 import NewBoard from './containers/NewBoard/NewBoard'
 import EditBoard from './containers/EditBoard/EditBoard'
@@ -26,6 +27,7 @@ class App extends Component {
           <Switch>
             <Route exact path='/home' component={Home} />
             <Route exact path='/board' component={BoardsPage} />
+            <Route exact path='/login' component={Login} />
             <Route path='/new-board' component={NewBoard} />
             <Route path='/edit-board/:boardId/:boardName' component={EditBoard} />
             <Route path='/board/:boardId/edit-list/:listId/:listName' component={EditList} />

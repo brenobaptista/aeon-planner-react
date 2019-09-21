@@ -16,7 +16,7 @@ const Boards = ({ boards, deleted }) => {
         <Link to={`/edit-board/${board.id}/${board.name}`}>
           <button className={`btn btn-warning ${classes.modBtn}`}><h6><FontAwesomeIcon icon="pencil-alt" /></h6></button>
         </Link>
-        <button className={`btn btn-danger ${classes.modBtn}`} onClick={() => deleted(board.id)}><h6><FontAwesomeIcon icon="window-close" /></h6></button>
+        <button className={`btn btn-danger ${classes.modBtn}`} onClick={() => {if (window.confirm('Are you sure you wish to delete this board?')) deleted(board.id)}}><h6><FontAwesomeIcon icon="window-close" /></h6></button>
       </center>
     ))}
   </div>
