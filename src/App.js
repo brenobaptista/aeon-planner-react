@@ -5,6 +5,8 @@ import './App.css'
 
 import Navbar from './components/Navbar/Navbar'
 import Home from './components/Home/Home'
+import BoardsPage from './containers/BoardsPage/BoardsPage'
+import Login from './containers/Login/Login'
 import ListsPage from './containers/ListsPage/ListsPage'
 import NewBoard from './containers/NewBoard/NewBoard'
 import EditBoard from './containers/EditBoard/EditBoard'
@@ -12,8 +14,6 @@ import NewList from './containers/NewList/NewList'
 import NewTask from './containers/NewTask/NewTask'
 import EditList from './containers/EditList/EditList'
 import EditTask from './containers/EditTask/EditTask'
-const Login = React.lazy(() => import('./containers/Login/Login'));
-const BoardsPage = React.lazy(() => import('./containers/BoardsPage/BoardsPage'));
 const HTTP404 = React.lazy(() => import('./components/HTTP404/HTTP404'));
 
 class App extends Component {
@@ -26,16 +26,8 @@ class App extends Component {
           <Switch>
             <Redirect exact from="/" to="/home" />
             <Route exact path='/home' component={Home} />
-            <Route exact path='/board' render={() => (
-              <Suspense fallback={<></>}>
-                <BoardsPage />
-              </Suspense>
-            )} />
-            <Route exact path='/login' render={() => (
-              <Suspense fallback={<></>}>
-                <Login />
-              </Suspense>
-            )} />
+            <Route exact path='/board' component={BoardsPage} />
+            <Route exact path='/login' component={Login} />
             <Route path='/new-board' component={NewBoard} />
             <Route path='/edit-board/:boardId/:boardName' component={EditBoard} />
             <Route path='/board/:boardId/edit-list/:listId/:listName' component={EditList} />

@@ -1,6 +1,7 @@
 import React, { Component } from 'react'
 import Lists from '../../components/Lists/Lists';
 import axios from 'axios';
+import Spinner from '../../components/Spinner/Spinner'
 
 class ListsPage extends Component {
   state = {
@@ -56,7 +57,7 @@ class ListsPage extends Component {
                 deleteL={this.deleteListHandler}
                 deleteT={this.deleteTaskHandler} />
             </div>
-            : <div className="margin-t-b"><h2>Loading lists...</h2></div>
+            : <Spinner />
           }
         </center>
       </>
