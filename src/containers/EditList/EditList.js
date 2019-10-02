@@ -4,17 +4,22 @@ import axios from 'axios';
 class EditList extends Component {
     state = {
         name: '',
+        boardId: ''
     }
 
     componentDidMount() {
-        this.setState({ name: this.props.match.params.listName })
+        this.setState({ 
+          name: this.props.match.params.listName,
+          boardId: this.props.match.params.boardId
+         })
     }
 
     dataHandler = () => {
         const data = {
-            name: this.state.name
+            name: this.state.name,
+            boardId: this.state.boardId
         };
-        axios.put(`https://trello-api-second.herokuapp.com/lists/${this.props.match.params.listId}`, data)
+        axios.put(`https://trello-api-nodejs.herokuapp.com/lists/${this.props.match.params.listId}`, data)
             .then(() => {
                 this.props.history.goBack();
             })

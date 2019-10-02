@@ -15,13 +15,13 @@ class ListsPage extends Component {
   }
 
   getHandler = () => {
-    axios.get(`https://trello-api-second.herokuapp.com/lists/`)
+    axios.get(`https://trello-api-nodejs.herokuapp.com/lists/`)
       .then(response => {
         this.setState({
           lists: response.data
         })
       })
-      .then(() => axios.get(`https://trello-api-second.herokuapp.com/tasks/`))
+      .then(() => axios.get(`https://trello-api-nodejs.herokuapp.com/tasks/`))
       .then(response => {
         this.setState({
           tasks: response.data,
@@ -31,12 +31,12 @@ class ListsPage extends Component {
   }
 
   deleteListHandler = (list_id) => {
-    axios.delete(`https://trello-api-second.herokuapp.com/lists/${list_id}`)
+    axios.delete(`https://trello-api-nodejs.herokuapp.com/lists/${list_id}`)
       .then( () => this.getHandler() )
   }
 
   deleteTaskHandler = (task_id) => {
-    axios.delete(`https://trello-api-second.herokuapp.com/tasks/${task_id}`)
+    axios.delete(`https://trello-api-nodejs.herokuapp.com/tasks/${task_id}`)
       .then( () => this.getHandler() )
   }
 

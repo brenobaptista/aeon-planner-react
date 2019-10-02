@@ -10,9 +10,9 @@ class NewList extends Component {
   dataHandler = () => {
     const data = {
       name: this.state.name,
-      board_id: this.props.match.params.boardId
+      boardId: this.props.match.params.boardId
     };
-    axios.post(`https://trello-api-second.herokuapp.com/lists/`, data)
+    axios.post(`https://trello-api-nodejs.herokuapp.com/lists/`, data)
     .then(() => {
       this.props.history.goBack()
       })

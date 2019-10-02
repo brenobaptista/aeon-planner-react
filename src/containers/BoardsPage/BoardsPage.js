@@ -18,7 +18,7 @@ class Home extends Component {
   }
 
   getHandler = () => {
-    axios.get('https://trello-api-second.herokuapp.com/boards/')
+    axios.get('https://trello-api-nodejs.herokuapp.com/boards/')
     .then(response => {
       this.setState({ 
         boards: response.data,
@@ -31,7 +31,7 @@ class Home extends Component {
   }
 
   deleteHandler = (boardId) => {
-    axios.delete(`https://trello-api-second.herokuapp.com/boards/${boardId}`)
+    axios.delete(`https://trello-api-nodejs.herokuapp.com/boards/${boardId}`)
       .then( () => this.getHandler() )
   }
   /* Agora falta renderizar novamente após o delete */

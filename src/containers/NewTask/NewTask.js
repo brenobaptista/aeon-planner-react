@@ -4,16 +4,16 @@ import axios from 'axios';
 class NewTask extends Component {
   state = {
     name: '',
-    description: ''
+    description: '',
   }
 
   dataHandler = () => {
     const data = {
       name: this.state.name,
       description: this.state.description,
-      list_id: this.props.match.params.listId
+      listId: this.props.match.params.listId
     };
-    axios.post(`https://trello-api-second.herokuapp.com/tasks/`, data)
+    axios.post(`https://trello-api-nodejs.herokuapp.com/tasks/`, data)
       .then(() => {
         this.props.history.goBack();
       })

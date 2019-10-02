@@ -4,22 +4,29 @@ import axios from 'axios';
 class EditTask extends Component {
     state = {
         name: '',
-        description: ''
+        description: '',
+        listId: ''
     }
 
     componentDidMount() {
         this.setState({ 
           name: this.props.match.params.taskName,
-          description: this.props.match.params.taskDescription
+          listId: this.props.match.params.listId
         })
+        if (this.props.match.params.taskDescription !== "australopithecus") {
+          this.setState({
+            description: this.props.match.params.taskDescription,
+          })
+        }
     }
 
     dataHandler = () => {
         const data = {
             name: this.state.name,
-            description: this.state.description
+            description: this.state.description,
+            listId: this.state.listId
         };
-        axios.put(`https://trello-api-second.herokuapp.com/tasks/${this.props.match.params.taskId}`, data)
+        axios.put(`https://trello-api-nodejs.herokuapp.com/tasks/${this.props.match.params.taskId}`, data)
             .then(() => {
                 this.props.history.goBack();
             })

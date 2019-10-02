@@ -14,7 +14,7 @@ class EditBoard extends Component {
         const data = {
             name: this.state.name
         };
-        axios.put(`https://trello-api-second.herokuapp.com/boards/${this.props.match.params.boardId}`, data)
+        axios.put(`https://trello-api-nodejs.herokuapp.com/boards/${this.props.match.params.boardId}`, data)
             .then(() => {
               this.props.history.goBack();
             })
