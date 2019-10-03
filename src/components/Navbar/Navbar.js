@@ -39,7 +39,7 @@ class Navbar extends Component {
               <NavLink to="/board" className="nav-link" onClick={this.menuCloser}>Boards</NavLink>
             </li>
             <li className="nav-item">
-              <NavLink to="/login" className="nav-link" onClick={this.menuCloser}>Login</NavLink>
+              <NavLink to="/signin" className="nav-link" onClick={this.menuCloser}>Sign In/Sign Up</NavLink>
             </li>
           </ul>
         </div>}

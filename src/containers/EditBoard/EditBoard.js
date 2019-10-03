@@ -1,9 +1,12 @@
 import React, { Component } from 'react';
 import axios from 'axios';
 
+import FormError from '../../components/FormError/FormError';
+
 class EditBoard extends Component {
     state = {
-        name: ''
+        name: '',
+        error: false
     }
 
     componentDidMount() {
@@ -15,9 +18,12 @@ class EditBoard extends Component {
             name: this.state.name
         };
         axios.put(`https://trello-api-nodejs.herokuapp.com/boards/${this.props.match.params.boardId}`, data)
-            .then(() => {
-              this.props.history.goBack();
-            })
+          .then(() => {
+            this.props.history.goBack();
+          })
+          .catch(() => {
+            this.setState({ error: true })
+          })
     }
 
     goBack = () => {
@@ -36,6 +42,7 @@ class EditBoard extends Component {
                   <button className="btn btn-danger margin-teeth" onClick={this.goBack}>Cancel</button>
                   <button className="btn btn-success margin-teeth" onClick={this.dataHandler}>Finish editing</button>
                 </center>
+                {this.state.error ? <FormError /> : null}
             </div>
         )
     }

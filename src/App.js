@@ -6,7 +6,8 @@ import './App.css'
 import Navbar from './components/Navbar/Navbar'
 import Home from './components/Home/Home'
 import BoardsPage from './containers/BoardsPage/BoardsPage'
-import Login from './containers/Login/Login'
+import SignIn from './containers/SignIn/SignIn'
+import SignUp from './containers/SignUp/SignUp'
 import ListsPage from './containers/ListsPage/ListsPage'
 import NewBoard from './containers/NewBoard/NewBoard'
 import EditBoard from './containers/EditBoard/EditBoard'
@@ -27,7 +28,8 @@ class App extends Component {
             <Redirect exact from="/" to="/home" />
             <Route exact path='/home' component={Home} />
             <Route exact path='/board' component={BoardsPage} />
-            <Route exact path='/login' component={Login} />
+            <Route exact path='/signin' component={SignIn} />
+            <Route exact path='/signup' component={SignUp} />
             <Route path='/new-board' component={NewBoard} />
             <Route path='/edit-board/:boardId/:boardName' component={EditBoard} />
             <Route path='/board/:boardId/edit-list/:listId/:listName' component={EditList} />

@@ -1,11 +1,13 @@
 import React, { Component } from 'react';
 import axios from 'axios';
 
+import FormError from '../../components/FormError/FormError';
+
 class NewList extends Component {
   state = {
     name: '',
+    error: false
   }
-
   
   dataHandler = () => {
     const data = {
@@ -16,7 +18,9 @@ class NewList extends Component {
     .then(() => {
       this.props.history.goBack()
       })
-      .catch((error) => console.log(error))
+      .catch(() => {
+        this.setState({ error: true })
+      })
   }
 
   goBack = () => {
@@ -35,6 +39,7 @@ class NewList extends Component {
           <button className="btn btn-danger margin-teeth" onClick={this.goBack}>Cancel</button>
           <button className="btn btn-success margin-teeth" onClick={this.dataHandler}>Add List</button>
         </center>
+        {this.state.error ? <FormError /> : null}
       </div>
     )
   }
