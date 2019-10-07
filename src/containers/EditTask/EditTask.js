@@ -1,3 +1,4 @@
+/* eslint-disable no-unused-vars */
 import React, { Component } from 'react';
 import axios from 'axios';
 
@@ -23,23 +24,19 @@ class EditTask extends Component {
     }
   }
 
-  dataHandler = () => {
+  dataHandler = async () => {
     const data = {
       name: this.state.name,
       description: this.state.description,
       listId: this.state.listId
     };
-    axios.put(`https://trello-api-nodejs.herokuapp.com/tasks/${this.props.match.params.taskId}`, data)
-      .then(() => {
-        this.props.history.goBack();
-      })
-      .catch(() => {
-        this.setState({ error: true })
-      })
-  }
-
-  goBack = () => {
-    this.props.history.goBack();
+    try {
+      const itemUpdated = await axios.put(`https://trello-api-nodejs.herokuapp.com/tasks/${this.props.match.params.taskId}`, data);
+      this.props.history.goBack();
+    }
+    catch {
+      this.setState({ error: true })
+    }
   }
 
   render() {
@@ -55,7 +52,7 @@ class EditTask extends Component {
           <textarea type="text" value={this.state.description} onChange={(event) => this.setState({ description: event.target.value })} /><br /><br />
         </center>
         <center>
-          <button className="btn btn-danger margin-teeth" onClick={this.goBack}>Cancel</button>
+          <button className="btn btn-danger margin-teeth" onClick={this.props.history.goBack}>Cancel</button>
           <button className="btn btn-success margin-teeth" onClick={this.dataHandler}>Finish editing</button>
         </center>
         {this.state.error ? <FormError /> : null}

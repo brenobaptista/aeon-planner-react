@@ -9,10 +9,6 @@ class SignIn extends Component {
     password: ''
   }
 
-  goBack = () => {
-    this.props.history.goBack()
-  }
-
   render() {
     return (
       <>
@@ -22,7 +18,7 @@ class SignIn extends Component {
           <input type="email" placeholder="Email" value={this.state.email} onChange={(event) => this.setState({ email: event.target.value })} /><br /><br />
           <label>Password:</label><br />
           <input type="password" placeholder="Password" value={this.state.password} onChange={(event) => this.setState({ password: event.target.value })} /><br /><br />
-          <button className="btn btn-danger margin-teeth" onClick={this.goBack}>Cancel</button>
+          <button className="btn btn-danger margin-teeth" onClick={this.props.history.goBack}>Cancel</button>
 
           {/* Adicionar a função da autenticação e componentes validação */}
           <button className="btn btn-success margin-teeth">Sign In</button><br /><br />

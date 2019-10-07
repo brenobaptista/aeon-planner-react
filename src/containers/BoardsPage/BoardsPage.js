@@ -1,3 +1,4 @@
+/* eslint-disable no-unused-vars */
 import React, { Component } from 'react'
 import Boards from '../../components/Boards/Boards';
 import axios from 'axios';
@@ -17,24 +18,18 @@ class Home extends Component {
     this.getHandler();
   }
 
-  getHandler = () => {
-    axios.get('https://trello-api-nodejs.herokuapp.com/boards/')
-    .then(response => {
-      this.setState({ 
-        boards: response.data,
-        isLoaded: true 
-      })
-    })
-    .catch((error) => {
-      console.log(error)
+  getHandler = async () => {
+    const response = await axios.get('https://trello-api-nodejs.herokuapp.com/boards/');
+    this.setState({
+      boards: response.data,
+      isLoaded: true,
     })
   }
 
-  deleteHandler = (boardId) => {
-    axios.delete(`https://trello-api-nodejs.herokuapp.com/boards/${boardId}`)
-      .then( () => this.getHandler() )
+  deleteHandler = async (boardId) => {
+    const itemDeleted = await axios.delete(`https://trello-api-nodejs.herokuapp.com/boards/${boardId}`);
+    this.getHandler();
   }
-  /* Agora falta renderizar novamente após o delete */
 
   render() {
     return (

@@ -1,3 +1,4 @@
+/* eslint-disable no-unused-vars */
 import React, { Component } from 'react'
 import Lists from '../../components/Lists/Lists';
 import axios from 'axios';
@@ -14,30 +15,24 @@ class ListsPage extends Component {
     this.getHandler();
   }
 
-  getHandler = () => {
-    axios.get(`https://trello-api-nodejs.herokuapp.com/lists/`)
-      .then(response => {
-        this.setState({
-          lists: response.data
-        })
-      })
-      .then(() => axios.get(`https://trello-api-nodejs.herokuapp.com/tasks/`))
-      .then(response => {
-        this.setState({
-          tasks: response.data,
-          isLoaded: true
-        })
-      })
+  getHandler = async () => {
+    const responseLists = await axios.get(`https://trello-api-nodejs.herokuapp.com/lists/`);
+    this.setState({ lists: responseLists.data });
+    const responseTasks = await axios.get(`https://trello-api-nodejs.herokuapp.com/tasks/`);
+    this.setState({
+      tasks: responseTasks.data,
+      isLoaded: true
+    })
   }
 
-  deleteListHandler = (list_id) => {
-    axios.delete(`https://trello-api-nodejs.herokuapp.com/lists/${list_id}`)
-      .then( () => this.getHandler() )
+  deleteListHandler = async (list_id) => {
+    const itemDeleted = await axios.delete(`https://trello-api-nodejs.herokuapp.com/lists/${list_id}`);
+    this.getHandler();
   }
 
-  deleteTaskHandler = (task_id) => {
-    axios.delete(`https://trello-api-nodejs.herokuapp.com/tasks/${task_id}`)
-      .then( () => this.getHandler() )
+  deleteTaskHandler = async (task_id) => {
+    const itemDeleted = await axios.delete(`https://trello-api-nodejs.herokuapp.com/tasks/${task_id}`);
+    this.getHandler();
   }
 
   render() {

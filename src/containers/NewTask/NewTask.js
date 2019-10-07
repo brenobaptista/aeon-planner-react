@@ -1,3 +1,4 @@
+/* eslint-disable no-unused-vars */
 import React, { Component } from 'react';
 import axios from 'axios';
 
@@ -10,23 +11,19 @@ class NewTask extends Component {
     error: false
   }
 
-  dataHandler = () => {
+  dataHandler = async () => {
     const data = {
       name: this.state.name,
       description: this.state.description,
       listId: this.props.match.params.listId
     };
-    axios.post(`https://trello-api-nodejs.herokuapp.com/tasks/`, data)
-      .then(() => {
-        this.props.history.goBack();
-      })
-      .catch(() => {
-        this.setState({ error: true })
-      })
-  }
-
-  goBack = () => {
-    this.props.history.goBack();
+    try {
+      const newItem = await axios.post(`https://trello-api-nodejs.herokuapp.com/tasks/`, data);
+      this.props.history.goBack();
+    }
+    catch {
+      this.setState({ error: true })
+    }
   }
 
   render() {
@@ -42,7 +39,7 @@ class NewTask extends Component {
           <textarea type="text" placeholder="Task Description?" value={this.state.description} onChange={(event) => this.setState({ description: event.target.value })} /><br /><br />
         </center>
         <center>
-          <button className="btn btn-danger margin-teeth" onClick={this.goBack}>Cancel</button>
+          <button className="btn btn-danger margin-teeth" onClick={this.props.history.goBack}>Cancel</button>
           <button className="btn btn-success margin-teeth" onClick={this.dataHandler}>Add Task</button>
         </center>
         {this.state.error ? <FormError /> : null}
