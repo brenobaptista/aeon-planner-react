@@ -1,4 +1,3 @@
-/* eslint-disable no-unused-vars */
 import React, { Component } from 'react';
 import axios from 'axios';
 
@@ -18,7 +17,7 @@ class NewTask extends Component {
       listId: this.props.match.params.listId
     };
     try {
-      const newItem = await axios.post(`https://trello-api-nodejs.herokuapp.com/tasks/`, data);
+      await axios.post(`https://trello-api-nodejs.herokuapp.com/tasks/`, data);
       this.props.history.goBack();
     }
     catch {

@@ -1,4 +1,3 @@
-/* eslint-disable no-unused-vars */
 import React, { Component } from 'react'
 import Boards from '../../components/Boards/Boards';
 import axios from 'axios';
@@ -23,7 +22,7 @@ class Home extends Component {
   }
 
   deleteHandler = async (boardId) => {
-    const boardDeleted = await axios.delete(`https://trello-api-nodejs.herokuapp.com/boards/${boardId}`);
+    await axios.delete(`https://trello-api-nodejs.herokuapp.com/boards/${boardId}`);
     this.setState(prevState => {
       const updatedBoards = prevState.boards.filter(board => board._id !== boardId);
       return { boards: updatedBoards }

@@ -1,4 +1,3 @@
-/* eslint-disable no-unused-vars */
 import React, { Component } from 'react'
 import Lists from '../../components/Lists/Lists';
 import axios from 'axios';
@@ -21,19 +20,19 @@ class ListsPage extends Component {
     })
   }
 
-  deleteListHandler = async (list_id) => {
-    const itemDeleted = await axios.delete(`https://trello-api-nodejs.herokuapp.com/lists/${list_id}`);
+  deleteListHandler = async (listId) => {
+    await axios.delete(`https://trello-api-nodejs.herokuapp.com/lists/${listId}`);
     this.setState(prevState => {
-      const updatedItems = prevState.lists.filter(item => item._id !== list_id);
-      return { lists: updatedItems }
+      const updatedLists = prevState.lists.filter(list => list._id !== listId);
+      return { lists: updatedLists }
     })
   }
 
-  deleteTaskHandler = async (task_id) => {
-    const itemDeleted = await axios.delete(`https://trello-api-nodejs.herokuapp.com/tasks/${task_id}`);
+  deleteTaskHandler = async (taskId) => {
+    await axios.delete(`https://trello-api-nodejs.herokuapp.com/tasks/${taskId}`);
     this.setState(prevState => {
-      const updatedItems = prevState.tasks.filter(item => item._id !== task_id);
-      return { tasks: updatedItems }
+      const updatedTasks = prevState.tasks.filter(task => task._id !== taskId);
+      return { tasks: updatedTasks }
     })
   }
 

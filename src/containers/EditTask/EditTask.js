@@ -1,4 +1,3 @@
-/* eslint-disable no-unused-vars */
 import React, { Component } from 'react';
 import axios from 'axios';
 
@@ -31,7 +30,7 @@ class EditTask extends Component {
       listId: this.state.listId
     };
     try {
-      const itemUpdated = await axios.put(`https://trello-api-nodejs.herokuapp.com/tasks/${this.props.match.params.taskId}`, data);
+      await axios.put(`https://trello-api-nodejs.herokuapp.com/tasks/${this.props.match.params.taskId}`, data);
       this.props.history.goBack();
     }
     catch {

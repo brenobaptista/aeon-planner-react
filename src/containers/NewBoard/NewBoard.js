@@ -1,4 +1,3 @@
-/* eslint-disable no-unused-vars */
 import React, { Component } from 'react';
 import axios from 'axios';
 
@@ -13,7 +12,7 @@ class NewBoard extends Component {
   dataHandler = async () => {
     const data = { name: this.state.name };
     try {
-      const newItem = await axios.post('https://trello-api-nodejs.herokuapp.com/boards/', data);
+      await axios.post('https://trello-api-nodejs.herokuapp.com/boards/', data);
       this.props.history.goBack();
     }
     catch {
