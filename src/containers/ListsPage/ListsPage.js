@@ -11,11 +11,7 @@ class ListsPage extends Component {
     isLoaded: false
   }
 
-  componentDidMount() {
-    this.getHandler();
-  }
-
-  getHandler = async () => {
+  async componentDidMount() {
     const responseLists = await axios.get(`https://trello-api-nodejs.herokuapp.com/lists/`);
     this.setState({ lists: responseLists.data });
     const responseTasks = await axios.get(`https://trello-api-nodejs.herokuapp.com/tasks/`);
@@ -27,12 +23,18 @@ class ListsPage extends Component {
 
   deleteListHandler = async (list_id) => {
     const itemDeleted = await axios.delete(`https://trello-api-nodejs.herokuapp.com/lists/${list_id}`);
-    this.getHandler();
+    this.setState(prevState => {
+      const updatedItems = prevState.lists.filter(item => item._id !== list_id);
+      return { lists: updatedItems }
+    })
   }
 
   deleteTaskHandler = async (task_id) => {
     const itemDeleted = await axios.delete(`https://trello-api-nodejs.herokuapp.com/tasks/${task_id}`);
-    this.getHandler();
+    this.setState(prevState => {
+      const updatedItems = prevState.tasks.filter(item => item._id !== task_id);
+      return { tasks: updatedItems }
+    })
   }
 
   render() {

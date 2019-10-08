@@ -14,11 +14,7 @@ class Home extends Component {
     isLoaded: false
   }
 
-  componentDidMount() {
-    this.getHandler();
-  }
-
-  getHandler = async () => {
+  async componentDidMount() {
     const response = await axios.get('https://trello-api-nodejs.herokuapp.com/boards/');
     this.setState({
       boards: response.data,
@@ -27,8 +23,11 @@ class Home extends Component {
   }
 
   deleteHandler = async (boardId) => {
-    const itemDeleted = await axios.delete(`https://trello-api-nodejs.herokuapp.com/boards/${boardId}`);
-    this.getHandler();
+    const boardDeleted = await axios.delete(`https://trello-api-nodejs.herokuapp.com/boards/${boardId}`);
+    this.setState(prevState => {
+      const updatedBoards = prevState.boards.filter(board => board._id !== boardId);
+      return { boards: updatedBoards }
+    })
   }
 
   render() {
