@@ -17,8 +17,7 @@ class NewList extends Component {
     try {
       await axios.post(`https://trello-api-nodejs.herokuapp.com/lists/`, data);
       this.props.history.goBack()
-    }
-    catch {
+    } catch {
       this.setState({ error: true })
     }
   }

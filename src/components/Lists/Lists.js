@@ -41,14 +41,9 @@ const Lists = ({ lists, tasks, boardId, boardName, deleteL, deleteT }) => {
                                   <center><p className="card-text">{task.description}</p></center>
                                   <br />
                                   <center>
-                                    {task.description ? 
-                                      <Link to={`/board/${boardId}/list/${list._id}/edit-task/${task.name}/${task._id}/${task.description}`}>
-                                        <button className={`btn btn-warning ${classes.listBtn}`}><FontAwesomeIcon icon="pencil-alt" /></button>
-                                      </Link> 
-                                      :
-                                       <Link to={`/board/${boardId}/list/${list._id}/edit-task/${task.name}/${task._id}/australopithecus`}>
-                                        <button className={`btn btn-warning ${classes.listBtn}`}><FontAwesomeIcon icon="pencil-alt" /></button>
-                                      </Link>}
+                                    <Link to={`/board/${boardId}/list/${list._id}/edit-task/${task.name}/${task._id}/${task.description ? task.description : null}`}>
+                                      <button className={`btn btn-warning ${classes.listBtn}`}><FontAwesomeIcon icon="pencil-alt" /></button>
+                                    </Link> 
                                     <button className={`btn btn-danger ${classes.listBtn}`} onClick={() => {if (window.confirm('Are you sure you wish to delete this task?')) deleteT(task._id)}}><FontAwesomeIcon icon="window-close" /></button>
                                   </center>
                                 </div>

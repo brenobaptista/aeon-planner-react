@@ -16,7 +16,7 @@ class EditTask extends Component {
       name: this.props.match.params.taskName,
       listId: this.props.match.params.listId
     })
-    if (this.props.match.params.taskDescription !== "australopithecus") {
+    if (this.props.match.params.taskDescription !== "null") {
       this.setState({
         description: this.props.match.params.taskDescription,
       })
@@ -32,8 +32,7 @@ class EditTask extends Component {
     try {
       await axios.put(`https://trello-api-nodejs.herokuapp.com/tasks/${this.props.match.params.taskId}`, data);
       this.props.history.goBack();
-    }
-    catch {
+    } catch {
       this.setState({ error: true })
     }
   }

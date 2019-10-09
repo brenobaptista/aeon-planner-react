@@ -14,8 +14,7 @@ class NewBoard extends Component {
     try {
       await axios.post('https://trello-api-nodejs.herokuapp.com/boards/', data);
       this.props.history.goBack();
-    }
-    catch {
+    } catch {
       this.setState({ error: true })
     }
   }

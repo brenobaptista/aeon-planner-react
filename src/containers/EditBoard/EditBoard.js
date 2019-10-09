@@ -18,8 +18,7 @@ class EditBoard extends Component {
       try {
         await axios.put(`https://trello-api-nodejs.herokuapp.com/boards/${this.props.match.params.boardId}`, data);
         this.props.history.goBack();
-      }
-      catch {
+      } catch {
         this.setState({ error: true })
       }
     }

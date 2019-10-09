@@ -19,8 +19,7 @@ class NewTask extends Component {
     try {
       await axios.post(`https://trello-api-nodejs.herokuapp.com/tasks/`, data);
       this.props.history.goBack();
-    }
-    catch {
+    } catch {
       this.setState({ error: true })
     }
   }
