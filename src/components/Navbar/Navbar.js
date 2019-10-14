@@ -1,53 +1,20 @@
-import React, { Component } from 'react';
-import { NavLink } from 'react-router-dom';
+import React from 'react';
+
 import classes from './Navbar.module.css';
+import Logo from '../Logo/Logo';
+import NavigationItems from '../NavigationItems/NavigationItems';
+import DrawerToggle from '../SideDrawer/DrawerToggle/DrawerToggle';
 
-class Navbar extends Component {
-  state = {
-    isCollapsed: true
-  }
+const navbar = (props) => (
+  <div className={classes.navbar}>
+    <DrawerToggle clicked={props.drawerToggleClicked} />
+    <div className={classes.logo}>
+      <Logo />
+    </div>
+    <nav className={classes.desktopOnly}>
+      <NavigationItems />
+    </nav>
+  </div>
+);
 
-  menuHandler = () => {
-    this.setState((previousState) => ({
-      isCollapsed: !previousState.isCollapsed
-    }))
-  }
-
-  menuCloser = () => {
-    this.setState({ isCollapsed: true })
-  }
-  
-  render() {
-    const collapsed = this.state.isCollapsed;
-    const classOne = collapsed ? 'collapse navbar-collapse' : 'collapse navbar-collapse show';
-    const classTwo = collapsed ? 'navbar-toggler collapsed' : 'navbar-toggler'
-
-    return (
-      <nav className={`navbar navbar-expand-lg navbar-dark ${classes.greenNavbar}`}>
-        <NavLink to="/board" className="navbar-brand">Aeon Planner</NavLink>
-
-        <button onClick={this.menuHandler} className={`${classTwo}`} type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-          <span className="navbar-toggler-icon"></span>
-        </button>
-
-        {<div className={`${classOne}`} id="navbarSupportedContent">
-          <ul className="navbar-nav ml-auto">
-            <li className="nav-item">
-              <NavLink to="/home" className="nav-link" onClick={this.menuCloser}>Home</NavLink>
-            </li>
-            <li className="nav-item">
-              <NavLink to="/board" className="nav-link" onClick={this.menuCloser}>Boards</NavLink>
-            </li>
-            <li className="nav-item">
-              <NavLink to="/signin" className="nav-link" onClick={this.menuCloser}>Sign In/Sign Up</NavLink>
-            </li>
-          </ul>
-        </div>}
-
-      </nav>
-    )
-
-  }
-}
-
-export default Navbar;
+export default navbar;
