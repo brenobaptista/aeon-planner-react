@@ -4,10 +4,10 @@ import classes from './FormError.module.css'
 const FormError = () => {
   return (
     <center>
-      <div class={`shadow-sm card ${classes.card50}`}>
-        <div class="card-body">
-          <h5 class="card-title">Error!</h5>
-          <p class="card-text">Complete the form</p>
+      <div className={`shadow-sm card ${classes.card50}`}>
+        <div className="card-body">
+          <h5 className="card-title">Error!</h5>
+          <p className="card-text">Complete the form</p>
         </div>
       </div>
     </center>

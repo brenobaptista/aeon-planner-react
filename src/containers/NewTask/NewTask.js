@@ -24,17 +24,20 @@ class NewTask extends Component {
     }
   }
 
+  nameHandler = (event) => this.setState({ name: event.target.value });
+  descriptionHandler = (event) => this.setState({ description: event.target.value });
+
   render() {
     return (
       <div>
         <center><h1 className="margin-t-b">Add a new task</h1></center>
         <center>
           <label>Name:</label><br />
-          <input type="text" placeholder="Task Name" value={this.state.name} onChange={(event) => this.setState({ name: event.target.value })} /><br /><br />
+          <input type="text" placeholder="Task Name" value={this.state.name} onChange={this.nameHandler} /><br /><br />
         </center>
         <center>
           <label>Description:</label><br />
-          <textarea type="text" placeholder="Task Description?" value={this.state.description} onChange={(event) => this.setState({ description: event.target.value })} /><br /><br />
+          <textarea type="text" placeholder="Task Description?" value={this.state.description} onChange={this.descriptionHandler} /><br /><br />
         </center>
         <center>
           <button className="btn btn-danger margin-teeth" onClick={this.props.history.goBack}>Cancel</button>

@@ -2,8 +2,10 @@ import React from 'react';
 import { Link } from "react-router-dom";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import classes from './Boards.module.css';
+import Modal from '../Modal/Modal';
+import EditBoard from '../../containers/EditBoard/EditBoard';
 
-const Boards = ({ boards, deleted }) => {
+const Boards = ({ boards, deleted, modalButton, editState, clickBackdrop, editBoardId, editBoardName, cancel, finish }) => {
   return(
     <div>
     {boards.map((board) => (
@@ -13,9 +15,10 @@ const Boards = ({ boards, deleted }) => {
             <center><h6>{board.name}</h6></center>
           </button>
         </Link>
-        <Link to={`/edit-board/${board._id}/${board.name}`}>
-          <button className={`btn btn-warning ${classes.modBtn}`}><h6><FontAwesomeIcon icon="pencil-alt" /></h6></button>
-        </Link>
+        <button className={`btn btn-warning ${classes.modBtn}`} onClick={() => modalButton(board._id, board.name)}><h6><FontAwesomeIcon icon="pencil-alt" /></h6></button>
+        <Modal show={editState} clickBackdrop={clickBackdrop}>
+          {editState ? <EditBoard id={editBoardId} name={editBoardName} cancel={cancel} finish={finish} /> : null}
+        </Modal>
         <button className={`btn btn-danger ${classes.modBtn}`} onClick={() => {if (window.confirm('Are you sure you wish to delete this board?')) deleted(board._id)}}><h6><FontAwesomeIcon icon="window-close" /></h6></button>
       </center>
     ))}

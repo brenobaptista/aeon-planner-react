@@ -22,13 +22,15 @@ class NewList extends Component {
     }
   }
 
+  nameHandler = (event) => this.setState({ name: event.target.value });
+
   render() {
     return (
       <div>
         <center><h1 className="margin-t-b">Add a new list</h1></center>
         <center>
           <label>Name:</label><br />
-          <input type="text" placeholder="List Name" value={this.state.name} onChange={(event) => this.setState({ name: event.target.value })} /><br /><br />
+          <input type="text" placeholder="List Name" value={this.state.name} onChange={this.nameHandler} /><br /><br />
         </center>
         <center>
           <button className="btn btn-danger margin-teeth" onClick={this.props.history.goBack}>Cancel</button>

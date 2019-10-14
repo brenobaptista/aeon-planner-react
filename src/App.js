@@ -9,8 +9,6 @@ import BoardsPage from './containers/BoardsPage/BoardsPage'
 import SignIn from './containers/SignIn/SignIn'
 import SignUp from './containers/SignUp/SignUp'
 import ListsPage from './containers/ListsPage/ListsPage'
-import NewBoard from './containers/NewBoard/NewBoard'
-import EditBoard from './containers/EditBoard/EditBoard'
 import NewList from './containers/NewList/NewList'
 import NewTask from './containers/NewTask/NewTask'
 import EditList from './containers/EditList/EditList'
@@ -30,8 +28,6 @@ class App extends Component {
             <Route exact path='/board' component={BoardsPage} />
             <Route exact path='/signin' component={SignIn} />
             <Route exact path='/signup' component={SignUp} />
-            <Route path='/new-board' component={NewBoard} />
-            <Route path='/edit-board/:boardId/:boardName' component={EditBoard} />
             <Route path='/board/:boardId/edit-list/:listId/:listName' component={EditList} />
             <Route path='/board/:boardId/new-list' component={NewList} />
             <Route path='/board/:boardId/list/:listId/new-task/' component={NewTask} />
