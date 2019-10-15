@@ -14,6 +14,7 @@ class Home extends Component {
     isLoaded: false,
     isCreateModalOpen: false,
     isEditModalOpen: false,
+    isDeleteModalOpen: false,
     editBoardId: '',
     editBoardName: ''
   }
@@ -30,7 +31,10 @@ class Home extends Component {
     await axios.delete(`https://trello-api-nodejs.herokuapp.com/boards/${boardId}`);
     this.setState(prevState => {
       const updatedBoards = prevState.boards.filter(board => board._id !== boardId);
-      return { boards: updatedBoards }
+      return { 
+        boards: updatedBoards,
+        isDeleteModalOpen: !prevState.isDeleteModalOpen
+      }
     })
   }
 
@@ -48,10 +52,17 @@ class Home extends Component {
     }))
   }
 
+  modalDeleteHandler = () => {
+    this.setState(prevState => ({
+      isDeleteModalOpen: !prevState.isDeleteModalOpen
+    }))
+  }
+
   clickBackdrop = () => {
     this.setState({ 
       isCreateModalOpen: false,
-      isEditModalOpen: false
+      isEditModalOpen: false,
+      isDeleteModalOpen: false
      })
   }
 
@@ -87,8 +98,10 @@ class Home extends Component {
               <Boards 
                 boards={this.state.boards} 
                 deleted={this.deleteHandler} 
-                modalButton={this.modalEditHandler} 
+                editButton={this.modalEditHandler} 
+                deleteButton={this.modalDeleteHandler}
                 editState={this.state.isEditModalOpen} 
+                deleteState={this.state.isDeleteModalOpen}
                 clickBackdrop={this.clickBackdrop}
                 editBoardId={this.state.editBoardId}
                 editBoardName={this.state.editBoardName}
