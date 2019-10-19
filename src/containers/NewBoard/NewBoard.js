@@ -13,7 +13,7 @@ class NewBoard extends Component {
     const data = { name: this.state.name };
     try {
       await axios.post('https://trello-api-nodejs.herokuapp.com/boards/', data);
-      await this.props.finish();
+      this.props.finish();
       this.setState({ name: '' })
     } catch {
       this.setState({ error: true })
@@ -25,16 +25,14 @@ class NewBoard extends Component {
   render() {
     return (
       <div>
-        <center><h1>Add a new board</h1></center>
         <center>
+          <h1>Add a new board</h1>
           <label>Name:</label><br />
           <input type="text" placeholder="Board Name" value={this.state.name} onChange={this.nameHandler} /><br /><br />
-        </center>
-        <center>
           <button className="btn btn-danger margin-teeth" onClick={this.props.cancel}>Cancel</button>
           <button className="btn btn-success margin-teeth" onClick={this.dataHandler}>Add Board</button>
+          {this.state.error ? <FormError /> : null}
         </center>
-        {this.state.error ? <FormError /> : null}
       </div>
     );
   }

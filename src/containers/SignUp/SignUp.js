@@ -13,7 +13,7 @@ class SignUp extends Component {
 
   render() {
     return (
-      <>
+      <div>
         <center>
           <h1 className="margin-t-b">Sign Up</h1><br />
           <label>Email:</label><br />
@@ -26,9 +26,8 @@ class SignUp extends Component {
 
           {/* Adicionar a função da autenticação e componentes validação */}
           <button className="btn btn-success margin-teeth">Sign Up</button>
-
         </center>
-      </>
+      </div>
     )
   }
 }

@@ -5,7 +5,7 @@ import classes from './Boards.module.css';
 import Modal from '../Modal/Modal';
 import EditBoard from '../../containers/EditBoard/EditBoard';
 
-const Boards = ({ boards, deleted, editButton, deleteButton, editState, deleteState, clickBackdrop, editBoardId, editBoardName, cancel, finish }) => {
+const Boards = ({ boards, deleted, editButton, deleteButton, editState, deleteState, clickBackdrop, editBoardId, editBoardName, finish }) => {
   return(
     <div>
     {boards.map((board) => (
@@ -17,13 +17,17 @@ const Boards = ({ boards, deleted, editButton, deleteButton, editState, deleteSt
         </Link>
         <button className={`btn btn-warning ${classes.modBtn}`} onClick={() => editButton(board._id, board.name)}><h6><FontAwesomeIcon icon="pencil-alt" /></h6></button>
         <Modal show={editState} clickBackdrop={clickBackdrop}>
-          {editState ? <EditBoard id={editBoardId} name={editBoardName} cancel={cancel} finish={finish} /> : null}
+          {editState ? <EditBoard id={editBoardId} name={editBoardName} cancel={editButton} finish={finish} /> : null}
         </Modal>
         <button className={`btn btn-danger ${classes.modBtn}`} onClick={deleteButton}><h6><FontAwesomeIcon icon="window-close" /></h6></button>
         <Modal show={deleteState} clickBackdrop={clickBackdrop}>
-          <h3 style={{ color: '#00AB84' }}>Are you sure you wish to delete it?</h3><br />
-          <button className="btn btn-danger margin-teeth" onClick={deleteButton}>Cancel</button>
-          <button className="btn btn-success margin-teeth" onClick={() => deleted(board._id)}>Yes</button>
+          {deleteState ? 
+            <div>
+              <h3 className={classes.greenText}>Are you sure you wish to delete it?</h3><br />
+              <button className="btn btn-danger margin-teeth" onClick={deleteButton}>Cancel</button>
+              <button className="btn btn-success margin-teeth" onClick={() => deleted(board._id)}>Yes</button>
+            </div>
+          : null }
         </Modal>
       </center>
     ))}

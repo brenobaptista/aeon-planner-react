@@ -8,15 +8,15 @@ class NewList extends Component {
     name: '',
     error: false
   }
-  
+
   dataHandler = async () => {
     const data = {
       name: this.state.name,
-      boardId: this.props.match.params.boardId
+      boardId: this.props.boardId
     };
     try {
       await axios.post(`https://trello-api-nodejs.herokuapp.com/lists/`, data);
-      this.props.history.goBack()
+      this.props.finish();
     } catch {
       this.setState({ error: true })
     }
@@ -27,16 +27,14 @@ class NewList extends Component {
   render() {
     return (
       <div>
-        <center><h1 className="margin-t-b">Add a new list</h1></center>
         <center>
+          <h1>Add a new list</h1>
           <label>Name:</label><br />
           <input type="text" placeholder="List Name" value={this.state.name} onChange={this.nameHandler} /><br /><br />
-        </center>
-        <center>
-          <button className="btn btn-danger margin-teeth" onClick={this.props.history.goBack}>Cancel</button>
+          <button className="btn btn-danger margin-teeth" onClick={this.props.cancel}>Cancel</button>
           <button className="btn btn-success margin-teeth" onClick={this.dataHandler}>Add List</button>
+          {this.state.error ? <FormError /> : null}
         </center>
-        {this.state.error ? <FormError /> : null}
       </div>
     )
   }

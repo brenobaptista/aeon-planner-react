@@ -12,18 +12,24 @@ class Home extends Component {
   state = {
     boards: [],
     isLoaded: false,
-    isCreateModalOpen: false,
-    isEditModalOpen: false,
-    isDeleteModalOpen: false,
     editBoardId: '',
-    editBoardName: ''
+    editBoardName: '',
+    showCreateModal: false,
+    showEditModal: false,
+    showDeleteModal: false,
   }
 
-  async componentDidMount() {
+  componentDidMount() {
+    this.boardHandler()
+  }
+  
+  boardHandler = async () => {
     const response = await axios.get('https://trello-api-nodejs.herokuapp.com/boards/');
     this.setState({
       boards: response.data,
       isLoaded: true,
+      showCreateModal: false,
+      showEditModal: false,
     })
   }
 
@@ -31,22 +37,22 @@ class Home extends Component {
     await axios.delete(`https://trello-api-nodejs.herokuapp.com/boards/${boardId}`);
     this.setState(prevState => {
       const updatedBoards = prevState.boards.filter(board => board._id !== boardId);
-      return { 
+      return {
         boards: updatedBoards,
-        isDeleteModalOpen: !prevState.isDeleteModalOpen
+        showDeleteModal: !prevState.showDeleteModal
       }
     })
   }
 
   modalCreateHandler = () => {
     this.setState(prevState => ({
-      isCreateModalOpen: !prevState.isCreateModalOpen
+      showCreateModal: !prevState.showCreateModal
     }))
   }
 
   modalEditHandler = (boardId, boardName) => {
     this.setState(prevState => ({
-      isEditModalOpen: !prevState.isEditModalOpen,
+      showEditModal: !prevState.showEditModal,
       editBoardId: boardId,
       editBoardName: boardName
     }))
@@ -54,33 +60,15 @@ class Home extends Component {
 
   modalDeleteHandler = () => {
     this.setState(prevState => ({
-      isDeleteModalOpen: !prevState.isDeleteModalOpen
+      showDeleteModal: !prevState.showDeleteModal
     }))
   }
 
   clickBackdrop = () => {
-    this.setState({ 
-      isCreateModalOpen: false,
-      isEditModalOpen: false,
-      isDeleteModalOpen: false
-     })
-  }
-
-  createBoardHandler = async () => {
-    const response = await axios.get('https://trello-api-nodejs.herokuapp.com/boards/');
     this.setState({
-      boards: response.data,
-      isLoaded: true,
-      isCreateModalOpen: false
-    })
-  }
-
-  editBoardHandler = async () => {
-    const response = await axios.get('https://trello-api-nodejs.herokuapp.com/boards/');
-    this.setState({
-      boards: response.data,
-      isLoaded: true,
-      isEditModalOpen: false
+      showCreateModal: false,
+      showEditModal: false,
+      showDeleteModal: false
     })
   }
 
@@ -89,24 +77,23 @@ class Home extends Component {
       <>
         <center className="margin-t-b">
           <h1 className={classes.marginBottom}>All Boards</h1>
-          {this.state.isLoaded ? 
+          {this.state.isLoaded ?
             <div>
               <button className={`btn btn-success ${classes.marginBottom}`} onClick={this.modalCreateHandler}>+ New Board</button>
-              <Modal show={this.state.isCreateModalOpen} clickBackdrop={this.clickBackdrop}>
-                <NewBoard cancel={this.modalCreateHandler} finish={this.createBoardHandler} />
-              </Modal> 
-              <Boards 
-                boards={this.state.boards} 
-                deleted={this.deleteHandler} 
-                editButton={this.modalEditHandler} 
+              <Modal show={this.state.showCreateModal} clickBackdrop={this.clickBackdrop}>
+                {this.state.showCreateModal ? <NewBoard cancel={this.modalCreateHandler} finish={this.boardHandler} /> : null}
+              </Modal>
+              <Boards
+                boards={this.state.boards}
+                deleted={this.deleteHandler}
+                editButton={this.modalEditHandler}
                 deleteButton={this.modalDeleteHandler}
-                editState={this.state.isEditModalOpen} 
-                deleteState={this.state.isDeleteModalOpen}
+                editState={this.state.showEditModal}
+                deleteState={this.state.showDeleteModal}
                 clickBackdrop={this.clickBackdrop}
                 editBoardId={this.state.editBoardId}
                 editBoardName={this.state.editBoardName}
-                cancel={this.modalEditHandler}
-                finish={this.editBoardHandler} />
+                finish={this.boardHandler} />
             </div>
             : <Spinner />
           }

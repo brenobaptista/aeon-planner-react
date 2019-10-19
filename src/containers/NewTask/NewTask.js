@@ -14,11 +14,11 @@ class NewTask extends Component {
     const data = {
       name: this.state.name,
       description: this.state.description,
-      listId: this.props.match.params.listId
+      listId: this.props.listId
     };
     try {
       await axios.post(`https://trello-api-nodejs.herokuapp.com/tasks/`, data);
-      this.props.history.goBack();
+      this.props.finish();
     } catch {
       this.setState({ error: true })
     }
@@ -30,20 +30,16 @@ class NewTask extends Component {
   render() {
     return (
       <div>
-        <center><h1 className="margin-t-b">Add a new task</h1></center>
         <center>
+          <h1>Add a new task</h1>
           <label>Name:</label><br />
           <input type="text" placeholder="Task Name" value={this.state.name} onChange={this.nameHandler} /><br /><br />
-        </center>
-        <center>
           <label>Description:</label><br />
           <textarea type="text" placeholder="Task Description?" value={this.state.description} onChange={this.descriptionHandler} /><br /><br />
-        </center>
-        <center>
-          <button className="btn btn-danger margin-teeth" onClick={this.props.history.goBack}>Cancel</button>
+          <button className="btn btn-danger margin-teeth" onClick={this.props.cancel}>Cancel</button>
           <button className="btn btn-success margin-teeth" onClick={this.dataHandler}>Add Task</button>
+          {this.state.error ? <FormError /> : null}
         </center>
-        {this.state.error ? <FormError /> : null}
       </div>
     )
   }
