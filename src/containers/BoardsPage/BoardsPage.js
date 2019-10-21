@@ -3,8 +3,6 @@ import Boards from '../../components/Boards/Boards';
 import axios from 'axios';
 import classes from './BoardsPage.module.css';
 import Spinner from '../../components/Spinner/Spinner'
-import Modal from '../../components/Modal/Modal';
-import NewBoard from '../NewBoard/NewBoard';
 
 import '../../App.css'
 
@@ -79,21 +77,24 @@ class Home extends Component {
           <h1 className={classes.marginBottom}>All Boards</h1>
           {this.state.isLoaded ?
             <div>
-              <button className={`btn btn-success ${classes.marginBottom}`} onClick={this.modalCreateHandler}>+ New Board</button>
-              <Modal show={this.state.showCreateModal} clickBackdrop={this.clickBackdrop}>
-                {this.state.showCreateModal ? <NewBoard cancel={this.modalCreateHandler} finish={this.boardHandler} /> : null}
-              </Modal>
               <Boards
-                boards={this.state.boards}
-                deleted={this.deleteHandler}
-                editButton={this.modalEditHandler}
-                deleteButton={this.modalDeleteHandler}
-                editState={this.state.showEditModal}
-                deleteState={this.state.showDeleteModal}
-                clickBackdrop={this.clickBackdrop}
-                editBoardId={this.state.editBoardId}
-                editBoardName={this.state.editBoardName}
-                finish={this.boardHandler} />
+                propsState={{
+                  boards: this.state.boards,
+                  createState: this.state.showCreateModal,
+                  editBoardId: this.state.editBoardId,
+                  editBoardName: this.state.editBoardName,
+                  editState: this.state.showEditModal,
+                  deleteState: this.state.showDeleteModal,
+                }}
+                propsFunction={{
+                  deleted: this.deleteHandler,
+                  createButton: this.modalCreateHandler,
+                  editButton: this.modalEditHandler,
+                  deleteButton: this.modalDeleteHandler,
+                  clickBackdrop: this.clickBackdrop,
+                  finish: this.boardHandler,
+                }}
+              />
             </div>
             : <Spinner />
           }

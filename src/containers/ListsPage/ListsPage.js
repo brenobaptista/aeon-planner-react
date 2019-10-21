@@ -120,31 +120,35 @@ class ListsPage extends Component {
           {this.state.isLoaded ?
             <div>
               <Lists
-                lists={this.state.lists}
-                tasks={this.state.tasks}
-                boardId={this.props.match.params.boardId}
-                boardName={this.props.match.params.boardName}
-                createList={this.modalCreateListHandler}
-                createTask={this.modalCreateTaskHandler}
-                createListState={this.state.showCreateListModal}
-                createTaskState={this.state.showCreateTaskModal}
-                editListState={this.state.showEditListModal}
-                editTaskState={this.state.showEditTaskModal}
-                editListButton={this.modalEditListHandler}
-                editTaskButton={this.modalEditTaskHandler}
-                editListId={this.state.editListId}
-                editListName={this.state.editListName}
-                editTaskId={this.state.editTaskId}
-                editTaskName={this.state.editTaskName}
-                editTaskDescription={this.state.editTaskDescription}
-                finish={this.listHandler}
-                deleteList={this.deleteListHandler}
-                deleteTask={this.deleteTaskHandler}
-                deleteListButton={this.modalDeleteListHandler}
-                deleteTaskButton={this.modalDeleteTaskHandler}  
-                deleteListState={this.state.showDeleteListModal}
-                deleteTaskState={this.state.showDeleteTaskModal}
-                clickBackdrop={this.clickBackdrop}
+                propsState={{
+                  lists: this.state.lists,
+                  tasks: this.state.tasks,
+                  deleteListState: this.state.showDeleteListModal,
+                  deleteTaskState: this.state.showDeleteTaskModal,
+                  editListId: this.state.editListId,
+                  editListName: this.state.editListName,
+                  editTaskId: this.state.editTaskId,
+                  editTaskName: this.state.editTaskName,
+                  editTaskDescription: this.state.editTaskDescription,
+                  createListState: this.state.showCreateListModal,
+                  createTaskState: this.state.showCreateTaskModal,
+                  editListState: this.state.showEditListModal,
+                  editTaskState: this.state.showEditTaskModal,
+                }}
+                propsFunction={{
+                  boardId: this.props.match.params.boardId,
+                  boardName: this.props.match.params.boardName,
+                  createList: this.modalCreateListHandler,
+                  createTask: this.modalCreateTaskHandler,
+                  editListButton: this.modalEditListHandler,
+                  editTaskButton: this.modalEditTaskHandler,
+                  finish: this.listHandler,
+                  deleteList: this.deleteListHandler,
+                  deleteTask: this.deleteTaskHandler,
+                  deleteListButton: this.modalDeleteListHandler,
+                  deleteTaskButton: this.modalDeleteTaskHandler,
+                  clickBackdrop: this.clickBackdrop,
+                }}
               />
             </div>
             : <Spinner />

@@ -16,3 +16,14 @@
 .greenText {
   color: #00AB84;
 }
+
+.darkGreenBg {
+  background-color: #00AB84 !important;
+}
+.darkGreenBg:hover {
+  background-color: #008675 !important;
+}
+
+.marginBottom {
+  margin-bottom: 1em;
+}

@@ -9,17 +9,17 @@ const Home = () => {
       <center>
         <div className={classes.marginHome}>
           <h1>Organize yourself for life!</h1>
-          <p className={classes.text180}>Aeon Planner helps you get things done.</p>
+          <p className={`${classes.text180} ${classes.grayColor}`}>Aeon Planner helps you get things done.</p>
           <div className={classes.marginBtn}>
             <Link to="/board">
               <button className={`btn ${classes.greenBtn}`}>Get Started - It's Free!</button>
             </Link>
           </div>
           <img src={AppPhoto} alt="app" width="100" />
-          <p className={classes.marginBetween}>Don't forget to add Aeon Planner to your home screen!</p>
+          <p className={`${classes.marginBetween} ${classes.grayColor}`}>Don't forget to add Aeon Planner to your home screen!</p>
         </div>
 
-        <footer>
+        <footer className={classes.grayColor}>
           © {new Date().getFullYear()}
             {` `}
           <a href="https://brenobaptista.github.io" className={classes.greenLink}>Breno Baptista</a>.

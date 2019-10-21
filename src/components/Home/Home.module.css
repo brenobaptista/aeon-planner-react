@@ -3,7 +3,7 @@
   color: white !important;
 }
 .greenBtn:hover {
-  background-color: #00785C !important;
+  background-color: #008675 !important;
 }
 
 .text180 {
@@ -14,7 +14,11 @@
   color: #00AB84;
 }
 .greenLink:hover {
-  color: #00785C;
+  color: #008675;
+}
+
+.grayColor {
+  color: #4B4F54
 }
 
 .marginHome {
