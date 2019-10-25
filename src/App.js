@@ -6,11 +6,11 @@ import './App.css'
 import Navbar from './components/Navbar/Navbar';
 import SideDrawer from './components/SideDrawer/SideDrawer';
 
-import Home from './components/Home/Home'
-import BoardsPage from './containers/BoardsPage/BoardsPage'
-import Login from './containers/Login/Login'
-import SignUp from './containers/SignUp/SignUp'
-import ListsPage from './containers/ListsPage/ListsPage'
+import Home from './components/Home/Home';
+import BoardsPage from './containers/BoardsPage/BoardsPage';
+import Login from './containers/Login/Login';
+import SignUp from './containers/SignUp/SignUp';
+import ListsPage from './containers/ListsPage/ListsPage';
 const HTTP404 = React.lazy(() => import('./components/HTTP404/HTTP404'));
 
 class App extends Component {

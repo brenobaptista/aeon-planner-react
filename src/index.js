@@ -7,9 +7,8 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 
 import { library } from '@fortawesome/fontawesome-svg-core'
 import { fab } from '@fortawesome/free-brands-svg-icons'
-import { faWindowClose, faPencilAlt } from '@fortawesome/free-solid-svg-icons'
-library.add(fab, faWindowClose, faPencilAlt)
-
+import { faWindowClose, faPencilAlt, faCog } from '@fortawesome/free-solid-svg-icons'
+library.add(fab, faWindowClose, faPencilAlt, faCog)
 
 ReactDOM.render(<App />, document.getElementById('root'));
 

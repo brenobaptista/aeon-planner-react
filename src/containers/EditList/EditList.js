@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import axios from 'axios';
 
 import FormError from '../../components/FormError/FormError';
+import { Button, Form, FormGroup, Label, Input } from 'reactstrap';
 
 class EditList extends Component {
   state = {
@@ -19,7 +20,8 @@ class EditList extends Component {
     })
   }
 
-  dataHandler = async () => {
+  dataHandler = async (event) => {
+    event.preventDefault()
     const data = {
       name: this.state.name,
       boardId: this.state.boardId
@@ -37,16 +39,19 @@ class EditList extends Component {
 
   render() {
     return (
-      <div>
-        <center>
-          <h1>Edit list</h1>
-          <label>Name:</label><br />
-          <input type="text" value={this.state.name} onChange={this.nameHandler} /><br /><br />
-          <button className="btn btn-danger margin-teeth" onClick={this.props.cancel}>Cancel</button>
-          <button className="btn btn-success margin-teeth" onClick={this.dataHandler}>Finish editing</button>
-          {this.state.error ? <FormError /> : null}
-        </center>
-      </div>
+      <>
+        <Form onSubmit={this.dataHandler}>
+          <Label tag="h1">Edit list</Label>
+          <FormGroup>
+            <Label for="name">Name</Label>
+            <Input type="text" name="name" id="name" placeholder="Name" value={this.state.name} onChange={this.nameHandler} />
+          </FormGroup>
+          <Button color="danger" className="margin-teeth" onClick={this.props.cancel}>Cancel</Button>
+          <Button type="submit" color="success" className="margin-teeth">Finish editing</Button>
+        </Form>
+        
+        {this.state.error ? <FormError /> : null}
+      </>
     )
   }
 }

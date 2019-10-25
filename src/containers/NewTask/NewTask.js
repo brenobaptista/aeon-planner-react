@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import axios from 'axios';
 
 import FormError from '../../components/FormError/FormError';
+import { Button, Form, FormGroup, Label, Input } from 'reactstrap';
 
 class NewTask extends Component {
   state = {
@@ -10,7 +11,8 @@ class NewTask extends Component {
     error: false
   }
 
-  dataHandler = async () => {
+  dataHandler = async (event) => {
+    event.preventDefault()
     const data = {
       name: this.state.name,
       description: this.state.description,
@@ -29,18 +31,23 @@ class NewTask extends Component {
 
   render() {
     return (
-      <div>
-        <center>
-          <h1>Add a new task</h1>
-          <label>Name:</label><br />
-          <input type="text" placeholder="Task Name" value={this.state.name} onChange={this.nameHandler} /><br /><br />
-          <label>Description:</label><br />
-          <textarea type="text" placeholder="Task Description?" value={this.state.description} onChange={this.descriptionHandler} /><br /><br />
-          <button className="btn btn-danger margin-teeth" onClick={this.props.cancel}>Cancel</button>
-          <button className="btn btn-success margin-teeth" onClick={this.dataHandler}>Add Task</button>
-          {this.state.error ? <FormError /> : null}
-        </center>
-      </div>
+      <>
+        <Form onSubmit={this.dataHandler}>
+          <Label tag="h1">Add a new task</Label>
+          <FormGroup>
+            <Label for="name">Name</Label>
+            <Input type="text" name="name" id="name" placeholder="Name" value={this.state.name} onChange={this.nameHandler} />
+          </FormGroup>
+          <FormGroup>
+            <Label for="description">Description</Label>
+            <Input type="textarea" name="description" id="description" placeholder="Description" value={this.state.description} onChange={this.descriptionHandler} />
+          </FormGroup>
+          <Button color="danger" className="margin-teeth" onClick={this.props.cancel}>Cancel</Button>
+          <Button type="submit" color="success" className="margin-teeth">Add Task</Button>
+        </Form>
+
+        {this.state.error ? <FormError /> : null}
+      </>
     )
   }
 }

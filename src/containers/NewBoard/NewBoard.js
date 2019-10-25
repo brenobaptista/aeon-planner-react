@@ -1,41 +1,42 @@
-import React, { Component } from 'react';
+import React, { useState } from 'react';
 import axios from 'axios';
 
 import FormError from '../../components/FormError/FormError';
+import { Button, Form, FormGroup, Label, Input } from 'reactstrap';
 
-class NewBoard extends Component {
-  state = {
-    name: '',
-    error: false
-  }
+const NewBoard = (props) => {
+  const [name, setName] = useState('');
+  const [error, setError] = useState(false);
 
-  dataHandler = async () => {
-    const data = { name: this.state.name };
+  const dataHandler = async (event) => {
+    event.preventDefault();
+    const data = { name };
     try {
       await axios.post('https://trello-api-nodejs.herokuapp.com/boards/', data);
-      this.props.finish();
-      this.setState({ name: '' })
+      props.finish();
+      setName('');
     } catch {
-      this.setState({ error: true })
+      setError(true);
     }
   }
 
-  nameHandler = (event) => this.setState({ name: event.target.value });
+  const nameHandler = (event) => setName(event.target.value);
 
-  render() {
-    return (
-      <div>
-        <center>
-          <h1>Add a new board</h1>
-          <label>Name:</label><br />
-          <input type="text" placeholder="Board Name" value={this.state.name} onChange={this.nameHandler} /><br /><br />
-          <button className="btn btn-danger margin-teeth" onClick={this.props.cancel}>Cancel</button>
-          <button className="btn btn-success margin-teeth" onClick={this.dataHandler}>Add Board</button>
-          {this.state.error ? <FormError /> : null}
-        </center>
-      </div>
-    );
-  }
+  return (
+    <>
+      <Form onSubmit={dataHandler}>
+        <Label tag="h1">Add a new board</Label>
+        <FormGroup>
+          <Label for="name">Name</Label>
+          <Input type="text" name="name" id="name" placeholder="Name" value={name} onChange={nameHandler} />
+        </FormGroup>
+        <Button color="danger" className="margin-teeth" onClick={props.cancel}>Cancel</Button>
+        <Button type="submit" color="success" className="margin-teeth">Add Board</Button>
+      </Form>
+      
+      {error ? <FormError /> : null}
+    </>
+  );
 }
 
 export default NewBoard;

@@ -1,48 +1,47 @@
-import React, { Component } from 'react';
+import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 
 import FormError from '../../components/FormError/FormError';
+import { Button, Form, FormGroup, Label, Input } from 'reactstrap';
 
-class EditBoard extends Component {
-  state = {
-    id: '',
-    name: '',
-    error: false
-  }
+const EditBoard = (props) => {
+  const [id, setId] = useState('');
+  const [name, setName] = useState('');
+  const [error, setError] = useState(false);
 
-  componentDidMount() {
-    this.setState({
-      id: this.props.id,
-      name: this.props.name
-    })
-  }
+  useEffect(() => {
+    setId(props.id);
+    setName(props.name);
+  }, [props.id, props.name])
 
-  dataHandler = async () => {
-    const data = { name: this.state.name };
+  const dataHandler = async (event) => {
+    event.preventDefault();
+    const data = { name };
     try {
-      await axios.put(`https://trello-api-nodejs.herokuapp.com/boards/${this.state.id}`, data);
-      this.props.finish();
+      await axios.put(`https://trello-api-nodejs.herokuapp.com/boards/${id}`, data);
+      props.finish();
     } catch {
-      this.setState({ error: true })
+      setError(true);
     }
   }
 
-  nameHandler = (event) => this.setState({ name: event.target.value });
+  const nameHandler = (event) => setName(event.target.value);
 
-  render() {
-    return (
-      <div>
-        <center>
-          <h1>Edit board</h1>
-          <label>Name:</label><br />
-          <input type="text" value={this.state.name} onChange={this.nameHandler} /><br /><br />
-          <button className="btn btn-danger margin-teeth" onClick={this.props.cancel}>Cancel</button>
-          <button className="btn btn-success margin-teeth" onClick={this.dataHandler}>Finish editing</button>
-          {this.state.error ? <FormError /> : null}
-        </center>
-      </div>
-    )
-  }
-}
+  return (
+    <>
+      <Form onSubmit={dataHandler}>
+        <Label tag="h1">Edit board</Label>
+        <FormGroup>
+          <Label for="name">Name</Label>
+          <Input type="text" name="name" id="name" placeholder="Name" value={name} onChange={nameHandler} />
+        </FormGroup>
+        <Button color="danger" className="margin-teeth" onClick={props.cancel}>Cancel</Button>
+        <Button type="submit" color="success" className="margin-teeth">Finish editing</Button>
+      </Form>
+
+      {error ? <FormError /> : null}
+    </>
+  );
+};
 
 export default EditBoard;

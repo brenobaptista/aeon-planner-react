@@ -1,6 +1,7 @@
 .greenBtn {
   background-color: #00AB84 !important;
   color: white !important;
+  border-color: #00AB84 !important;
 }
 .greenBtn:hover {
   background-color: #008675 !important;
@@ -23,7 +24,7 @@
 
 .marginHome {
   margin-top: 3rem;
-  margin-bottom: 1rem;
+  margin-bottom: 2rem;
 }
 
 .marginBtn {
@@ -33,4 +34,11 @@
 
 .marginBetween {
   margin-top: 1rem;
+}
+
+
+.betterText {
+  text-indent: 30px;
+  text-align: justify;
+  text-justify: inter-word;
 }
