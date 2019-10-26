@@ -10,7 +10,8 @@ class EditTask extends Component {
     name: '',
     description: '',
     listId: '',
-    error: false
+    error: false,
+    errorMessage: '',
   }
 
   componentDidMount() {
@@ -32,8 +33,11 @@ class EditTask extends Component {
     try {
       await axios.put(`https://trello-api-nodejs.herokuapp.com/tasks/${this.state.id}`, data);
       this.props.finish();
-    } catch {
-      this.setState({ error: true })
+    } catch (error) {
+      this.setState({ 
+        error: true,
+        errorMessage: error.response.data.message,
+       })
     }
   }
 
@@ -57,7 +61,7 @@ class EditTask extends Component {
           <Button type="submit" color="success" className="margin-teeth">Finish editing</Button>
         </Form>
         
-        {this.state.error ? <FormError /> : null}
+        {this.state.error ? <FormError errorMessage={this.state.errorMessage} /> : null}
       </>
     )
   }

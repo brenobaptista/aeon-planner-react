@@ -13,24 +13,54 @@ class Login extends Component {
     password: '',
     error: false,
     authLoading: false,
+    errorMessage: '',
+    emailInvalid: false,
+    emailValid: false,
+    passwordInvalid: false,
   }
 
   loginHandler = async (event) => {
     event.preventDefault()
-    this.setState({ authLoading: true })
+    this.setState({
+      authLoading: true,
+      emailInvalid: false,
+      emailValid: false,
+      passwordInvalid: false,
+      errorMessage: '',
+    })
     const data = {
       email: this.state.email,
       password: this.state.password
     }
     try {
       const res = await axios.post('https://trello-api-nodejs.herokuapp.com/login', data)
-      this.setState({ authLoading: false })
+      this.setState({
+        authLoading: false,
+        error: false,
+      })
       console.log(res.data.token)
       console.log(res.data.userId)
-    } catch {
-      this.setState({ 
+    } catch (error) {
+      switch (error.response.data.message) {
+        case 'A user with this email could not be found.':
+          this.setState({
+            errorMessage: 'A user with this email could not be found.',
+            emailInvalid: true,
+          })
+          break;
+        case 'Wrong password!':
+          this.setState({
+            errorMessage: 'Wrong password!',
+            passwordInvalid: true,
+            emailValid: true,
+          })
+          break;
+        default:
+          this.setState({ errorMessage: 'Some error occurred while authenticating the user.' })
+      }
+      this.setState({
         error: true,
-        authLoading: false
+        authLoading: false,
       })
     }
   }
@@ -48,22 +78,22 @@ class Login extends Component {
               <Form onSubmit={this.loginHandler}>
                 <FormGroup>
                   <Label for="email">Email</Label>
-                  <Input type="email" name="email" id="email" placeholder="Your email, please" value={this.state.email} onChange={this.emailHandler} />
+                  <Input valid={this.state.emailValid} invalid={this.state.emailInvalid} type="email" name="email" id="email" placeholder="Your email, please" value={this.state.email} onChange={this.emailHandler} />
                 </FormGroup>
                 <FormGroup>
                   <Label for="password">Password</Label>
-                  <Input type="password" name="password" id="password" placeholder="Your password, please" value={this.state.password} onChange={this.passwordHandler} />
+                  <Input invalid={this.state.passwordInvalid} type="password" name="password" id="password" placeholder="Your password, please" value={this.state.password} onChange={this.passwordHandler} />
                 </FormGroup>
                 <Button color="danger" className="margin-teeth" onClick={this.props.history.goBack}>Cancel</Button>
                 <Button type="submit" color="success" className="margin-teeth">Login</Button><br /><br />
                 <Link to="/signup"><b className={classes.greenLink}>I don't have an account yet</b></Link>
+                {this.state.authLoading ? <Spinner /> : null}
+                {this.state.error ? <FormError errorMessage={this.state.errorMessage} /> : null}
               </Form>
             </CardText>
           </CardBody>
         </Card>
 
-        {this.state.authLoading ? <Spinner /> : null}
-        {this.state.error ? <FormError /> : null}
       </div>
     )
   }

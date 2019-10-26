@@ -8,7 +8,8 @@ class NewTask extends Component {
   state = {
     name: '',
     description: '',
-    error: false
+    error: false,
+    errorMessage: '',
   }
 
   dataHandler = async (event) => {
@@ -21,8 +22,11 @@ class NewTask extends Component {
     try {
       await axios.post(`https://trello-api-nodejs.herokuapp.com/tasks/`, data);
       this.props.finish();
-    } catch {
-      this.setState({ error: true })
+    } catch (error) {
+      this.setState({ 
+        error: true,
+        errorMessage: error.response.data.message,
+       })
     }
   }
 
@@ -46,7 +50,7 @@ class NewTask extends Component {
           <Button type="submit" color="success" className="margin-teeth">Add Task</Button>
         </Form>
 
-        {this.state.error ? <FormError /> : null}
+        {this.state.error ? <FormError errorMessage={this.state.errorMessage} /> : null}
       </>
     )
   }

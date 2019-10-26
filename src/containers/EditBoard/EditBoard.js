@@ -8,6 +8,7 @@ const EditBoard = (props) => {
   const [id, setId] = useState('');
   const [name, setName] = useState('');
   const [error, setError] = useState(false);
+  const [errorMessage, setErrorMessage] = useState('');
 
   useEffect(() => {
     setId(props.id);
@@ -20,7 +21,8 @@ const EditBoard = (props) => {
     try {
       await axios.put(`https://trello-api-nodejs.herokuapp.com/boards/${id}`, data);
       props.finish();
-    } catch {
+    } catch (error) {
+      setErrorMessage(error.response.data.message);
       setError(true);
     }
   }
@@ -39,7 +41,7 @@ const EditBoard = (props) => {
         <Button type="submit" color="success" className="margin-teeth">Finish editing</Button>
       </Form>
 
-      {error ? <FormError /> : null}
+      {error ? <FormError errorMessage={errorMessage} /> : null}
     </>
   );
 };

@@ -7,7 +7,8 @@ import { Button, Form, FormGroup, Label, Input } from 'reactstrap';
 class NewList extends Component {
   state = {
     name: '',
-    error: false
+    error: false,
+    errorMessage: '',
   }
 
   dataHandler = async (event) => {
@@ -19,8 +20,11 @@ class NewList extends Component {
     try {
       await axios.post(`https://trello-api-nodejs.herokuapp.com/lists/`, data);
       this.props.finish();
-    } catch {
-      this.setState({ error: true })
+    } catch (error) {
+      this.setState({ 
+        error: true,
+        errorMessage: error.response.data.message,
+       })
     }
   }
 
@@ -39,7 +43,7 @@ class NewList extends Component {
           <Button type="submit" color="success" className="margin-teeth">Add List</Button>
         </Form>
 
-        {this.state.error ? <FormError /> : null}
+        {this.state.error ? <FormError errorMessage={this.state.errorMessage} /> : null}
       </>
     )
   }

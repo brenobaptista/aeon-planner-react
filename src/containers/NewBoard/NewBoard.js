@@ -7,6 +7,7 @@ import { Button, Form, FormGroup, Label, Input } from 'reactstrap';
 const NewBoard = (props) => {
   const [name, setName] = useState('');
   const [error, setError] = useState(false);
+  const [errorMessage, setErrorMessage] = useState('');
 
   const dataHandler = async (event) => {
     event.preventDefault();
@@ -15,7 +16,8 @@ const NewBoard = (props) => {
       await axios.post('https://trello-api-nodejs.herokuapp.com/boards/', data);
       props.finish();
       setName('');
-    } catch {
+    } catch (error) {
+      setErrorMessage(error.response.data.message);
       setError(true);
     }
   }
@@ -34,7 +36,7 @@ const NewBoard = (props) => {
         <Button type="submit" color="success" className="margin-teeth">Add Board</Button>
       </Form>
       
-      {error ? <FormError /> : null}
+      {error ? <FormError errorMessage={errorMessage} /> : null}
     </>
   );
 }
