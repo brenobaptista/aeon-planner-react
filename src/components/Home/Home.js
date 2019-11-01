@@ -12,7 +12,7 @@ const Home = () => {
         <h1 className="centerText">Organize yourself for life!</h1>
         <p className={`centerText ${classes.text180} ${classes.grayColor}`}>Aeon Planner helps you get things done.</p>
         <div className={`centerText ${classes.marginBtn}`}>
-          <Link to="/board">
+          <Link to="/login">
             <Button className={classes.greenBtn}>Get Started - It's Free!</Button>
           </Link>
         </div>

@@ -1,4 +1,7 @@
 import React, { Component } from 'react'
+import { Redirect } from 'react-router-dom';
+import { connect } from 'react-redux';
+
 import Boards from '../../components/Boards/Boards';
 import axios from 'axios';
 import classes from './BoardsPage.module.css';
@@ -22,7 +25,11 @@ class Home extends Component {
   }
   
   boardHandler = async () => {
-    const response = await axios.get('https://trello-api-nodejs.herokuapp.com/boards/');
+    const response = await axios.get('https://trello-api-nodejs.herokuapp.com/boards/', {
+      headers: {
+        Authorization: 'Bearer ' + this.props.token
+      }
+    });
     this.setState({
       boards: response.data,
       isLoaded: true,
@@ -32,7 +39,11 @@ class Home extends Component {
   }
 
   deleteHandler = async (boardId) => {
-    await axios.delete(`https://trello-api-nodejs.herokuapp.com/boards/${boardId}`);
+    await axios.delete(`https://trello-api-nodejs.herokuapp.com/boards/${boardId}`, {
+      headers: {
+        Authorization: 'Bearer ' + this.props.token
+      }
+    });
     this.setState(prevState => {
       const updatedBoards = prevState.boards.filter(board => board._id !== boardId);
       return {
@@ -71,9 +82,16 @@ class Home extends Component {
   }
 
   render() {
+    let authRedirect = null;
+
+    if (!this.props.token) {
+      authRedirect = <Redirect to='/login' />
+    }
+
     return (
       <>
         <center className="margin-t-b">
+          {authRedirect}
           <h1 className={classes.marginBottom}>All Boards</h1>
           {this.state.isLoaded ?
             <div>
@@ -104,4 +122,10 @@ class Home extends Component {
   }
 }
 
-export default Home
+const mapStateToProps = state => {
+  return {
+    token: state.token,
+  }
+};
+
+export default connect(mapStateToProps)(Home);

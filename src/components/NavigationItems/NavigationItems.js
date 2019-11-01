@@ -1,14 +1,36 @@
 import React from 'react';
+import { connect } from 'react-redux';
 
 import classes from './NavigationItems.module.css';
 import NavigationItem from './NavigationItem/NavigationItem';
+import * as actionCreators from '../../store/actions/index';
 
 const navigationItems = (props) => (
   <ul className={classes.navigationItems}>
-    <NavigationItem link="/" clicked={props.clicked}>Welcome</NavigationItem>
-    <NavigationItem link="/board" clicked={props.clicked}>Boards</NavigationItem>
-    <NavigationItem link="/login" clicked={props.clicked}>Login</NavigationItem>
+    {props.token ? 
+      <>
+        <NavigationItem link="/board" clicked={props.clicked}>Boards</NavigationItem>
+        <NavigationItem clicked={props.authLogout}>Logout</NavigationItem>
+      </>
+      :
+      <>
+        <NavigationItem link="/" clicked={props.clicked}>Welcome</NavigationItem>
+        <NavigationItem link="/login" clicked={props.clicked}>Login</NavigationItem>
+      </>
+    }
   </ul>
 );
 
-export default navigationItems;
+const mapStateToProps = state => {
+  return {
+    token: state.token,
+  }
+};
+
+const mapDispatchToProps = dispatch => {
+  return {
+    authLogout: () => dispatch(actionCreators.authLogout()),
+  }
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(navigationItems);

@@ -2,10 +2,12 @@ import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
 import axios from 'axios';
 import { Button, Form, FormGroup, Label, Input, Card, CardText, CardBody, CardTitle } from 'reactstrap';
+import { connect } from 'react-redux';
 
 import classes from './Login.module.css';
 import FormError from '../../components/FormError/FormError';
 import Spinner from '../../components/Spinner/Spinner';
+import * as actionCreators from '../../store/actions/index';
 
 class Login extends Component {
   state = {
@@ -38,8 +40,9 @@ class Login extends Component {
         authLoading: false,
         error: false,
       })
-      console.log(res.data.token)
-      console.log(res.data.userId)
+      this.props.responseHandler(res.data.token, res.data.userId);
+      this.props.authTimeout(res.data.expiresIn);
+      this.props.history.push('/board');
     } catch (error) {
       switch (error.response.data.message) {
         case 'A user with this email could not be found.':
@@ -99,4 +102,11 @@ class Login extends Component {
   }
 }
 
-export default Login;
+const mapDispatchToProps = dispatch => {
+  return {
+    responseHandler: (token, userId) => dispatch(actionCreators.responseHandler(token, userId)),
+    authTimeout: (expiresIn) => dispatch(actionCreators.authTimeout(expiresIn)),
+  }
+}
+
+export default connect(null, mapDispatchToProps)(Login);

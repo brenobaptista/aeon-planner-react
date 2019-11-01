@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import axios from 'axios';
+import { connect } from 'react-redux';
 
 import FormError from '../../components/FormError/FormError';
 import { Button, Form, FormGroup, Label, Input } from 'reactstrap';
@@ -13,7 +14,11 @@ const NewBoard = (props) => {
     event.preventDefault();
     const data = { name };
     try {
-      await axios.post('https://trello-api-nodejs.herokuapp.com/boards/', data);
+      await axios.post('https://trello-api-nodejs.herokuapp.com/boards/', data, {
+        headers: {
+          Authorization: 'Bearer ' + props.token
+        }
+      });
       props.finish();
       setName('');
     } catch (error) {
@@ -41,4 +46,10 @@ const NewBoard = (props) => {
   );
 }
 
-export default NewBoard;
+const mapStateToProps = state => {
+  return {
+    token: state.token,
+  }
+};
+
+export default connect(mapStateToProps)(NewBoard);

@@ -10,7 +10,7 @@ import Spinner from '../../components/Spinner/Spinner';
 const SignUp = (props) => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
-  const [passwordAgain, setPasswordAgain] = useState('');
+  const [passwordConfirm, setPasswordConfirm] = useState('');
   const [error, setError] = useState(false);
   const [errorMessage, setErrorMessage] = useState('');
   const [authLoading, setAuthLoading] = useState(false);
@@ -20,7 +20,7 @@ const SignUp = (props) => {
   const signUpHandler = async (event) => {
     event.preventDefault();
     try {
-      if (password === passwordAgain) {
+      if (password === passwordConfirm) {
         setEmailInvalid(false);
         setPasswordInvalid(false);
         setAuthLoading(true);
@@ -60,7 +60,7 @@ const SignUp = (props) => {
 
   const emailHandler = (event) => setEmail(event.target.value);
   const passwordHandler = (event) => setPassword(event.target.value);
-  const passwordAgainHandler = (event) => setPasswordAgain(event.target.value);
+  const passwordConfirmHandler = (event) => setPasswordConfirm(event.target.value);
 
   return (
     <div className="centerText">
@@ -78,8 +78,8 @@ const SignUp = (props) => {
                 <Input invalid={passwordInvalid} type="password" name="password" id="password" placeholder="Choose your password" value={password} onChange={passwordHandler} />
               </FormGroup>
               <FormGroup>
-                <Label for="passwordAgain">Password Again</Label>
-                <Input invalid={passwordInvalid} type="password" name="passwordAgain" id="passwordAgain" placeholder="Type your password again" value={passwordAgain} onChange={passwordAgainHandler} />
+                <Label for="passwordConfirm">Confirm Password</Label>
+                <Input invalid={passwordInvalid} type="password" name="passwordConfirm" id="passwordConfirm" placeholder="Confirm your password" value={passwordConfirm} onChange={passwordConfirmHandler} />
               </FormGroup>
               <Button color="danger" className="margin-teeth" onClick={props.history.goBack}>Cancel</Button>
               <Button type="submit" color="success" className="margin-teeth">Sign Up</Button>

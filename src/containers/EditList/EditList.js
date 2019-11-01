@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import axios from 'axios';
+import { connect } from 'react-redux';
 
 import FormError from '../../components/FormError/FormError';
 import { Button, Form, FormGroup, Label, Input } from 'reactstrap';
@@ -28,7 +29,11 @@ class EditList extends Component {
       boardId: this.state.boardId
     };
     try {
-      await axios.put(`https://trello-api-nodejs.herokuapp.com/lists/${this.state.id}`, data);
+      await axios.put(`https://trello-api-nodejs.herokuapp.com/lists/${this.state.id}`, data, {
+        headers: {
+          Authorization: 'Bearer ' + this.props.token
+        }
+      });
       this.props.finish();
     } catch (error) {
       this.setState({ 
@@ -59,4 +64,10 @@ class EditList extends Component {
   }
 }
 
-export default EditList;
+const mapStateToProps = state => {
+  return {
+    token: state.token,
+  }
+};
+
+export default connect(mapStateToProps)(EditList);

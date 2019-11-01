@@ -1,6 +1,9 @@
 import React, { Component } from 'react'
-import Lists from '../../components/Lists/Lists';
+import { Redirect } from 'react-router-dom';
 import axios from 'axios';
+import { connect } from 'react-redux';
+
+import Lists from '../../components/Lists/Lists';
 import Spinner from '../../components/Spinner/Spinner'
 
 class ListsPage extends Component {
@@ -26,9 +29,17 @@ class ListsPage extends Component {
   }
 
   listHandler = async () => {
-    const responseLists = await axios.get(`https://trello-api-nodejs.herokuapp.com/lists/`);
+    const responseLists = await axios.get(`https://trello-api-nodejs.herokuapp.com/lists/`, {
+      headers: {
+        Authorization: 'Bearer ' + this.props.token
+      }
+    });
     this.setState({ lists: responseLists.data });
-    const responseTasks = await axios.get(`https://trello-api-nodejs.herokuapp.com/tasks/`);
+    const responseTasks = await axios.get(`https://trello-api-nodejs.herokuapp.com/tasks/`, {
+      headers: {
+        Authorization: 'Bearer ' + this.props.token
+      }
+    });
     this.setState({
       tasks: responseTasks.data,
       isLoaded: true,
@@ -40,7 +51,11 @@ class ListsPage extends Component {
   }
 
   deleteListHandler = async (listId) => {
-    await axios.delete(`https://trello-api-nodejs.herokuapp.com/lists/${listId}`);
+    await axios.delete(`https://trello-api-nodejs.herokuapp.com/lists/${listId}`, {
+      headers: {
+        Authorization: 'Bearer ' + this.props.token
+      }
+    });
     this.setState(prevState => {
       const updatedLists = prevState.lists.filter(list => list._id !== listId);
       return { 
@@ -51,7 +66,11 @@ class ListsPage extends Component {
   }
 
   deleteTaskHandler = async (taskId) => {
-    await axios.delete(`https://trello-api-nodejs.herokuapp.com/tasks/${taskId}`);
+    await axios.delete(`https://trello-api-nodejs.herokuapp.com/tasks/${taskId}`, {
+      headers: {
+        Authorization: 'Bearer ' + this.props.token
+      }
+    });
     this.setState(prevState => {
       const updatedTasks = prevState.tasks.filter(task => task._id !== taskId);
       return { 
@@ -114,9 +133,16 @@ class ListsPage extends Component {
   }
 
   render() {
+    let authRedirect = null;
+
+    if (!this.props.token) {
+      authRedirect = <Redirect to='/login' />
+    }
+
     return (
       <>
         <center>
+          {authRedirect}
           {this.state.isLoaded ?
             <div>
               <Lists
@@ -159,4 +185,10 @@ class ListsPage extends Component {
   }
 }
 
-export default ListsPage
+const mapStateToProps = state => {
+  return {
+    token: state.token,
+  }
+};
+
+export default connect(mapStateToProps)(ListsPage);
