@@ -89,7 +89,8 @@ class Login extends Component {
                 </FormGroup>
                 <Button color="danger" className="margin-teeth" onClick={this.props.history.goBack}>Cancel</Button>
                 <Button type="submit" color="success" className="margin-teeth">Login</Button><br /><br />
-                <Link to="/signup"><b className={classes.greenLink}>I don't have an account yet</b></Link>
+                <Link to="/signup"><b className={classes.greenLink}>I don't have an account yet</b></Link><br /><br />
+                <Link to="/reset"><b className={classes.greenLink}>I've forgotten my password</b></Link>
                 {this.state.authLoading ? <Spinner /> : null}
                 {this.state.error ? <FormError errorMessage={this.state.errorMessage} /> : null}
               </Form>
