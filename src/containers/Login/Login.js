@@ -40,8 +40,7 @@ class Login extends Component {
         authLoading: false,
         error: false,
       })
-      this.props.responseHandler(res.data.token, res.data.userId);
-      this.props.authTimeout(res.data.expiresIn);
+      this.props.responseHandler(res.data.token, res.data.userId, res.data.expiresIn);
       this.props.history.push('/board');
     } catch (error) {
       switch (error.response.data.message) {
@@ -105,8 +104,7 @@ class Login extends Component {
 
 const mapDispatchToProps = dispatch => {
   return {
-    responseHandler: (token, userId) => dispatch(actionCreators.responseHandler(token, userId)),
-    authTimeout: (expiresIn) => dispatch(actionCreators.authTimeout(expiresIn)),
+    responseHandler: (token, userId, expiresIn) => dispatch(actionCreators.responseHandler(token, userId, expiresIn)),
   }
 }
 

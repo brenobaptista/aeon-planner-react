@@ -31,13 +31,15 @@ class ListsPage extends Component {
   listHandler = async () => {
     const responseLists = await axios.get(`https://trello-api-nodejs.herokuapp.com/lists/`, {
       headers: {
-        Authorization: 'Bearer ' + this.props.token
+        Authorization: 'Bearer ' + this.props.token,
+        userId: this.props.userId,
       }
     });
     this.setState({ lists: responseLists.data });
     const responseTasks = await axios.get(`https://trello-api-nodejs.herokuapp.com/tasks/`, {
       headers: {
-        Authorization: 'Bearer ' + this.props.token
+        Authorization: 'Bearer ' + this.props.token,
+        userId: this.props.userId,
       }
     });
     this.setState({
@@ -68,7 +70,7 @@ class ListsPage extends Component {
   deleteTaskHandler = async (taskId) => {
     await axios.delete(`https://trello-api-nodejs.herokuapp.com/tasks/${taskId}`, {
       headers: {
-        Authorization: 'Bearer ' + this.props.token
+        Authorization: 'Bearer ' + this.props.token,
       }
     });
     this.setState(prevState => {
@@ -188,6 +190,7 @@ class ListsPage extends Component {
 const mapStateToProps = state => {
   return {
     token: state.token,
+    userId: state.userId,
   }
 };
 

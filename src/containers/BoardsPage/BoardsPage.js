@@ -27,7 +27,8 @@ class Home extends Component {
   boardHandler = async () => {
     const response = await axios.get('https://trello-api-nodejs.herokuapp.com/boards/', {
       headers: {
-        Authorization: 'Bearer ' + this.props.token
+        Authorization: 'Bearer ' + this.props.token,
+        userId: this.props.userId,
       }
     });
     this.setState({
@@ -125,6 +126,7 @@ class Home extends Component {
 const mapStateToProps = state => {
   return {
     token: state.token,
+    userId: state.userId,
   }
 };
 

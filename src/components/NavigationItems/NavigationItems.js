@@ -10,7 +10,7 @@ const navigationItems = (props) => (
     {props.token ? 
       <>
         <NavigationItem link="/board" clicked={props.clicked}>Boards</NavigationItem>
-        <NavigationItem clicked={props.authLogout}>Logout</NavigationItem>
+        <NavigationItem link="/login" clicked={props.authLogout}>Logout</NavigationItem>
       </>
       :
       <>

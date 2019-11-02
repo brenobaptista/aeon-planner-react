@@ -1,11 +1,11 @@
 import React, { Component, Suspense } from 'react';
 import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
+import { connect } from 'react-redux';
 
+import * as actionCreators from './store/actions/index';
 import './App.css'
-
 import Navbar from './components/Navbar/Navbar';
 import SideDrawer from './components/SideDrawer/SideDrawer';
-
 import Home from './components/Home/Home';
 import BoardsPage from './containers/BoardsPage/BoardsPage';
 import Login from './containers/Login/Login';
@@ -30,7 +30,40 @@ class App extends Component {
     }));
   }
 
+  componentDidMount () {
+    this.props.onTryAutoSignup();
+  }
+
   render() {
+    let routes = (
+      <Switch>
+        <Route exact path='/' component={Home} />
+        <Route path='/login' component={Login} />
+        <Route path='/signup' component={SignUp} />
+        <Route exact path='/reset' component={ResetPassword} />
+        <Route path='/reset/:token' component={NewPassword} />
+        <Route render={() => (
+          <Suspense fallback={<></>}>
+            <HTTP404 />
+          </Suspense>
+        )} />
+      </Switch>
+    )
+
+    if (this.props.isAuthenticated) {
+      routes = (
+        <Switch>
+          <Route exact path='/board' component={BoardsPage} />
+          <Route path='/board/:boardName/:boardId' component={ListsPage} />
+          <Route render={() => (
+            <Suspense fallback={<></>}>
+              <HTTP404 />
+            </Suspense>
+          )} />
+        </Switch>
+      )
+    }
+
     return (
       <>
         <Router>
@@ -39,20 +72,7 @@ class App extends Component {
             open={this.state.showSideDrawer}
             closed={this.sideDrawerClosedHandler} />
           <div className="marginForNavbar">
-            <Switch>
-              <Route exact path='/' component={Home} />
-              <Route exact path='/board' component={BoardsPage} />
-              <Route path='/login' component={Login} />
-              <Route path='/signup' component={SignUp} />
-              <Route exact path='/reset' component={ResetPassword} />
-              <Route path='/reset/:token' component={NewPassword} />
-              <Route path='/board/:boardName/:boardId' component={ListsPage} />
-              <Route render={() => (
-                <Suspense fallback={<></>}>
-                  <HTTP404 />
-                </Suspense>
-              )} />
-            </Switch>
+            {routes}
           </div>
         </Router>
       </>
@@ -60,4 +80,16 @@ class App extends Component {
   }
 }
 
-export default App;
+const mapStateToProps = state => {
+  return {
+    isAuthenticated: state.token !== null
+  };
+};
+
+const mapDispatchToProps = dispatch => {
+  return {
+    onTryAutoSignup: () => dispatch(actionCreators.authCheckState()),
+  };
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(App);

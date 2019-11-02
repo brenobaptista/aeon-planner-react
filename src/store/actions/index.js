@@ -1,1 +1,1 @@
-export { responseHandler, authTimeout, authLogout } from './auth';
+export { responseHandler, authTimeout, authLogout, authCheckState } from './auth';
