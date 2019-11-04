@@ -35,7 +35,7 @@ const Lists = ({ propsState, propsFunction }) => {
                         </DropdownToggle>
                         <DropdownMenu>
                           <DropdownItem onClick={() => propsFunction.editListButton(list._id, list.name)}>Edit</DropdownItem>
-                          <DropdownItem onClick={propsFunction.deleteListButton}>Delete</DropdownItem>
+                          <DropdownItem onClick={() => propsFunction.deleteListButton(list._id)}>Delete</DropdownItem>
                         </DropdownMenu>
                       </UncontrolledButtonDropdown>
                     </Badge>
@@ -59,7 +59,7 @@ const Lists = ({ propsState, propsFunction }) => {
                       <div>
                         <h3 className={classes.greenText}>Are you sure you wish to delete it?</h3><br />
                         <Button color="danger" className="margin-teeth" onClick={propsFunction.deleteListButton}>Cancel</Button>
-                        <Button color="success" className="margin-teeth" onClick={() => propsFunction.deleteList(list._id)}>Yes</Button>
+                        <Button color="success" className="margin-teeth" onClick={() => propsFunction.deleteList(propsState.deleteListId)}>Yes</Button>
                       </div>
                       : null}
                   </Modal>
@@ -70,6 +70,7 @@ const Lists = ({ propsState, propsFunction }) => {
                         if (task.listId === list._id) {
                           return (
                             <Tasks
+                              key={task._id}
                               taskId={task._id} 
                               taskName={task.name} 
                               taskDescription={task.description}
@@ -78,10 +79,12 @@ const Lists = ({ propsState, propsFunction }) => {
                               deleteTaskButton={propsFunction.deleteTaskButton} 
                               deleteTaskState={propsState.deleteTaskState}
                               deleteTask={propsFunction.deleteTask}
+                              deleteTaskId={propsState.deleteTaskId}
                               clickBackdrop={propsFunction.clickBackdrop}
                               editTaskId={propsState.editTaskId}
                               editTaskName={propsState.editTaskName}
                               editTaskDescription={propsState.editTaskDescription}
+                              editTaskListId={propsState.editTaskListId}
                               listId={list._id}
                               cancel={propsFunction.editTaskButton}
                               finish={propsFunction.finish}
@@ -94,13 +97,13 @@ const Lists = ({ propsState, propsFunction }) => {
                   </div>
 
                   <div className={classes.marginTop}>
-                    <Button color="success" className={classes.marginBottom} onClick={propsFunction.createTask}>+ New Task</Button>
+                    <Button color="success" className={classes.marginBottom} onClick={() => propsFunction.createTask(list._id)}>+ New Task</Button>
                     <Modal show={propsState.createTaskState} clickBackdrop={propsFunction.clickBackdrop}>
                       {propsState.createTaskState ? 
                         <NewTask 
                           cancel={propsFunction.createTask} 
                           finish={propsFunction.finish} 
-                          listId={list._id} /> 
+                          listId={propsState.createTaskListId} /> 
                         : null}
                     </Modal>
                   </div>

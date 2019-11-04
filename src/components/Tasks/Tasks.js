@@ -8,7 +8,7 @@ import EditTask from '../../containers/EditTask/EditTask';
 
 const Tasks = (props) => (
   <>
-    <div className="col-md-4" key={props.taskId}>
+    <div className="col-md-4">
       <Card className={`margin-t-b shadow-sm ${classes.whiteBg}`}>
         <CardBody>
           <CardTitle className={classes.greenText} tag="h5">
@@ -19,8 +19,8 @@ const Tasks = (props) => (
                   <FontAwesomeIcon icon="cog" />
                 </DropdownToggle>
                 <DropdownMenu>
-                  <DropdownItem onClick={() => props.editTaskButton(props.taskId, props.taskName, props.taskDescription)}>Edit</DropdownItem>
-                  <DropdownItem onClick={props.deleteTaskButton}>Delete</DropdownItem>
+                  <DropdownItem onClick={() => props.editTaskButton(props.taskId, props.taskName, props.taskDescription, props.listId)}>Edit</DropdownItem>
+                  <DropdownItem onClick={() => props.deleteTaskButton(props.taskId)}>Delete</DropdownItem>
                 </DropdownMenu>
               </UncontrolledButtonDropdown>
             </Badge>
@@ -38,7 +38,7 @@ const Tasks = (props) => (
           id={props.editTaskId}
           name={props.editTaskName}
           description={props.editTaskDescription}
-          listId={props.listId}
+          listId={props.editTaskListId}
           cancel={props.cancel}
           finish={props.finish}
         />
@@ -51,7 +51,7 @@ const Tasks = (props) => (
         <div>
           <h3 className={classes.greenText}>Are you sure you wish to delete it?</h3><br />
           <Button color="danger" className="margin-teeth" onClick={props.deleteTaskButton}>Cancel</Button>
-          <Button color="success" className="margin-teeth" onClick={() => props.deleteTask(props.taskId)}>Yes</Button>
+          <Button color="success" className="margin-teeth" onClick={() => props.deleteTask(props.deleteTaskId)}>Yes</Button>
         </div>
         : null}
     </Modal>

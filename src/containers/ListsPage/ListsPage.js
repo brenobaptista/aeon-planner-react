@@ -13,6 +13,7 @@ class ListsPage extends Component {
     isLoaded: false,
     showCreateListModal: false,
     showCreateTaskModal: false,
+    createTaskListId: '',
     showEditListModal: false,
     showEditTaskModal: false,
     editListId: '',
@@ -20,8 +21,11 @@ class ListsPage extends Component {
     editTaskId: '',
     editTaskName: '',
     editTaskDescription: '',
+    editTaskListId: '',
     showDeleteListModal: false,
     showDeleteTaskModal: false,
+    deleteTaskId: '',
+    deleteListId: '',
   }
 
   componentDidMount() {
@@ -88,9 +92,10 @@ class ListsPage extends Component {
     }))
   }
 
-  modalCreateTaskHandler = () => {
+  modalCreateTaskHandler = (listId) => {
     this.setState(prevState => ({
-      showCreateTaskModal: !prevState.showCreateTaskModal
+      showCreateTaskModal: !prevState.showCreateTaskModal,
+      createTaskListId: listId,
     }))
   }
 
@@ -102,24 +107,27 @@ class ListsPage extends Component {
     }))
   }
 
-  modalEditTaskHandler = (taskId, taskName, taskDescription) => {
+  modalEditTaskHandler = (taskId, taskName, taskDescription, listId) => {
     this.setState(prevState => ({
       showEditTaskModal: !prevState.showEditTaskModal,
       editTaskId: taskId,
       editTaskName: taskName,
-      editTaskDescription: taskDescription
+      editTaskDescription: taskDescription,
+      editTaskListId: listId,
     }))
   }
 
-  modalDeleteListHandler = () => {
+  modalDeleteListHandler = (listId) => {
     this.setState(prevState => ({
-      showDeleteListModal: !prevState.showDeleteListModal
+      showDeleteListModal: !prevState.showDeleteListModal,
+      deleteListId: listId,
     }))
   }
 
-  modalDeleteTaskHandler = () => {
+  modalDeleteTaskHandler = (taskId) => {
     this.setState(prevState => ({
-      showDeleteTaskModal: !prevState.showDeleteTaskModal
+      showDeleteTaskModal: !prevState.showDeleteTaskModal,
+      deleteTaskId: taskId,
     }))
   }
 
@@ -153,13 +161,17 @@ class ListsPage extends Component {
                   tasks: this.state.tasks,
                   deleteListState: this.state.showDeleteListModal,
                   deleteTaskState: this.state.showDeleteTaskModal,
+                  deleteTaskId: this.state.deleteTaskId,
+                  deleteListId: this.state.deleteListId,
                   editListId: this.state.editListId,
                   editListName: this.state.editListName,
                   editTaskId: this.state.editTaskId,
                   editTaskName: this.state.editTaskName,
                   editTaskDescription: this.state.editTaskDescription,
+                  editTaskListId: this.state.editTaskListId,
                   createListState: this.state.showCreateListModal,
                   createTaskState: this.state.showCreateTaskModal,
+                  createTaskListId: this.state.createTaskListId,
                   editListState: this.state.showEditListModal,
                   editTaskState: this.state.showEditTaskModal,
                 }}
