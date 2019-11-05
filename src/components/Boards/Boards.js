@@ -10,11 +10,6 @@ import NewBoard from '../../containers/NewBoard/NewBoard';
 const Boards = ({ propsState , propsFunction }) => {
   return (
     <>
-      <Button color="success" className={classes.marginBottom} onClick={propsFunction.createButton}>+ New Board</Button>
-      <Modal show={propsState.createState} clickBackdrop={propsFunction.clickBackdrop}>
-        {propsState.createState ? <NewBoard cancel={propsFunction.createButton} finish={propsFunction.finish} /> : null}
-      </Modal>
-
       {propsState.boards.map((board) => (
         <div key={board._id}>
           <Link to={`/board/${board.name}/${board._id}`}>
@@ -42,6 +37,11 @@ const Boards = ({ propsState , propsFunction }) => {
           </Modal>
         </div>
       ))}
+
+      <Button color="success" className={classes.marginTop} onClick={propsFunction.createButton}>+ New Board</Button>
+      <Modal show={propsState.createState} clickBackdrop={propsFunction.clickBackdrop}>
+        {propsState.createState ? <NewBoard cancel={propsFunction.createButton} finish={propsFunction.finish} /> : null}
+      </Modal>
     </>
   )
 }

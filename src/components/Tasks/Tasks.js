@@ -8,14 +8,14 @@ import EditTask from '../../containers/EditTask/EditTask';
 
 const Tasks = (props) => (
   <>
-    <div className="col-md-4">
+    <div className="col-md-4 col-sm-6">
       <Card className={`margin-t-b shadow-sm ${classes.whiteBg}`}>
         <CardBody>
           <CardTitle className={classes.greenText} tag="h5">
             {props.taskName}
-            <Badge color="link">
+            <Badge color="link" className={classes.fixBadge2}>
               <UncontrolledButtonDropdown>
-                <DropdownToggle caret color="secondary" size="sm" className={classes.fixBadge}>
+                <DropdownToggle color="link" size="sm" className={classes.fixBadge}>
                   <FontAwesomeIcon icon="cog" />
                 </DropdownToggle>
                 <DropdownMenu>

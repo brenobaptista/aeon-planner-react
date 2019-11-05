@@ -1,5 +1,5 @@
 .modBtn {
-  width: 4em;
+  width: 3.5em;
   height: 3.5em;
   margin-bottom: 0.5em;
   margin-right: 0.5em;
@@ -13,6 +13,12 @@
   margin-right: 0.5em;
 }
 
+@media (min-width: 768px) {
+  .boardBtn {
+    width: 22rem;
+  }
+}
+
 .greenText {
   color: #00AB84;
 }
@@ -24,6 +30,6 @@
   background-color: #008675 !important;
 }
 
-.marginBottom {
-  margin-bottom: 1em;
+.marginTop {
+  margin-top: 2em;
 }

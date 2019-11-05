@@ -25,12 +25,12 @@ const Lists = ({ propsState, propsFunction }) => {
           return (
             <div key={list._id}>
               <Card className={`shadow ${classes.card80} bg-light ${classes.marginBottomCard}`}>
-                <CardBody>
+                <CardBody className={classes.paddingTasks}>
                   <CardTitle className={classes.greenText} tag="h4">
                     {list.name}
-                    <Badge color="link">
+                    <Badge color="link" className={classes.fixBadge2}>
                       <UncontrolledButtonDropdown size="sm">
-                        <DropdownToggle caret color="secondary" className={classes.fixBadge}>
+                        <DropdownToggle color="link" className={classes.fixBadge}>
                           <FontAwesomeIcon icon="cog" />
                         </DropdownToggle>
                         <DropdownMenu>
