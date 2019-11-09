@@ -5,6 +5,7 @@ import { connect } from 'react-redux';
 
 import Lists from '../../components/Lists/Lists';
 import Spinner from '../../components/Spinner/Spinner'
+import * as actionTypes from '../../store/actions/actionTypes';
 
 class ListsPage extends Component {
   state = {
@@ -12,19 +13,10 @@ class ListsPage extends Component {
     tasks: [],
     isLoaded: false,
     showCreateListModal: false,
-    showCreateTaskModal: false,
-    createTaskListId: '',
     showEditListModal: false,
-    showEditTaskModal: false,
     editListId: '',
     editListName: '',
-    editTaskId: '',
-    editTaskName: '',
-    editTaskDescription: '',
-    editTaskListId: '',
     showDeleteListModal: false,
-    showDeleteTaskModal: false,
-    deleteTaskId: '',
     deleteListId: '',
   }
 
@@ -50,10 +42,10 @@ class ListsPage extends Component {
       tasks: responseTasks.data,
       isLoaded: true,
       showCreateListModal: false,
-      showCreateTaskModal: false,
       showEditListModal: false,
-      showEditTaskModal: false,
     })
+    this.props.editTaskCompleted();
+    this.props.createTaskCompleted();
   }
 
   deleteListHandler = async (listId) => {
@@ -81,21 +73,14 @@ class ListsPage extends Component {
       const updatedTasks = prevState.tasks.filter(task => task._id !== taskId);
       return { 
         tasks: updatedTasks,
-        showDeleteTaskModal: !prevState.showDeleteTaskModal
        }
-    })
+    });
+    this.props.deleteTaskCompleted();
   }
 
   modalCreateListHandler = () => {
     this.setState(prevState => ({
       showCreateListModal: !prevState.showCreateListModal
-    }))
-  }
-
-  modalCreateTaskHandler = (listId) => {
-    this.setState(prevState => ({
-      showCreateTaskModal: !prevState.showCreateTaskModal,
-      createTaskListId: listId,
     }))
   }
 
@@ -107,16 +92,6 @@ class ListsPage extends Component {
     }))
   }
 
-  modalEditTaskHandler = (taskId, taskName, taskDescription, listId) => {
-    this.setState(prevState => ({
-      showEditTaskModal: !prevState.showEditTaskModal,
-      editTaskId: taskId,
-      editTaskName: taskName,
-      editTaskDescription: taskDescription,
-      editTaskListId: listId,
-    }))
-  }
-
   modalDeleteListHandler = (listId) => {
     this.setState(prevState => ({
       showDeleteListModal: !prevState.showDeleteListModal,
@@ -124,21 +99,11 @@ class ListsPage extends Component {
     }))
   }
 
-  modalDeleteTaskHandler = (taskId) => {
-    this.setState(prevState => ({
-      showDeleteTaskModal: !prevState.showDeleteTaskModal,
-      deleteTaskId: taskId,
-    }))
-  }
-
   clickBackdrop = () => {
     this.setState({
       showCreateListModal: false,
-      showCreateTaskModal: false,
       showEditListModal: false,
-      showEditTaskModal: false,
       showDeleteListModal: false,
-      showDeleteTaskModal: false,
     })
   }
 
@@ -156,39 +121,23 @@ class ListsPage extends Component {
           {this.state.isLoaded ?
             <div>
               <Lists
-                propsState={{
-                  lists: this.state.lists,
-                  tasks: this.state.tasks,
-                  deleteListState: this.state.showDeleteListModal,
-                  deleteTaskState: this.state.showDeleteTaskModal,
-                  deleteTaskId: this.state.deleteTaskId,
-                  deleteListId: this.state.deleteListId,
-                  editListId: this.state.editListId,
-                  editListName: this.state.editListName,
-                  editTaskId: this.state.editTaskId,
-                  editTaskName: this.state.editTaskName,
-                  editTaskDescription: this.state.editTaskDescription,
-                  editTaskListId: this.state.editTaskListId,
-                  createListState: this.state.showCreateListModal,
-                  createTaskState: this.state.showCreateTaskModal,
-                  createTaskListId: this.state.createTaskListId,
-                  editListState: this.state.showEditListModal,
-                  editTaskState: this.state.showEditTaskModal,
-                }}
-                propsFunction={{
-                  boardId: this.props.match.params.boardId,
-                  boardName: this.props.match.params.boardName,
-                  createList: this.modalCreateListHandler,
-                  createTask: this.modalCreateTaskHandler,
-                  editListButton: this.modalEditListHandler,
-                  editTaskButton: this.modalEditTaskHandler,
-                  finish: this.listHandler,
-                  deleteList: this.deleteListHandler,
-                  deleteTask: this.deleteTaskHandler,
-                  deleteListButton: this.modalDeleteListHandler,
-                  deleteTaskButton: this.modalDeleteTaskHandler,
-                  clickBackdrop: this.clickBackdrop,
-                }}
+                lists={this.state.lists}
+                tasks={this.state.tasks}
+                boardId={this.props.match.params.boardId}
+                boardName={this.props.match.params.boardName}
+                deleteListState={this.state.showDeleteListModal}
+                deleteListId={this.state.deleteListId}
+                editListId={this.state.editListId}
+                editListName={this.state.editListName}
+                createListState={this.state.showCreateListModal}
+                editListState={this.state.showEditListModal}
+                deleteTask={this.deleteTaskHandler}
+                createList={this.modalCreateListHandler}
+                editListButton={this.modalEditListHandler}
+                deleteList={this.deleteListHandler}
+                deleteListButton={this.modalDeleteListHandler}
+                finish={this.listHandler}
+                clickBackdrop={this.clickBackdrop}
               />
             </div>
             : <Spinner />
@@ -201,9 +150,17 @@ class ListsPage extends Component {
 
 const mapStateToProps = state => {
   return {
-    token: state.token,
-    userId: state.userId,
+    token: state.auth.token,
+    userId: state.auth.userId,
   }
 };
 
-export default connect(mapStateToProps)(ListsPage);
+const mapDispatchToProps = dispatch => {
+  return {
+    deleteTaskCompleted: () => dispatch({ type: actionTypes.CANCEL_DELETE_TASK }),
+    editTaskCompleted: () => dispatch({ type: actionTypes.CANCEL_EDIT_TASK }),
+    createTaskCompleted: () => dispatch({ type: actionTypes.CANCEL_CREATE_TASK }),
+  }
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(ListsPage);

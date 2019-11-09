@@ -1,6 +1,6 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import { createStore, applyMiddleware } from 'redux';
+import { createStore, combineReducers, applyMiddleware } from 'redux';
 import { Provider } from 'react-redux';
 import thunk from 'redux-thunk';
 import { library } from '@fortawesome/fontawesome-svg-core'
@@ -12,8 +12,14 @@ import App from './App';
 import * as serviceWorker from './serviceWorker';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import authReducer from './store/reducers/auth';
+import taskReducer from './store/reducers/task';
 
-const store = createStore(authReducer, applyMiddleware(thunk));
+const rootReducer = combineReducers({
+  auth: authReducer,
+  task: taskReducer,
+});
+
+const store = createStore(rootReducer, applyMiddleware(thunk));
 
 library.add(fab, faWindowClose, faPencilAlt, faCog)
 

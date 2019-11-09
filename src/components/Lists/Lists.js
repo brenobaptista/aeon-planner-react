@@ -2,26 +2,28 @@ import React from 'react';
 import classes from './Lists.module.css';
 import { Button, Badge, Card, CardBody, CardTitle, UncontrolledButtonDropdown, DropdownToggle, DropdownMenu, DropdownItem } from 'reactstrap';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { connect } from 'react-redux';
 
 import Modal from '../Modal/Modal';
 import NewList from '../../containers/NewList/NewList';
 import NewTask from '../../containers/NewTask/NewTask';
 import EditList from '../../containers/EditList/EditList';
 import Tasks from '../Tasks/Tasks';
+import * as actionTypes from '../../store/actions/actionTypes';
 
-const Lists = ({ propsState, propsFunction }) => {
+const Lists = ( props ) => {
   return (
     <>
       <Card className={`shadow-sm ${classes.card50} margin-t-b bg-light ${classes.greenText}`}>
         <CardBody>
           <CardTitle tag="h3" className={classes.marginCard}>
-            {propsFunction.boardName}
+            {props.boardName}
           </CardTitle>
         </CardBody>
       </Card>
 
-      {propsState.lists.map((list) => {
-        if (list.boardId === propsFunction.boardId) {
+      {props.lists.map((list) => {
+        if (list.boardId === props.boardId) {
           return (
             <div key={list._id}>
               <Card className={`shadow ${classes.card80} bg-light ${classes.marginBottomCard}`}>
@@ -34,60 +36,50 @@ const Lists = ({ propsState, propsFunction }) => {
                           <FontAwesomeIcon icon="cog" />
                         </DropdownToggle>
                         <DropdownMenu>
-                          <DropdownItem onClick={() => propsFunction.editListButton(list._id, list.name)}>Edit</DropdownItem>
-                          <DropdownItem onClick={() => propsFunction.deleteListButton(list._id)}>Delete</DropdownItem>
+                          <DropdownItem onClick={() => props.editListButton(list._id, list.name)}>Edit</DropdownItem>
+                          <DropdownItem onClick={() => props.deleteListButton(list._id)}>Delete</DropdownItem>
                         </DropdownMenu>
                       </UncontrolledButtonDropdown>
                     </Badge>
                   </CardTitle>
 
-                  <Modal show={propsState.editListState} clickBackdrop={propsFunction.clickBackdrop}>
-                    {propsState.editListState ?
+                  <Modal show={props.editListState} clickBackdrop={props.clickBackdrop}>
+                    {props.editListState ?
                       <EditList 
-                        id={propsState.editListId} 
-                        name={propsState.editListName} 
-                        boardId={propsFunction.boardId} 
-                        cancel={propsFunction.editListButton} 
-                        finish={propsFunction.finish} 
+                        id={props.editListId} 
+                        name={props.editListName} 
+                        boardId={props.boardId} 
+                        cancel={props.editListButton} 
+                        finish={props.finish} 
                       />
                       : null
                     }
                   </Modal>
 
-                  <Modal show={propsState.deleteListState} clickBackdrop={propsFunction.clickBackdrop}>
-                    {propsState.deleteListState ?
+                  <Modal show={props.deleteListState} clickBackdrop={props.clickBackdrop}>
+                    {props.deleteListState ?
                       <div>
                         <h3 className={classes.greenText}>Are you sure you wish to delete it?</h3><br />
-                        <Button color="danger" className="margin-teeth" onClick={propsFunction.deleteListButton}>Cancel</Button>
-                        <Button color="success" className="margin-teeth" onClick={() => propsFunction.deleteList(propsState.deleteListId)}>Yes</Button>
+                        <Button color="danger" className="margin-teeth" onClick={props.deleteListButton}>Cancel</Button>
+                        <Button color="success" className="margin-teeth" onClick={() => props.deleteList(props.deleteListId)}>Yes</Button>
                       </div>
                       : null}
                   </Modal>
 
                   <div className="container">
                     <div className="row">
-                      {propsState.tasks.map((task) => {
+                      {props.tasks.map((task) => {
                         if (task.listId === list._id) {
                           return (
                             <Tasks
                               key={task._id}
+                              deleteTask={props.deleteTask}
                               taskId={task._id} 
                               taskName={task.name} 
                               taskDescription={task.description}
-                              editTaskButton={propsFunction.editTaskButton}
-                              editTaskState={propsState.editTaskState}
-                              deleteTaskButton={propsFunction.deleteTaskButton} 
-                              deleteTaskState={propsState.deleteTaskState}
-                              deleteTask={propsFunction.deleteTask}
-                              deleteTaskId={propsState.deleteTaskId}
-                              clickBackdrop={propsFunction.clickBackdrop}
-                              editTaskId={propsState.editTaskId}
-                              editTaskName={propsState.editTaskName}
-                              editTaskDescription={propsState.editTaskDescription}
-                              editTaskListId={propsState.editTaskListId}
                               listId={list._id}
-                              cancel={propsFunction.editTaskButton}
-                              finish={propsFunction.finish}
+                              finish={props.finish}
+                              clickBackdrop={props.clickBackdrop}
                             />
                           )
                         };
@@ -97,16 +89,17 @@ const Lists = ({ propsState, propsFunction }) => {
                   </div>
 
                   <div className={classes.marginTop}>
-                    <Button color="success" className={classes.marginBottom} onClick={() => propsFunction.createTask(list._id)}>+ New Task</Button>
-                    <Modal show={propsState.createTaskState} clickBackdrop={propsFunction.clickBackdrop}>
-                      {propsState.createTaskState ? 
+                    <Button color="success" className={classes.marginBottom} onClick={() => props.modalCreateTask(list._id)}>+ New Task</Button>
+                    <Modal show={props.showCreateTaskModal} clickBackdrop={props.cancelCreateTask}>
+                      {props.showCreateTaskModal ? 
                         <NewTask 
-                          cancel={propsFunction.createTask} 
-                          finish={propsFunction.finish} 
-                          listId={propsState.createTaskListId} /> 
+                          cancel={props.cancelCreateTask} 
+                          finish={props.finish} 
+                          listId={props.createTaskListId} /> 
                         : null}
                     </Modal>
                   </div>
+
                   </CardBody>
               </Card>
             </div>
@@ -116,34 +109,33 @@ const Lists = ({ propsState, propsFunction }) => {
       }
       )}
 
-      <Button color="success" className={classes.marginBottom} onClick={propsFunction.createList}>+ New List</Button>
-      
-      <Modal show={propsState.editListState} clickBackdrop={propsFunction.clickBackdrop}>
-        {propsState.editListState ?
-          <EditList 
-            id={propsState.editListId} 
-            name={propsState.editListName} 
-            boardId={propsFunction.boardId} 
-            cancel={propsFunction.editListButton} 
-            finish={propsFunction.finish} 
-          />
-          : null
-        }
-      </Modal>
-      
-      <Modal show={propsState.createListState} clickBackdrop={propsFunction.clickBackdrop}>
-        {propsState.createListState ? 
+      <Button color="success" className={classes.marginBottom} onClick={props.createList}>+ New List</Button>
+      <Modal show={props.createListState} clickBackdrop={props.clickBackdrop}>
+        {props.createListState ? 
           <NewList 
-            cancel={propsFunction.createList} 
-            finish={propsFunction.finish} 
-            boardId={propsFunction.boardId} 
+            cancel={props.createList} 
+            finish={props.finish} 
+            boardId={props.boardId} 
           /> 
           : null
         }
       </Modal>
-
     </>
   )
 }
 
-export default Lists;
+const mapStateToProps = state => {
+  return {
+    showCreateTaskModal: state.task.showCreateTaskModal,
+    createTaskListId: state.task.createTaskListId,
+  }
+};
+
+const mapDispatchToProps = dispatch => {
+  return {
+    modalCreateTask: (listId) => dispatch({ type: actionTypes.MODAL_CREATE_TASK, listId }),
+    cancelCreateTask: () => dispatch({ type: actionTypes.CANCEL_CREATE_TASK }),
+  }
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(Lists);

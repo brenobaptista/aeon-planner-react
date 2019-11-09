@@ -125,8 +125,8 @@ class Home extends Component {
 
 const mapStateToProps = state => {
   return {
-    token: state.token,
-    userId: state.userId,
+    token: state.auth.token,
+    userId: state.auth.userId,
   }
 };
 

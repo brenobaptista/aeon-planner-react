@@ -5,7 +5,7 @@ const initialState = {
   userId: null,
 }
 
-const reducer = (state = initialState, action) => {
+const authReducer = (state = initialState, action) => {
   switch (action.type) {
     case actionTypes.RESPONSE_HANDLER:
       return {
@@ -24,4 +24,4 @@ const reducer = (state = initialState, action) => {
   }
 }
 
-export default reducer;
+export default authReducer;
