@@ -14,7 +14,7 @@ const Tasks = (props) => (
           <CardTitle className={classes.greenText} tag="h5">
             {props.taskName}
             <Badge color="link" className={classes.fixBadge2}>
-              <UncontrolledButtonDropdown>
+              <UncontrolledButtonDropdown direction="left">
                 <DropdownToggle color="link" size="sm" className={classes.fixBadge}>
                   <FontAwesomeIcon icon="cog" />
                 </DropdownToggle>

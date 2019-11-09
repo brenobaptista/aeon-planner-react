@@ -1,7 +1,7 @@
 import React from 'react';
 import { Link } from "react-router-dom";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { Button } from 'reactstrap';
+import { Button, UncontrolledButtonDropdown, DropdownToggle, DropdownMenu, DropdownItem } from 'reactstrap';
 import classes from './Boards.module.css';
 import Modal from '../Modal/Modal';
 import EditBoard from '../../containers/EditBoard/EditBoard';
@@ -17,15 +17,21 @@ const Boards = ({ propsState , propsFunction }) => {
               {board.name}
             </Button>
           </Link>
-          <Button color="warning" className={classes.modBtn} onClick={() => propsFunction.editButton(board._id, board.name)}>
-            <FontAwesomeIcon icon="pencil-alt" />
-          </Button>
+
+          <UncontrolledButtonDropdown direction="left">
+            <DropdownToggle color="info" className={classes.modBtn}>
+              <FontAwesomeIcon icon="cog" />
+            </DropdownToggle>
+            <DropdownMenu>
+              <DropdownItem onClick={() => propsFunction.editButton(board._id, board.name)}>Edit</DropdownItem>
+              <DropdownItem onClick={propsFunction.deleteButton}>Delete</DropdownItem>
+            </DropdownMenu>
+          </UncontrolledButtonDropdown>
+
           <Modal show={propsState.editState} clickBackdrop={propsFunction.clickBackdrop}>
             {propsState.editState ? <EditBoard id={propsState.editBoardId} name={propsState.editBoardName} cancel={propsFunction.editButton} finish={propsFunction.finish} /> : null}
           </Modal>
-          <Button color="danger" className={classes.modBtn} onClick={propsFunction.deleteButton}>
-            <FontAwesomeIcon icon="window-close" />
-          </Button>
+
           <Modal show={propsState.deleteState} clickBackdrop={propsFunction.clickBackdrop}>
             {propsState.deleteState ?
               <div>

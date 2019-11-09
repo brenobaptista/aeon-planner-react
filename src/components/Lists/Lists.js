@@ -14,7 +14,7 @@ const Lists = ({ propsState, propsFunction }) => {
     <>
       <Card className={`shadow-sm ${classes.card50} margin-t-b bg-light ${classes.greenText}`}>
         <CardBody>
-          <CardTitle tag="h3">
+          <CardTitle tag="h3" className={classes.marginCard}>
             {propsFunction.boardName}
           </CardTitle>
         </CardBody>
@@ -29,7 +29,7 @@ const Lists = ({ propsState, propsFunction }) => {
                   <CardTitle className={classes.greenText} tag="h4">
                     {list.name}
                     <Badge color="link" className={classes.fixBadge2}>
-                      <UncontrolledButtonDropdown size="sm">
+                      <UncontrolledButtonDropdown size="sm" direction="left">
                         <DropdownToggle color="link" className={classes.fixBadge}>
                           <FontAwesomeIcon icon="cog" />
                         </DropdownToggle>
