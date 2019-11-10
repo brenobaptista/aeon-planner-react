@@ -26,21 +26,24 @@ const Lists = ( props ) => {
         if (list.boardId === props.boardId) {
           return (
             <div key={list._id}>
-              <Card className={`shadow ${classes.card80} bg-light ${classes.marginBottomCard}`}>
+              <Card className={`shadow ${classes.card80} bg-light ${classes.marginBottomCard} ${classes.fixCard}`}>
+                <div className={classes.flexContainer}>
+                  <Badge color="link" className={classes.fixBadge2}>
+                    <UncontrolledButtonDropdown size="sm" direction="left">
+                      <DropdownToggle color="link" className={classes.fixBadge}>
+                        <FontAwesomeIcon icon="cog" />
+                      </DropdownToggle>
+                      <DropdownMenu>
+                        <DropdownItem onClick={() => props.modalEditList(list._id, list.name)}>Edit</DropdownItem>
+                        <DropdownItem onClick={() => props.modalDeleteList(list._id)}>Delete</DropdownItem>
+                      </DropdownMenu>
+                    </UncontrolledButtonDropdown>
+                  </Badge>
+                </div>
+
                 <CardBody className={classes.paddingTasks}>
                   <CardTitle className={classes.greenText} tag="h4">
                     {list.name}
-                    <Badge color="link" className={classes.fixBadge2}>
-                      <UncontrolledButtonDropdown size="sm" direction="left">
-                        <DropdownToggle color="link" className={classes.fixBadge}>
-                          <FontAwesomeIcon icon="cog" />
-                        </DropdownToggle>
-                        <DropdownMenu>
-                          <DropdownItem onClick={() => props.modalEditList(list._id, list.name)}>Edit</DropdownItem>
-                          <DropdownItem onClick={() => props.modalDeleteList(list._id)}>Delete</DropdownItem>
-                        </DropdownMenu>
-                      </UncontrolledButtonDropdown>
-                    </Badge>
                   </CardTitle>
 
                   <Modal show={props.showEditListModal} clickBackdrop={props.cancelEditList}>

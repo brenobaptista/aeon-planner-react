@@ -12,20 +12,22 @@ const Tasks = (props) => (
   <>
     <div className="col-md-4 col-sm-6">
       <Card className={`margin-t-b shadow-sm ${classes.whiteBg}`}>
-        <CardBody>
+        <div className={classes.flexContainer}>
+          <Badge color="link" className={classes.fixBadge2}>
+            <UncontrolledButtonDropdown direction="left">
+              <DropdownToggle color="link" size="sm" className={classes.fixBadge}>
+                <FontAwesomeIcon icon="cog" />
+              </DropdownToggle>
+              <DropdownMenu>
+                <DropdownItem onClick={() => props.modalEditTask(props.taskId, props.taskName, props.taskDescription, props.listId)}>Edit</DropdownItem>
+                <DropdownItem onClick={() => props.modalDeleteTask(props.taskId)}>Delete</DropdownItem>
+              </DropdownMenu>
+            </UncontrolledButtonDropdown>
+          </Badge>
+        </div>
+        <CardBody className={classes.fixCard}>
           <CardTitle className={classes.greenText} tag="h5">
             {props.taskName}
-            <Badge color="link" className={classes.fixBadge2}>
-              <UncontrolledButtonDropdown direction="left">
-                <DropdownToggle color="link" size="sm" className={classes.fixBadge}>
-                  <FontAwesomeIcon icon="cog" />
-                </DropdownToggle>
-                <DropdownMenu>
-                  <DropdownItem onClick={() => props.modalEditTask(props.taskId, props.taskName, props.taskDescription, props.listId)}>Edit</DropdownItem>
-                  <DropdownItem onClick={() => props.modalDeleteTask(props.taskId)}>Delete</DropdownItem>
-                </DropdownMenu>
-              </UncontrolledButtonDropdown>
-            </Badge>
           </CardTitle>
           <CardText>
             {props.taskDescription}
