@@ -13,10 +13,12 @@ import * as serviceWorker from './serviceWorker';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import authReducer from './store/reducers/auth';
 import taskReducer from './store/reducers/task';
+import listReducer from './store/reducers/list';
 
 const rootReducer = combineReducers({
   auth: authReducer,
   task: taskReducer,
+  list: listReducer,
 });
 
 const store = createStore(rootReducer, applyMiddleware(thunk));

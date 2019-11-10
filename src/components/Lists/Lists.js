@@ -36,31 +36,31 @@ const Lists = ( props ) => {
                           <FontAwesomeIcon icon="cog" />
                         </DropdownToggle>
                         <DropdownMenu>
-                          <DropdownItem onClick={() => props.editListButton(list._id, list.name)}>Edit</DropdownItem>
-                          <DropdownItem onClick={() => props.deleteListButton(list._id)}>Delete</DropdownItem>
+                          <DropdownItem onClick={() => props.modalEditList(list._id, list.name)}>Edit</DropdownItem>
+                          <DropdownItem onClick={() => props.modalDeleteList(list._id)}>Delete</DropdownItem>
                         </DropdownMenu>
                       </UncontrolledButtonDropdown>
                     </Badge>
                   </CardTitle>
 
-                  <Modal show={props.editListState} clickBackdrop={props.clickBackdrop}>
-                    {props.editListState ?
+                  <Modal show={props.showEditListModal} clickBackdrop={props.cancelEditList}>
+                    {props.showEditListModal ?
                       <EditList 
                         id={props.editListId} 
                         name={props.editListName} 
                         boardId={props.boardId} 
-                        cancel={props.editListButton} 
+                        cancel={props.cancelEditList} 
                         finish={props.finish} 
                       />
                       : null
                     }
                   </Modal>
 
-                  <Modal show={props.deleteListState} clickBackdrop={props.clickBackdrop}>
-                    {props.deleteListState ?
+                  <Modal show={props.showDeleteListModal} clickBackdrop={props.cancelDeleteList}>
+                    {props.showDeleteListModal ?
                       <div>
                         <h3 className={classes.greenText}>Are you sure you wish to delete it?</h3><br />
-                        <Button color="danger" className="margin-teeth" onClick={props.deleteListButton}>Cancel</Button>
+                        <Button color="danger" className="margin-teeth" onClick={props.cancelDeleteList}>Cancel</Button>
                         <Button color="success" className="margin-teeth" onClick={() => props.deleteList(props.deleteListId)}>Yes</Button>
                       </div>
                       : null}
@@ -109,11 +109,11 @@ const Lists = ( props ) => {
       }
       )}
 
-      <Button color="success" className={classes.marginBottom} onClick={props.createList}>+ New List</Button>
-      <Modal show={props.createListState} clickBackdrop={props.clickBackdrop}>
-        {props.createListState ? 
+      <Button color="success" className={classes.marginBottom} onClick={props.modalCreateList}>+ New List</Button>
+      <Modal show={props.showCreateListModal} clickBackdrop={props.cancelCreateList}>
+        {props.showCreateListModal ? 
           <NewList 
-            cancel={props.createList} 
+            cancel={props.cancelCreateList} 
             finish={props.finish} 
             boardId={props.boardId} 
           /> 
@@ -128,6 +128,12 @@ const mapStateToProps = state => {
   return {
     showCreateTaskModal: state.task.showCreateTaskModal,
     createTaskListId: state.task.createTaskListId,
+    showDeleteListModal: state.list.showDeleteListModal,
+    deleteListId: state.list.deleteListId,
+    showCreateListModal: state.list.showCreateListModal,
+    showEditListModal: state.list.showEditListModal,
+    editListId: state.list.editListId,
+    editListName: state.list.editListName,
   }
 };
 
@@ -135,6 +141,12 @@ const mapDispatchToProps = dispatch => {
   return {
     modalCreateTask: (listId) => dispatch({ type: actionTypes.MODAL_CREATE_TASK, listId }),
     cancelCreateTask: () => dispatch({ type: actionTypes.CANCEL_CREATE_TASK }),
+    modalDeleteList: (listId) => dispatch({ type: actionTypes.MODAL_DELETE_LIST, listId }),
+    cancelDeleteList: () => dispatch({ type: actionTypes.CANCEL_DELETE_LIST }),
+    modalEditList: (listId) => dispatch({ type: actionTypes.MODAL_EDIT_LIST, listId }),
+    cancelEditList: () => dispatch({ type: actionTypes.CANCEL_EDIT_LIST }),
+    modalCreateList: (listId) => dispatch({ type: actionTypes.MODAL_CREATE_LIST, listId }),
+    cancelCreateList: () => dispatch({ type: actionTypes.CANCEL_CREATE_LIST }),
   }
 }
 

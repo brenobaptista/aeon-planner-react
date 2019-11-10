@@ -12,12 +12,9 @@ class ListsPage extends Component {
     lists: [],
     tasks: [],
     isLoaded: false,
-    showCreateListModal: false,
     showEditListModal: false,
     editListId: '',
     editListName: '',
-    showDeleteListModal: false,
-    deleteListId: '',
   }
 
   componentDidMount() {
@@ -41,11 +38,11 @@ class ListsPage extends Component {
     this.setState({
       tasks: responseTasks.data,
       isLoaded: true,
-      showCreateListModal: false,
       showEditListModal: false,
     })
     this.props.editTaskCompleted();
     this.props.createTaskCompleted();
+    this.props.createListCompleted();
   }
 
   deleteListHandler = async (listId) => {
@@ -58,9 +55,9 @@ class ListsPage extends Component {
       const updatedLists = prevState.lists.filter(list => list._id !== listId);
       return { 
         lists: updatedLists,
-        showDeleteListModal: !prevState.showDeleteListModal,
        }
     })
+    this.props.deleteListCompleted();
   }
 
   deleteTaskHandler = async (taskId) => {
@@ -76,35 +73,6 @@ class ListsPage extends Component {
        }
     });
     this.props.deleteTaskCompleted();
-  }
-
-  modalCreateListHandler = () => {
-    this.setState(prevState => ({
-      showCreateListModal: !prevState.showCreateListModal
-    }))
-  }
-
-  modalEditListHandler = (listId, listName) => {
-    this.setState(prevState => ({
-      showEditListModal: !prevState.showEditListModal,
-      editListId: listId,
-      editListName: listName
-    }))
-  }
-
-  modalDeleteListHandler = (listId) => {
-    this.setState(prevState => ({
-      showDeleteListModal: !prevState.showDeleteListModal,
-      deleteListId: listId,
-    }))
-  }
-
-  clickBackdrop = () => {
-    this.setState({
-      showCreateListModal: false,
-      showEditListModal: false,
-      showDeleteListModal: false,
-    })
   }
 
   render() {
@@ -125,19 +93,9 @@ class ListsPage extends Component {
                 tasks={this.state.tasks}
                 boardId={this.props.match.params.boardId}
                 boardName={this.props.match.params.boardName}
-                deleteListState={this.state.showDeleteListModal}
-                deleteListId={this.state.deleteListId}
-                editListId={this.state.editListId}
-                editListName={this.state.editListName}
-                createListState={this.state.showCreateListModal}
-                editListState={this.state.showEditListModal}
                 deleteTask={this.deleteTaskHandler}
-                createList={this.modalCreateListHandler}
-                editListButton={this.modalEditListHandler}
                 deleteList={this.deleteListHandler}
-                deleteListButton={this.modalDeleteListHandler}
                 finish={this.listHandler}
-                clickBackdrop={this.clickBackdrop}
               />
             </div>
             : <Spinner />
@@ -160,6 +118,8 @@ const mapDispatchToProps = dispatch => {
     deleteTaskCompleted: () => dispatch({ type: actionTypes.CANCEL_DELETE_TASK }),
     editTaskCompleted: () => dispatch({ type: actionTypes.CANCEL_EDIT_TASK }),
     createTaskCompleted: () => dispatch({ type: actionTypes.CANCEL_CREATE_TASK }),
+    deleteListCompleted: () => dispatch({ type: actionTypes.CANCEL_DELETE_LIST }),
+    createListCompleted: () => dispatch({ type: actionTypes.CANCEL_CREATE_LIST }),
   }
 }
 
