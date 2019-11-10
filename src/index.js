@@ -14,11 +14,13 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import authReducer from './store/reducers/auth';
 import taskReducer from './store/reducers/task';
 import listReducer from './store/reducers/list';
+import boardReducer from './store/reducers/board';
 
 const rootReducer = combineReducers({
   auth: authReducer,
   task: taskReducer,
   list: listReducer,
+  board: boardReducer,
 });
 
 const store = createStore(rootReducer, applyMiddleware(thunk));

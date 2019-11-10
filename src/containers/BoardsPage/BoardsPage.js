@@ -5,7 +5,8 @@ import { connect } from 'react-redux';
 import Boards from '../../components/Boards/Boards';
 import axios from 'axios';
 import classes from './BoardsPage.module.css';
-import Spinner from '../../components/Spinner/Spinner'
+import Spinner from '../../components/Spinner/Spinner';
+import * as actionTypes from '../../store/actions/actionTypes';
 
 import '../../App.css'
 
@@ -13,11 +14,6 @@ class Home extends Component {
   state = {
     boards: [],
     isLoaded: false,
-    editBoardId: '',
-    editBoardName: '',
-    showCreateModal: false,
-    showEditModal: false,
-    showDeleteModal: false,
   }
 
   componentDidMount() {
@@ -34,9 +30,9 @@ class Home extends Component {
     this.setState({
       boards: response.data,
       isLoaded: true,
-      showCreateModal: false,
-      showEditModal: false,
     })
+    this.props.editBoardCompleted();
+    this.props.createBoardCompleted();
   }
 
   deleteHandler = async (boardId) => {
@@ -49,37 +45,9 @@ class Home extends Component {
       const updatedBoards = prevState.boards.filter(board => board._id !== boardId);
       return {
         boards: updatedBoards,
-        showDeleteModal: !prevState.showDeleteModal
       }
     })
-  }
-
-  modalCreateHandler = () => {
-    this.setState(prevState => ({
-      showCreateModal: !prevState.showCreateModal
-    }))
-  }
-
-  modalEditHandler = (boardId, boardName) => {
-    this.setState(prevState => ({
-      showEditModal: !prevState.showEditModal,
-      editBoardId: boardId,
-      editBoardName: boardName
-    }))
-  }
-
-  modalDeleteHandler = () => {
-    this.setState(prevState => ({
-      showDeleteModal: !prevState.showDeleteModal
-    }))
-  }
-
-  clickBackdrop = () => {
-    this.setState({
-      showCreateModal: false,
-      showEditModal: false,
-      showDeleteModal: false
-    })
+    this.props.deleteBoardCompleted();
   }
 
   render() {
@@ -97,22 +65,9 @@ class Home extends Component {
           {this.state.isLoaded ?
             <div>
               <Boards
-                propsState={{
-                  boards: this.state.boards,
-                  createState: this.state.showCreateModal,
-                  editBoardId: this.state.editBoardId,
-                  editBoardName: this.state.editBoardName,
-                  editState: this.state.showEditModal,
-                  deleteState: this.state.showDeleteModal,
-                }}
-                propsFunction={{
-                  deleted: this.deleteHandler,
-                  createButton: this.modalCreateHandler,
-                  editButton: this.modalEditHandler,
-                  deleteButton: this.modalDeleteHandler,
-                  clickBackdrop: this.clickBackdrop,
-                  finish: this.boardHandler,
-                }}
+                boards={this.state.boards}
+                finish={this.boardHandler}
+                deleted={this.deleteHandler}
               />
             </div>
             : <Spinner />
@@ -130,4 +85,12 @@ const mapStateToProps = state => {
   }
 };
 
-export default connect(mapStateToProps)(Home);
+const mapDispatchToProps = dispatch => {
+  return {
+    deleteBoardCompleted: () => dispatch({ type: actionTypes.CANCEL_DELETE_BOARD }),
+    editBoardCompleted: () => dispatch({ type: actionTypes.CANCEL_EDIT_BOARD }),
+    createBoardCompleted: () => dispatch({ type: actionTypes.CANCEL_CREATE_BOARD }),
+  }
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(Home);
