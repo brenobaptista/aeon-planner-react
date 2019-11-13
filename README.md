@@ -3,7 +3,10 @@
 # Aeon Planner => Personal Planner React PWA
 
 ```
-Aeon Planner is my personal planner PWA made using React. I made it for educational purposes and for my own use. It's like Trello + Evernote, or like that post-it mural you've got in your bedroom. It's meant to be simple and straight-forward, and I've put some of my own philosophies about productivity. It's not meant to be a Trello or Pipefy clone (but it was true in the very beginning).
+Aeon Planner is my personal planner PWA made using React. I made it for educational purposes and for my own use.
+It's like Trello + Evernote, or like that post-it mural you've got in your bedroom. It's meant to be simple and 
+straight-forward, and I've put some of my own philosophies about productivity. It's not meant to be a Trello or 
+Pipefy clone (but it was true in the very beginning).
 
 Some differences from Trello:
 - No "to do", "doing" and "done" lists right from the start.
