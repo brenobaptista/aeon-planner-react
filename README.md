@@ -19,7 +19,13 @@ Some differences from Trello:
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
+# Screenshot
+![alt text](https://github.com/brenobaptista/aeon-planner-react/blob/master/src/screenshots/sc01.png)
+
+# Instructions
 ## `npm install`
+
+Install the dependencies
 
 ## `npm start`
 
