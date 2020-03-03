@@ -1,10 +1,10 @@
-import React, { Component } from 'react'
+import React, { Component } from 'react';
 import { Redirect } from 'react-router-dom';
 import axios from 'axios';
 import { connect } from 'react-redux';
 
 import Lists from '../../components/Lists/Lists';
-import Spinner from '../../components/Spinner/Spinner'
+import Spinner from '../../components/Spinner/Spinner';
 import * as actionTypes from '../../store/actions/actionTypes';
 
 class ListsPage extends Component {
@@ -12,9 +12,6 @@ class ListsPage extends Component {
     lists: [],
     tasks: [],
     isLoaded: false,
-    showEditListModal: false,
-    editListId: '',
-    editListName: '',
   }
 
   componentDidMount() {
@@ -22,105 +19,128 @@ class ListsPage extends Component {
   }
 
   listHandler = async () => {
-    const responseLists = await axios.get(`https://trello-api-nodejs.herokuapp.com/lists/`, {
+    const {
+      token, userId, editTaskCompleted, editListCompleted, createTaskCompleted, createListCompleted,
+    } = this.props;
+
+    const responseLists = await axios.get('https://kanban-api-nodejs.herokuapp.com/lists/', {
       headers: {
-        Authorization: 'Bearer ' + this.props.token,
-        userId: this.props.userId,
-      }
+        Authorization: `Bearer ${token}`,
+        userId,
+      },
     });
-    this.setState({ lists: responseLists.data });
-    const responseTasks = await axios.get(`https://trello-api-nodejs.herokuapp.com/tasks/`, {
+    this.setState({
+      lists: responseLists.data,
+    });
+
+    const responseTasks = await axios.get('https://kanban-api-nodejs.herokuapp.com/tasks/', {
       headers: {
-        Authorization: 'Bearer ' + this.props.token,
-        userId: this.props.userId,
-      }
+        Authorization: `Bearer ${token}`,
+        userId,
+      },
     });
     this.setState({
       tasks: responseTasks.data,
       isLoaded: true,
-      showEditListModal: false,
-    })
-    this.props.editTaskCompleted();
-    this.props.createTaskCompleted();
-    this.props.createListCompleted();
+    });
+
+    editListCompleted();
+    editTaskCompleted();
+    createTaskCompleted();
+    createListCompleted();
   }
 
   deleteListHandler = async (listId) => {
-    await axios.delete(`https://trello-api-nodejs.herokuapp.com/lists/${listId}`, {
+    const { token, deleteListCompleted } = this.props;
+
+    await axios.delete(`https://kanban-api-nodejs.herokuapp.com/lists/${listId}`, {
       headers: {
-        Authorization: 'Bearer ' + this.props.token
-      }
+        Authorization: `Bearer ${token}`,
+      },
     });
-    this.setState(prevState => {
-      const updatedLists = prevState.lists.filter(list => list._id !== listId);
-      return { 
+    this.setState((prevState) => {
+      const updatedLists = prevState.lists.filter((list) => list._id !== listId);
+      return {
         lists: updatedLists,
-       }
-    })
-    this.props.deleteListCompleted();
+      };
+    });
+    deleteListCompleted();
   }
 
   deleteTaskHandler = async (taskId) => {
-    await axios.delete(`https://trello-api-nodejs.herokuapp.com/tasks/${taskId}`, {
+    const { token, deleteTaskCompleted } = this.props;
+
+    await axios.delete(`https://kanban-api-nodejs.herokuapp.com/tasks/${taskId}`, {
       headers: {
-        Authorization: 'Bearer ' + this.props.token,
-      }
+        Authorization: `Bearer ${token}`,
+      },
     });
-    this.setState(prevState => {
-      const updatedTasks = prevState.tasks.filter(task => task._id !== taskId);
-      return { 
+    this.setState((prevState) => {
+      const updatedTasks = prevState.tasks.filter((task) => task._id !== taskId);
+      return {
         tasks: updatedTasks,
-       }
+      };
     });
-    this.props.deleteTaskCompleted();
+    deleteTaskCompleted();
   }
 
   render() {
+    const { token, match } = this.props;
+    const { isLoaded, lists, tasks } = this.state;
+
     let authRedirect = null;
 
-    if (!this.props.token) {
-      authRedirect = <Redirect to='/login' />
+    if (!token) {
+      authRedirect = <Redirect to="/login" />;
     }
 
     return (
       <>
         <center>
           {authRedirect}
-          {this.state.isLoaded ?
+          {isLoaded ? (
             <div>
               <Lists
-                lists={this.state.lists}
-                tasks={this.state.tasks}
-                boardId={this.props.match.params.boardId}
-                boardName={this.props.match.params.boardName}
+                lists={lists}
+                tasks={tasks}
+                boardId={match.params.boardId}
+                boardName={match.params.boardName}
                 deleteTask={this.deleteTaskHandler}
                 deleteList={this.deleteListHandler}
                 finish={this.listHandler}
               />
             </div>
-            : <Spinner />
-          }
+          ) : <Spinner />}
         </center>
       </>
-    )
+    );
   }
 }
 
-const mapStateToProps = state => {
-  return {
-    token: state.auth.token,
-    userId: state.auth.userId,
-  }
-};
+const mapStateToProps = (state) => ({
+  token: state.auth.token,
+  userId: state.auth.userId,
+});
 
-const mapDispatchToProps = dispatch => {
-  return {
-    deleteTaskCompleted: () => dispatch({ type: actionTypes.CANCEL_DELETE_TASK }),
-    editTaskCompleted: () => dispatch({ type: actionTypes.CANCEL_EDIT_TASK }),
-    createTaskCompleted: () => dispatch({ type: actionTypes.CANCEL_CREATE_TASK }),
-    deleteListCompleted: () => dispatch({ type: actionTypes.CANCEL_DELETE_LIST }),
-    createListCompleted: () => dispatch({ type: actionTypes.CANCEL_CREATE_LIST }),
-  }
-}
+const mapDispatchToProps = (dispatch) => ({
+  deleteTaskCompleted: () => dispatch({
+    type: actionTypes.CANCEL_DELETE_TASK,
+  }),
+  editTaskCompleted: () => dispatch({
+    type: actionTypes.CANCEL_EDIT_TASK,
+  }),
+  createTaskCompleted: () => dispatch({
+    type: actionTypes.CANCEL_CREATE_TASK,
+  }),
+  deleteListCompleted: () => dispatch({
+    type: actionTypes.CANCEL_DELETE_LIST,
+  }),
+  editListCompleted: () => dispatch({
+    type: actionTypes.CANCEL_EDIT_LIST,
+  }),
+  createListCompleted: () => dispatch({
+    type: actionTypes.CANCEL_CREATE_LIST,
+  }),
+});
 
 export default connect(mapStateToProps, mapDispatchToProps)(ListsPage);

@@ -3,9 +3,9 @@ import ReactDOM from 'react-dom';
 import { createStore, combineReducers, applyMiddleware } from 'redux';
 import { Provider } from 'react-redux';
 import thunk from 'redux-thunk';
-import { library } from '@fortawesome/fontawesome-svg-core'
-import { fab } from '@fortawesome/free-brands-svg-icons'
-import { faWindowClose, faPencilAlt, faCog } from '@fortawesome/free-solid-svg-icons'
+import { library } from '@fortawesome/fontawesome-svg-core';
+import { fab } from '@fortawesome/free-brands-svg-icons';
+import { faWindowClose, faPencilAlt, faCog } from '@fortawesome/free-solid-svg-icons';
 
 import './index.css';
 import App from './App';
@@ -25,7 +25,7 @@ const rootReducer = combineReducers({
 
 const store = createStore(rootReducer, applyMiddleware(thunk));
 
-library.add(fab, faWindowClose, faPencilAlt, faCog)
+library.add(fab, faWindowClose, faPencilAlt, faCog);
 
 ReactDOM.render(<Provider store={store}><App /></Provider>, document.getElementById('root'));
 

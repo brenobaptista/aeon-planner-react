@@ -10,7 +10,7 @@ const initialState = {
   editTaskListId: '',
   showCreateTaskModal: false,
   createTaskListId: '',
-}
+};
 
 const taskReducer = (state = initialState, action) => {
   switch (action.type) {
@@ -19,7 +19,7 @@ const taskReducer = (state = initialState, action) => {
         ...state,
         showDeleteTaskModal: true,
         deleteTaskId: action.taskId,
-      }
+      };
     case actionTypes.MODAL_EDIT_TASK:
       return {
         ...state,
@@ -28,19 +28,19 @@ const taskReducer = (state = initialState, action) => {
         editTaskName: action.taskName,
         editTaskDescription: action.taskDescription,
         editTaskListId: action.listId,
-      }
+      };
     case actionTypes.MODAL_CREATE_TASK:
       return {
         ...state,
         showCreateTaskModal: true,
         createTaskListId: action.listId,
-      }
+      };
     case actionTypes.CANCEL_DELETE_TASK:
       return {
         ...state,
         showDeleteTaskModal: false,
         deleteTaskId: '',
-      }
+      };
     case actionTypes.CANCEL_EDIT_TASK:
       return {
         ...state,
@@ -49,16 +49,16 @@ const taskReducer = (state = initialState, action) => {
         editTaskName: '',
         editTaskDescription: '',
         editTaskListId: '',
-      }
+      };
     case actionTypes.CANCEL_CREATE_TASK:
       return {
         ...state,
         showCreateTaskModal: false,
         createTaskListId: '',
-      }
+      };
     default:
       return state;
   }
-}
+};
 
 export default taskReducer;

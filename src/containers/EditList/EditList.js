@@ -1,73 +1,108 @@
 import React, { Component } from 'react';
 import axios from 'axios';
 import { connect } from 'react-redux';
+import {
+  Button, Form, FormGroup, Label, Input,
+} from 'reactstrap';
 
 import FormError from '../../components/FormError/FormError';
-import { Button, Form, FormGroup, Label, Input } from 'reactstrap';
 
 class EditList extends Component {
   state = {
-    id: '',
-    name: '',
+    listId: '',
+    listName: '',
     boardId: '',
     error: false,
     errorMessage: '',
   }
 
   componentDidMount() {
+    const { id, name, boardId } = this.props;
+
     this.setState({
-      id: this.props.id,
-      name: this.props.name,
-      boardId: this.props.boardId
-    })
+      listId: id,
+      listName: name,
+      boardId,
+    });
   }
 
   dataHandler = async (event) => {
-    event.preventDefault()
+    const { token, finish } = this.props;
+    const { listId, listName, boardId } = this.state;
+
+    event.preventDefault();
     const data = {
-      name: this.state.name,
-      boardId: this.state.boardId
+      name: listName,
+      boardId,
     };
     try {
-      await axios.put(`https://trello-api-nodejs.herokuapp.com/lists/${this.state.id}`, data, {
+      await axios.put(`https://kanban-api-nodejs.herokuapp.com/lists/${listId}`, data, {
         headers: {
-          Authorization: 'Bearer ' + this.props.token
-        }
+          Authorization: `Bearer ${token}`,
+        },
       });
-      this.props.finish();
-    } catch (error) {
-      this.setState({ 
+      finish();
+    } catch (err) {
+      this.setState({
+        errorMessage: err.response.data.message,
         error: true,
-        errorMessage: error.response.data.message,
-       })
+      });
     }
   }
 
-  nameHandler = (event) => this.setState({ name: event.target.value });
+  nameHandler = (event) => this.setState({
+    listName: event.target.value,
+  });
 
   render() {
+    const { cancel } = this.props;
+    const { listName, error, errorMessage } = this.state;
+
     return (
       <>
         <Form onSubmit={this.dataHandler}>
-          <Label tag="h1">Edit list</Label>
+          <Label tag="h1">
+            Edit list
+          </Label>
           <FormGroup>
-            <Label for="name">Name</Label>
-            <Input type="text" name="name" id="name" placeholder="Name" value={this.state.name} onChange={this.nameHandler} />
+            <Label for="name">
+              Name
+            </Label>
+            <Input
+              type="text"
+              name="name"
+              id="name"
+              placeholder="Name"
+              value={listName}
+              onChange={this.nameHandler}
+            />
           </FormGroup>
-          <Button color="danger" className="margin-teeth" onClick={this.props.cancel}>Cancel</Button>
-          <Button type="submit" color="success" className="margin-teeth">Finish editing</Button>
+          <Button
+            color="danger"
+            className="margin-teeth"
+            onClick={cancel}
+          >
+            Cancel
+          </Button>
+          <Button
+            type="submit"
+            color="success"
+            className="margin-teeth"
+          >
+            Finish editing
+          </Button>
         </Form>
-        
-        {this.state.error ? <FormError errorMessage={this.state.errorMessage} /> : null}
+
+        {error ? (
+          <FormError errorMessage={errorMessage} />
+        ) : null}
       </>
-    )
+    );
   }
 }
 
-const mapStateToProps = state => {
-  return {
-    token: state.auth.token,
-  }
-};
+const mapStateToProps = (state) => ({
+  token: state.auth.token,
+});
 
 export default connect(mapStateToProps)(EditList);

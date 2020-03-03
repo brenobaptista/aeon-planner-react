@@ -1,9 +1,11 @@
 import React, { Component } from 'react';
 import axios from 'axios';
 import { connect } from 'react-redux';
+import {
+  Button, Form, FormGroup, Label, Input,
+} from 'reactstrap';
 
 import FormError from '../../components/FormError/FormError';
-import { Button, Form, FormGroup, Label, Input } from 'reactstrap';
 
 class NewList extends Component {
   state = {
@@ -13,51 +15,80 @@ class NewList extends Component {
   }
 
   dataHandler = async (event) => {
-    event.preventDefault()
+    const { token, finish, boardId } = this.props;
+    const { name } = this.state;
+
+    event.preventDefault();
     const data = {
-      name: this.state.name,
-      boardId: this.props.boardId
+      name,
+      boardId,
     };
     try {
-      await axios.post(`https://trello-api-nodejs.herokuapp.com/lists/`, data, {
+      await axios.post('https://kanban-api-nodejs.herokuapp.com/lists/', data, {
         headers: {
-          Authorization: 'Bearer ' + this.props.token
-        }
+          Authorization: `Bearer ${token}`,
+        },
       });
-      this.props.finish();
-    } catch (error) {
-      this.setState({ 
+      finish();
+    } catch (err) {
+      this.setState({
         error: true,
-        errorMessage: error.response.data.message,
-       })
+        errorMessage: err.response.data.message,
+      });
     }
   }
 
-  nameHandler = (event) => this.setState({ name: event.target.value });
+  nameHandler = (event) => this.setState({
+    name: event.target.value,
+  });
 
   render() {
+    const { name, errorMessage, error } = this.state;
+    const { cancel } = this.props;
+
     return (
       <>
         <Form onSubmit={this.dataHandler}>
-          <Label tag="h1">Add a new list</Label>
+          <Label tag="h1">
+            Add a new list
+          </Label>
           <FormGroup>
-            <Label for="name">Name</Label>
-            <Input type="text" name="name" id="name" placeholder="Name" value={this.state.name} onChange={this.nameHandler} />
+            <Label for="name">
+              Name
+            </Label>
+            <Input
+              type="text"
+              name="name"
+              id="name"
+              placeholder="Name"
+              value={name}
+              onChange={this.nameHandler}
+            />
           </FormGroup>
-          <Button color="danger" className="margin-teeth" onClick={this.props.cancel}>Cancel</Button>
-          <Button type="submit" color="success" className="margin-teeth">Add List</Button>
+          <Button
+            color="danger"
+            className="margin-teeth"
+            onClick={cancel}
+          >
+            Cancel
+          </Button>
+          <Button
+            type="submit"
+            color="success"
+            className="margin-teeth"
+          >
+            Add List
+          </Button>
         </Form>
 
-        {this.state.error ? <FormError errorMessage={this.state.errorMessage} /> : null}
+        {error ? <FormError errorMessage={errorMessage} /> : null}
       </>
-    )
+    );
   }
 }
 
-const mapStateToProps = state => {
-  return {
-    token: state.auth.token,
-  }
-};
+const mapStateToProps = (state) => ({
+  token: state.auth.token,
+});
 
 export default connect(mapStateToProps)(NewList);

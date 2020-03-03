@@ -1,9 +1,11 @@
 import React, { Component } from 'react';
 import axios from 'axios';
 import { connect } from 'react-redux';
+import {
+  Button, Form, FormGroup, Label, Input,
+} from 'reactstrap';
 
 import FormError from '../../components/FormError/FormError';
-import { Button, Form, FormGroup, Label, Input } from 'reactstrap';
 
 class NewTask extends Component {
   state = {
@@ -14,57 +16,100 @@ class NewTask extends Component {
   }
 
   dataHandler = async (event) => {
-    event.preventDefault()
+    const { name, description } = this.state;
+    const { token, finish, listId } = this.props;
+
+    event.preventDefault();
     const data = {
-      name: this.state.name,
-      description: this.state.description,
-      listId: this.props.listId
+      name,
+      description,
+      listId,
     };
     try {
-      await axios.post(`https://trello-api-nodejs.herokuapp.com/tasks/`, data, {
+      await axios.post('https://kanban-api-nodejs.herokuapp.com/tasks/', data, {
         headers: {
-          Authorization: 'Bearer ' + this.props.token
-        }
+          Authorization: `Bearer ${token}`,
+        },
       });
-      this.props.finish();
-    } catch (error) {
-      this.setState({ 
+      finish();
+    } catch (err) {
+      this.setState({
         error: true,
-        errorMessage: error.response.data.message,
-       })
+        errorMessage: err.response.data.message,
+      });
     }
   }
 
-  nameHandler = (event) => this.setState({ name: event.target.value });
-  descriptionHandler = (event) => this.setState({ description: event.target.value });
+  nameHandler = (event) => this.setState({
+    name: event.target.value,
+  });
+
+  descriptionHandler = (event) => this.setState({
+    description: event.target.value,
+  });
 
   render() {
+    const {
+      name, description, errorMessage, error,
+    } = this.state;
+    const { cancel } = this.props;
+
     return (
       <>
         <Form onSubmit={this.dataHandler}>
-          <Label tag="h1">Add a new task</Label>
+          <Label tag="h1">
+            Add a new task
+          </Label>
           <FormGroup>
-            <Label for="name">Name</Label>
-            <Input type="text" name="name" id="name" placeholder="Name" value={this.state.name} onChange={this.nameHandler} />
+            <Label for="name">
+              Name
+            </Label>
+            <Input
+              type="text"
+              name="name"
+              id="name"
+              placeholder="Name"
+              value={name}
+              onChange={this.nameHandler}
+            />
           </FormGroup>
           <FormGroup>
-            <Label for="description">Description</Label>
-            <Input type="textarea" name="description" id="description" placeholder="Description" value={this.state.description} onChange={this.descriptionHandler} />
+            <Label for="description">
+              Description
+            </Label>
+            <Input
+              type="textarea"
+              name="description"
+              id="description"
+              placeholder="Description"
+              value={description}
+              onChange={this.descriptionHandler}
+            />
           </FormGroup>
-          <Button color="danger" className="margin-teeth" onClick={this.props.cancel}>Cancel</Button>
-          <Button type="submit" color="success" className="margin-teeth">Add Task</Button>
+          <Button
+            color="danger"
+            className="margin-teeth"
+            onClick={cancel}
+          >
+            Cancel
+          </Button>
+          <Button
+            type="submit"
+            color="success"
+            className="margin-teeth"
+          >
+            Add Task
+          </Button>
         </Form>
 
-        {this.state.error ? <FormError errorMessage={this.state.errorMessage} /> : null}
+        {error ? <FormError errorMessage={errorMessage} /> : null}
       </>
-    )
+    );
   }
 }
 
-const mapStateToProps = state => {
-  return {
-    token: state.auth.token,
-  }
-};
+const mapStateToProps = (state) => ({
+  token: state.auth.token,
+});
 
 export default connect(mapStateToProps)(NewTask);

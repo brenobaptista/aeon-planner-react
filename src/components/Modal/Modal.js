@@ -4,16 +4,18 @@ import classes from './Modal.module.css';
 import Backdrop from '../Backdrop/Backdrop';
 
 const modal = (props) => {
-  let toggleClass = props.show ? classes.modalOpen : classes.modalClose;
-  
+  const { show, clickBackdrop, children } = props;
+
+  const toggleClass = show ? classes.modalOpen : classes.modalClose;
+
   return (
     <>
-      <Backdrop show={props.show} clicked={props.clickBackdrop} />
+      <Backdrop show={show} clicked={clickBackdrop} />
       <div className={`${classes.modal} ${toggleClass}`}>
-        {props.children}
+        {children}
       </div>
     </>
-  )
-}
+  );
+};
 
 export default modal;

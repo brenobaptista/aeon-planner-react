@@ -1,7 +1,8 @@
-/* eslint-disable array-callback-return */
 import React, { useState } from 'react';
 import axios from 'axios';
-import { Button, Form, FormGroup, Label, Input, Card, CardText, CardBody, CardTitle } from 'reactstrap';
+import {
+  Button, Form, FormGroup, Label, Input, Card, CardText, CardBody, CardTitle,
+} from 'reactstrap';
 
 import classes from './SignUp.module.css';
 import FormError from '../../components/FormError/FormError';
@@ -17,6 +18,8 @@ const SignUp = (props) => {
   const [emailInvalid, setEmailInvalid] = useState(false);
   const [passwordInvalid, setPasswordInvalid] = useState(false);
 
+  const { history } = props;
+
   const signUpHandler = async (event) => {
     event.preventDefault();
     try {
@@ -24,8 +27,10 @@ const SignUp = (props) => {
         setEmailInvalid(false);
         setPasswordInvalid(false);
         setAuthLoading(true);
-        const data = { email, password };
-        await axios.put('https://trello-api-nodejs.herokuapp.com/signup', data);
+        const data = {
+          email, password,
+        };
+        await axios.put('https://kanban-api-nodejs.herokuapp.com/signup', data);
         setError(false);
         setAuthLoading(false);
         props.history.push('/login');
@@ -34,8 +39,8 @@ const SignUp = (props) => {
         setError(true);
         setPasswordInvalid(true);
       }
-    } catch (error) {
-      error.response.data.errors.map((err) => {
+    } catch (erro) {
+      erro.response.data.errors.map((err) => {
         switch (err.msg) {
           case 'Password must be at least 5 chars long.':
             setPasswordInvalid(true);
@@ -52,11 +57,12 @@ const SignUp = (props) => {
           default:
             return null;
         }
+        return null;
       });
       setAuthLoading(false);
       setError(true);
     }
-  }
+  };
 
   const emailHandler = (event) => setEmail(event.target.value);
   const passwordHandler = (event) => setPassword(event.target.value);
@@ -66,23 +72,68 @@ const SignUp = (props) => {
     <div className="centerText">
       <Card className={`shadow ${classes.card80} bg-light`}>
         <CardBody>
-          <CardTitle tag="h1">Sign Up</CardTitle>
+          <CardTitle tag="h1">
+            Sign Up
+          </CardTitle>
           <CardText>
             <Form onSubmit={signUpHandler}>
               <FormGroup>
-                <Label for="email">Email</Label>
-                <Input invalid={emailInvalid} type="email" name="email" id="email" placeholder="Type your email" value={email} onChange={emailHandler} />
+                <Label for="email">
+                  Email
+                </Label>
+                <Input
+                  invalid={emailInvalid}
+                  type="email"
+                  name="email"
+                  id="email"
+                  placeholder="Type your email"
+                  value={email}
+                  onChange={emailHandler}
+                />
               </FormGroup>
               <FormGroup>
-                <Label for="password">Password</Label>
-                <Input invalid={passwordInvalid} type="password" name="password" id="password" placeholder="Choose your password" value={password} onChange={passwordHandler} />
+                <Label for="password">
+                  Password
+                </Label>
+                <Input
+                  invalid={passwordInvalid}
+                  type="password"
+                  name="password"
+                  id="password"
+                  placeholder="Choose your password"
+                  value={password}
+                  onChange={passwordHandler}
+                />
               </FormGroup>
               <FormGroup>
-                <Label for="passwordConfirm">Confirm Password</Label>
-                <Input invalid={passwordInvalid} type="password" name="passwordConfirm" id="passwordConfirm" placeholder="Confirm your password" value={passwordConfirm} onChange={passwordConfirmHandler} />
+                <Label for="passwordConfirm">
+                  Confirm Password
+                </Label>
+                <Input
+                  invalid={passwordInvalid}
+                  type="password"
+                  name="passwordConfirm"
+                  id="passwordConfirm"
+                  placeholder="Confirm your password"
+                  value={passwordConfirm}
+                  onChange={passwordConfirmHandler}
+                />
               </FormGroup>
-              <Button color="danger" className="margin-teeth" onClick={props.history.goBack}>Cancel</Button>
-              <Button type="submit" color="success" className="margin-teeth">Sign Up</Button>
+              <Button
+                color="danger"
+                className="margin-teeth"
+                onClick={history.goBack}
+              >
+                Cancel
+              </Button>
+              <Button
+                type="submit"
+                color="success"
+                className="margin-teeth"
+              >
+                Sign Up
+              </Button>
+
               {authLoading ? <Spinner /> : null}
               {error ? <FormError errorMessage={errorMessage} /> : null}
             </Form>
