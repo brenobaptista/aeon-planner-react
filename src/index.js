@@ -28,7 +28,7 @@ const store = createStore(rootReducer, applyMiddleware(thunk));
 
 library.add(fab, faWindowClose, faPencilAlt, faCog);
 
-ReactGA.initialize('G-K6BD8HRCLQ');
+ReactGA.initialize('UA-146454458-2');
 
 ReactGA.pageview(window.location.pathname + window.location.search);
 
