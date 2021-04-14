@@ -6,7 +6,6 @@ import thunk from 'redux-thunk';
 import { library } from '@fortawesome/fontawesome-svg-core';
 import { fab } from '@fortawesome/free-brands-svg-icons';
 import { faWindowClose, faPencilAlt, faCog } from '@fortawesome/free-solid-svg-icons';
-import ReactGA from 'react-ga';
 
 import './index.css';
 import App from './App';
@@ -27,10 +26,6 @@ const rootReducer = combineReducers({
 const store = createStore(rootReducer, applyMiddleware(thunk));
 
 library.add(fab, faWindowClose, faPencilAlt, faCog);
-
-ReactGA.initialize('UA-146454458-2');
-
-ReactGA.pageview(window.location.pathname + window.location.search);
 
 ReactDOM.render(<Provider store={store}><App /></Provider>, document.getElementById('root'));
 
